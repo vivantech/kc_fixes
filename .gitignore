@@ -1,0 +1,30 @@
+# Maven Release Specific
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
+
+# Eclipse Specific
+.classpath
+.project
+.settings/
+target/
+
+# OS Garbage
+
+# OSX
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Sublime Text files
+*.sublime*
+
+# IntelliJ files
+*.iml
+.idea/
