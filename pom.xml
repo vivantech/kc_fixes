@@ -15,8 +15,6 @@
 			<version>5.2.1</version>
 			<type>jar</type>
 			<classifier>classes</classifier>
-			<!-- provided since the overlay pulls in the classes and we don't want to add it to the lib dir too -->
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.kuali.kra</groupId>
@@ -47,6 +45,18 @@
 							<artifactId>kc_project</artifactId>
 						</overlay>
 					</overlays>
+					<!--
+						Included the kc_project classes jar as a compile-scope dependency so its
+						transitive dependencies remain intact for projects including this one as
+						a dependency.  However, having the jar in the lib directory can cause
+						complications for projects using this one in a war overlay.  So we can
+						exclude the jar from packaging since its contents are already brought in
+						by the overlay.
+
+						Note: packagingExcludes removes the artifact from the built war, but it 
+						will still be present in the temporary war directory 
+					-->
+					<packagingExcludes>WEB-INF/lib/kc_project-*-classes.jar</packagingExcludes>
 				</configuration>
 			</plugin>
 
