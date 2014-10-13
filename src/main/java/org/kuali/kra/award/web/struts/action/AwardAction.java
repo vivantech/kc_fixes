@@ -794,7 +794,7 @@ public class AwardAction extends BudgetParentActionBase {
             }
             
             if (timeAndMoneyDocument == null) {
-                generateDirectFandADistribution(currentAward);
+                generateDirectFandADistribution(rootAward);
             }
 
             if(firstTimeAndMoneyDocCreation){
@@ -1494,6 +1494,9 @@ public class AwardAction extends BudgetParentActionBase {
         AwardTemplateSyncService awardTemplateSyncService = KraServiceLocator.getService(AwardTemplateSyncService.class);
         AwardForm awardForm = (AwardForm)form;
         AwardDocument awardDocument = awardForm.getAwardDocument();
+        String awardTemplateDescription = "";
+        if (org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument) && org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument.getAward()) && org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument.getAward().getAwardTemplate()) && org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument.getAward().getAwardTemplate().getDescription()))
+        	awardTemplateDescription = awardDocument.getAward().getAwardTemplate().getDescription();
         String question = request.getParameter(KRADConstants.QUESTION_INST_ATTRIBUTE_NAME);
         Object buttonClicked = request.getParameter(KRADConstants.QUESTION_CLICKED_BUTTON);
         AwardTemplateSyncScope[] scopes = awardForm.getCurrentSyncScopes();
@@ -1515,11 +1518,11 @@ public class AwardAction extends BudgetParentActionBase {
                 if( StringUtils.equals(scopeSyncLabel, REPORTS_PROPERTY_NAME) || StringUtils.equals(scopeSyncLabel, PAYMENT_INVOICES_PROPERTY_NAME)) {
                     confirmationQuestion = buildAwardSyncParameterizedConfirmationQuestion(mapping, form, request, response, (QUESTION_VERIFY_SYNC+":"+currentScope), 
                                 currentScope.equals(AwardTemplateSyncScope.FULL)?KeyConstants.QUESTION_SYNC_FULL:KeyConstants.QUESTION_SYNC_PANEL,
-                            scopeSyncLabel, awardDocument.getAward().getAwardTemplate().getDescription(), getScopeMessageToAddQuestion(currentScope));
+                            scopeSyncLabel, awardTemplateDescription, getScopeMessageToAddQuestion(currentScope));
                 } else {
                     confirmationQuestion = buildParameterizedConfirmationQuestion(mapping, form, request, response, (QUESTION_VERIFY_SYNC+":"+currentScope), 
                             currentScope.equals(AwardTemplateSyncScope.FULL)?KeyConstants.QUESTION_SYNC_FULL:KeyConstants.QUESTION_SYNC_PANEL,
-                            scopeSyncLabel, awardDocument.getAward().getAwardTemplate().getDescription(), getScopeMessageToAddQuestion(currentScope)); 
+                            scopeSyncLabel, awardTemplateDescription, getScopeMessageToAddQuestion(currentScope)); 
                 }
                 confirmationQuestion.setCaller("processSyncAward");
                 awardForm.setCurrentSyncQuestionId( (QUESTION_VERIFY_SYNC+":"+currentScope) );
