@@ -35,6 +35,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/* ### Vivantech Fix : #4 / [#80479158] Correcting 'RiceRuntimeException: The workflow document is null' 
+ * when Running a Batch Correspondence History filter with invalid date range.
+ */
+
 /**
  * The CommitteeHelperBase corresponds to the CommitteeBase tab web page.
  */
@@ -305,7 +309,9 @@ public abstract class CommitteeHelperBase implements Serializable {
      * @param committeeForm the CommitteeFormBase
      */
     public void resetBatchCorrespondenceHistory(CommitteeFormBase committeeForm) {
-        setBatchCorrespondenceHistory(null);
+    	// ### Vivantech Fix : #4 / [#80479158] Fixing RiceRuntimeException by resetting 
+    	// batchCorrespondenceHistory to an initialized, empty list
+        setBatchCorrespondenceHistory(new ArrayList<CommitteeBatchCorrespondenceBase>());
         committeeForm.setTabStates(new HashMap<String, String>());
         committeeForm.getTabStates().put(WebUtils.generateTabKey(BATCH_CORRESPONDENCE_PANEL_TITLE), "OPEN");
     }
