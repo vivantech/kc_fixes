@@ -35,6 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/* ### Vivantech Fix : #6 / [#80876498] Correcting Document locking issues specific to Award Documents
+ */
 public class AwardLockServiceImpl extends PessimisticLockServiceImpl implements ProposalLockService {
 
     /**
@@ -94,8 +96,8 @@ public class AwardLockServiceImpl extends PessimisticLockServiceImpl implements 
     @SuppressWarnings("unchecked")
     @Override
     protected Map getEditModeWithEditableModesRemoved(Map currentEditMode) {
-    	Map editModeMap = new HashMap();
-        //Map editModeMap = super.getEditModeWithEditableModesRemoved(currentEditMode);
+    	// ### Vivantech Fix : #6 / [#80876498] Correcting Award Document locking issues
+        Map editModeMap = super.getEditModeWithEditableModesRemoved(currentEditMode);
         for (Iterator iterator = editModeMap.entrySet().iterator(); iterator.hasNext();) {
             Map.Entry<String, String> entry = (Map.Entry<String, String>) iterator.next();
             if (StringUtils.equals(entry.getKey(), "addBudget")) {
