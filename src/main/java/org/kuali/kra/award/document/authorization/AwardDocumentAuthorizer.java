@@ -1,4 +1,8 @@
+/* ### Vivantech Fix : #8 / [#80748746] Use the same logic for Blanket Approval on Award Document.  
+ */
+
 /*
+ * 
  * Copyright 2005-2014 The Kuali Foundation
  * 
  * Licensed under the Educational Community License, Version 2.0 (the "License");
@@ -309,10 +313,14 @@ public class AwardDocumentAuthorizer extends KcTransactionalDocumentAuthorizerBa
     @Override
     public boolean canBlanketApprove(Document document, Person user) {
         boolean canBA = false;
-        PermissionService permService = KraServiceLocator.getService(KimApiServiceLocator.KIM_PERMISSION_SERVICE);
-        canBA = 
-                (!(isFinal(document)||isProcessed (document))&&
-                        permService.hasPermission (user.getPrincipalId(), "KC-AWARD", "Blanket Approve AwardDocument"));
+//        PermissionService permService = KraServiceLocator.getService(KimApiServiceLocator.KIM_PERMISSION_SERVICE);
+//        canBA = 
+//                (!(isFinal(document)||isProcessed (document))&&
+//                        permService.hasPermission (user.getPrincipalId(), "KC-AWARD", "Blanket Approve AwardDocument"));
+        
+        boolean canBlanketApprove = super.canBlanketApprove(document, user);
+        canBA = (!(isFinal(document)||isProcessed (document)) && canBlanketApprove);
+        
         if (!isFinal(document) &&canBA){
             // check system parameter - if Y, use default workflow behavior: allow a user with the permission
             // to perform the blanket approve action at any time
