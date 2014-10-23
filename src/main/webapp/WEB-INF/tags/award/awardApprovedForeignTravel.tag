@@ -1,3 +1,5 @@
+<%-- ### Vivantech Fix : #11 / [#81148708] use personId for person lookup --%>
+
 <%--
  Copyright 2005-2014 The Kuali Foundation
  
@@ -109,8 +111,8 @@
                 								attributeEntry="${approvedForeignTravelAttributes.travelerName}" readOnly="true"/>
                         <c:if test="${formAward.approvedForeignTravelTrips[status.index].employee}">
                 		    <kul:lookup boClassName="org.kuali.kra.bo.KcPerson"
-                			    	fieldConversions="personId:${docAward}.approvedForeignTravelTrips[${status.index}].travelerId" anchor="${tabKey}"
-        	  	 				    lookupParameters="${docAward}.approvedForeignTravelTrips[${status.index}].travelerId:personId" />
+                			    	fieldConversions="personId:${docAward}.approvedForeignTravelTrips[${status.index}].personId" anchor="${tabKey}"
+        	  	 				    lookupParameters="${docAward}.approvedForeignTravelTrips[${status.index}].personId:personId" />
                         </c:if>
                         <c:if test="${formAward.approvedForeignTravelTrips[status.index].nonemployee}">
                 		    <kul:lookup boClassName="org.kuali.kra.bo.NonOrganizationalRolodex"
