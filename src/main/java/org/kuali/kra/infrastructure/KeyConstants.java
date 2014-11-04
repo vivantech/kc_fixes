@@ -546,6 +546,11 @@ public final class KeyConstants {
     
     //Award template validation errors
     public static final String ERROR_NO_TEMPLATE_CODE = "error.award.templateCode.notFound";
+    
+    //### Vivantech Fix : #15 / [#80417598] Adding key constants for the validation for invalid Award Template.
+    public static final String ERROR_INVALID_TEMPLATE_CODE = "error.award.templateCode.invalid";
+    //### Vivantech Fix : #15 / [#80417598] Finish.
+    
     public static final String ERROR_NO_SPONSOR_TEMPLATE_FOUND = "error.award.sponsor.template.notFound";
     public static final String INVALID_BASIS_PAYMENT = "error.invalid.award.awardTemplate.awardBasisPayment";
     public static final String INVALID_METHOD_PAYMENT = "error.invalid.award.awardTemplate.awardMethodPayment";
