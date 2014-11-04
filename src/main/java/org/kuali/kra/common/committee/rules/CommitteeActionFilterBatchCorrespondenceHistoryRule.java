@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2013 The Kuali Foundation
+ * Copyright 2005-2014 The Kuali Foundation
  * 
  * Licensed under the Educational Community License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,6 +50,20 @@ public class CommitteeActionFilterBatchCorrespondenceHistoryRule extends Researc
             reportError(END_DATE_FIELD, KeyConstants.ERROR_COMMITTEE_ACTION_HISTORY_END_DATE_BEFORE_START_DATE);
             rulePassed = false;
         }
+        
+        // ### Vivantech Fix : #17 / [#82066418] Fix for IACUC Committees: Incident Report when clicking on the Filter button.
+        
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        java.util.Date utilDate = cal.getTime();
+        java.sql.Date currentDate = new java.sql.Date(utilDate.getTime());
+        if(event.getEndDate() != null && event.getEndDate().after(currentDate))
+        {
+        	reportError(END_DATE_FIELD, KeyConstants.ERROR_COMMITTEE_ACTION_HISTORY_END_DATE_AFTER_CURRENT_DATE);
+            rulePassed = false;
+            
+        }
+
+        // ### Vivantech Fix : #17 / [#82066418] Finish.
         
         return rulePassed;
     }
