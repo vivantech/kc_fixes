@@ -805,6 +805,11 @@ public final class KeyConstants {
     public static final String ERROR_COMMITTEE_ACTION_GENERATE_VIEW_NOT_SPECIFIED = "error.committee.action.generate.view.not.specified";
     public static final String ERROR_COMMITTEE_ACTION_HISTORY_BATCH_CORRESPONDENCE_TYPE_CODE_NOT_SPECIFIED = "error.committee.action.history.batch.correspondence.type.code.not.specified";
     public static final String ERROR_COMMITTEE_ACTION_HISTORY_END_DATE_BEFORE_START_DATE = "error.committee.action.history.end.date.before.start.date";
+    
+    // ### Vivantech Fix : #17 / [#82066418] Fix for IACUC Committees: Incident Report when clicking on the Filter button.
+    public static final String ERROR_COMMITTEE_ACTION_HISTORY_END_DATE_AFTER_CURRENT_DATE = "error.committee.action.history.end.date.after.current.date";
+    // ### Vivantech Fix : #17 / [#82066418] Finish.
+    
     public static final String ERROR_COMMITTEE_ACTION_HISTORY_VIEW_NOT_SPECIFIED = "error.committee.action.history.view.not.specified";
     public static final String ERROR_COMMITTEE_ACTION_PRINT_REPORT_NOT_SPECIFIED = "error.committee.action.print.report.not.specified";
     
