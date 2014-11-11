@@ -1422,8 +1422,25 @@ public class AwardAction extends BudgetParentActionBase {
             awardForm.setOldTemplateCode(null);
             awardForm.setTemplateLookup(false);
             return mapping.findForward(Constants.MAPPING_AWARD_BASIC);
-        } else {
-            awardDocument.getAward().refreshReferenceObject("awardTemplate");
+            
+         // ### Vivantech Fix : #15 / [#80417598] Adding validation for invalid Award Template.
+            
+        } else if (org.kuali.rice.krad.util.ObjectUtils.isNull(awardDocument.getAward().getAwardTemplate())) {
+        	awardDocument.getAward().refreshReferenceObject("awardTemplate");
+        	// check again to confirm if the awardTemplate was actually invalid or was it just the OJB lazy loading.
+        	if (org.kuali.rice.krad.util.ObjectUtils.isNull(awardDocument.getAward().getAwardTemplate())) {
+        		GlobalVariables.getMessageMap().clearErrorMessages(); 
+        		GlobalVariables.getMessageMap().putError("document.award.awardTemplate", KeyConstants.ERROR_INVALID_TEMPLATE_CODE,  new String[] {});
+        		awardForm.setOldTemplateCode(null);
+        		awardForm.setTemplateLookup(false);
+        		return mapping.findForward(Constants.MAPPING_AWARD_BASIC);
+        	}
+        
+         // ### Vivantech Fix : #15 / [#80417598] finish.
+            
+        }
+        else {
+        	awardDocument.getAward().refreshReferenceObject("awardTemplate");
         }
         
         Object question = request.getParameter(KRADConstants.QUESTION_INST_ATTRIBUTE_NAME);
