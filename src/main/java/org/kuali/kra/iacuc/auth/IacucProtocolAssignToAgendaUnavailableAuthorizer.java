@@ -21,6 +21,10 @@ import org.kuali.kra.infrastructure.PermissionConstants;
 import org.kuali.kra.protocol.ProtocolBase;
 import org.kuali.kra.protocol.actions.submit.ProtocolSubmissionBase;
 
+/* ### Vivantech Fix : #20 / [#82983242] The Assign to Agenda option
+ * is being displayed in both Available and Unavailable options.
+ */
+
 /**
  * Determine if a user can assign a protocol to a committee/schedule.
  */
@@ -30,11 +34,11 @@ public class IacucProtocolAssignToAgendaUnavailableAuthorizer extends IacucProto
     @Override
     public boolean isAuthorized(String username, IacucProtocolTask task) {
         ProtocolBase protocol = task.getProtocol();
-        return !( kraWorkflowService.isInWorkflow(protocol.getProtocolDocument())
-                && kraWorkflowService.isCurrentNode(protocol.getProtocolDocument(), Constants.PROTOCOL_IACUCREVIEW_ROUTE_NODE_NAME)
-                && canExecuteAction(protocol, IacucProtocolActionType.ASSIGNED_TO_AGENDA) 
-                && !isAssignedToCommittee(protocol)
-                )
+        // ### Vivantech Fix : #20 / [#82983242] Fixing Assign to Agenda double display by correcting Unavailable logic
+        return (   !kraWorkflowService.isInWorkflow(protocol.getProtocolDocument())
+                || !kraWorkflowService.isCurrentNode(protocol.getProtocolDocument(), Constants.PROTOCOL_IACUCREVIEW_ROUTE_NODE_NAME)
+                || !canExecuteAction(protocol, IacucProtocolActionType.ASSIGNED_TO_AGENDA) 
+                || !isAssignedToCommittee(protocol))
                 && hasPermission(username, protocol, PermissionConstants.PERFORM_IACUC_ACTIONS_ON_PROTO);
     }
 
