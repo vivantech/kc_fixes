@@ -93,6 +93,7 @@ public abstract class CoiDisclosureLookupableHelperBase extends KraLookupableHel
         for (Row row : rows) {
             for (Field field : row.getFields()) {
                 if (field.getPropertyName().equals("person.userName")) {
+                	// ### Vivantech Fix : #23 / [#83059512] Fixing incident reports from people search 
                     // field.setFieldConversions("principalName:person.userName,principalId:personId");
                 	field.setFieldConversions("userName:person.userName,personId:personId");
                 }
