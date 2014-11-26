@@ -190,7 +190,8 @@ public class ProposalLogLookupableHelperServiceImpl extends KualiLookupableHelpe
         for (Row row : rows) {
             for (Field field : row.getFields()) {
                 if (field.getPropertyName().equals(USERNAME_FIELD)) {
-                    field.setFieldConversions("principalName:person.userName,principalId:personId");
+                    // field.setFieldConversions("principalName:person.userName,principalId:personId");
+                	field.setFieldConversions("userName:person.userName,personId:personId");
                 }
                 if (field.getPropertyName().equals("logStatus") && isLookupForProposalCreation) {
                     field.setPropertyValue(STATUS_PENDING);

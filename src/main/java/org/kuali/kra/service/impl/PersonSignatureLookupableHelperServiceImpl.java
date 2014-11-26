@@ -50,7 +50,8 @@ public class PersonSignatureLookupableHelperServiceImpl extends KualiLookupableH
         for (Row row : rows) {
             for (Field field : row.getFields()) {
                 if (field.getPropertyName().equals("person.userName")) {
-                    field.setFieldConversions("principalName:person.userName,principalId:personId");
+                    // field.setFieldConversions("principalName:person.userName,principalId:personId");
+                	field.setFieldConversions("userName:person.userName,personId:personId");
                 }
             }
         }

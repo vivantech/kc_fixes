@@ -155,7 +155,8 @@ public class SubAwardLookupableHelperServiceImpl extends KraLookupableHelperServ
                     field.setDatePicker(true);
                 }
                 if (field.getPropertyName().equals("requisitionerUserName")) {
-                    field.setFieldConversions("principalName:requisitionerUserName,principalId:requisitionerId");
+                    // field.setFieldConversions("principalName:requisitionerUserName,principalId:requisitionerId");
+                	field.setFieldConversions("userName:person.userName,personId:personId");
                 }
             }
         }
