@@ -65,7 +65,7 @@ public class UnitAdministratorLookupableHelperServiceImpl extends KualiLookupabl
         for (Row row : rows) {
             for (Field field : row.getFields()) {
                 if (field.getPropertyName().equals("person.userName")) {
-                	// ### Vivantech Fix : #23 / [#83059512] Fixing incident reports from people search
+                	// ### Vivantech Fix : #23 / [#83059512] Fixing incident reports from Person lookup
                     // field.setFieldConversions("principalName:person.userName,principalId:personId");
                 	field.setFieldConversions("userName:person.userName,personId:personId");
                 }
