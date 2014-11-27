@@ -51,9 +51,12 @@
                 <bean parent="MaintainableFieldDefinition" 
                 	p:name="personId" 
                 	p:required="true" />
+               	<!-- ### Vivantech Fix : #25 / [#82749864] fix the issue for no return value from KC Person lookup -->
  		        <bean parent="MaintainableFieldDefinition" 
  		        	p:name="person.userName" 
- 		        	p:required="false" />
+ 		        	p:required="false" 
+ 		        	p:overrideLookupClass="org.kuali.kra.bo.KcPerson" 
+ 		        	p:overrideFieldConversions="personId:personId"/>
                <bean parent="MaintainableFieldDefinition"
                     p:name="templateFile" />
                <bean parent="MaintainableFieldDefinition"

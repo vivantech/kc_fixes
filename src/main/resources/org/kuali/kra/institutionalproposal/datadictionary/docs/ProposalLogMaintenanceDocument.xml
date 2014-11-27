@@ -66,7 +66,8 @@
                 <bean parent="MaintainableFieldDefinition" p:name="proposalTypeCode" p:required="true" />
                 <bean parent="MaintainableFieldDefinition" p:name="title" p:required="true" />
                 <bean parent="MaintainableFieldDefinition" p:name="piId" p:required="false" />
-                <bean parent="MaintainableFieldDefinition" p:name="person.userName" p:required="false" />
+                <!-- ### Vivantech Fix : #25 / [#82749864] fix the issue for no return value from KC Person lookup -->
+                <bean parent="MaintainableFieldDefinition" p:name="person.userName" p:required="false" p:overrideLookupClass="org.kuali.kra.bo.KcPerson" p:overrideFieldConversions="personId:personId"/>
                 <bean parent="MaintainableFieldDefinition" p:name="rolodexId" p:required="false"  p:webUILeaveFieldFunction="loadRolodexInfoById"/>
                 <bean parent="MaintainableFieldDefinition" p:name="leadUnit" p:required="true" />
                 <bean parent="MaintainableFieldDefinition" p:name="sponsorCode" />
