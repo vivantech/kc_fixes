@@ -15,41 +15,11 @@
  */
 package org.kuali.kra.bo;
 
-import org.kuali.kra.iacuc.correspondence.IacucCorrespondentType;
 
 public class IacucUnitCorrespondent extends Correspondent {
-
+	// ### Vivantech Fix : #28 / [#82749292] Overriding common fields from super class
     private static final long serialVersionUID = 1L;
-    
-    private String unitNumber;
-    
-    private Unit unit;
     
     public IacucUnitCorrespondent() {
     }
-    
-    public String getUnitNumber() {
-        return unitNumber;
-    }
-    
-    public void setUnitNumber(String unitNumber) {
-        this.unitNumber = unitNumber;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-    
-    public IacucCorrespondentType getCorrespondentType() {
-        return (IacucCorrespondentType) correspondentType;
-    }
-    
-    public void setCorrespondentType(IacucCorrespondentType correspondentType) {
-        this.correspondentType = correspondentType;
-    }
-
 }

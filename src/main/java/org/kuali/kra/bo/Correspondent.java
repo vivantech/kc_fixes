@@ -33,6 +33,11 @@ public abstract class Correspondent extends KraPersistableBusinessObjectBase {
     
     protected CorrespondentType correspondentType;
     
+    private String unitNumber;
+    
+    private Unit unit;
+
+    
     public Correspondent() {
         super();
     }
@@ -87,5 +92,21 @@ public abstract class Correspondent extends KraPersistableBusinessObjectBase {
 
     public void setCorrespondentType(CorrespondentType correspondentType) {
         this.correspondentType = correspondentType;
+    }
+
+    public String getUnitNumber() {
+        return unitNumber;
+    }
+
+    public void setUnitNumber(String unitNumber) {
+        this.unitNumber = unitNumber;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
     }
 }

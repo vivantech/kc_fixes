@@ -16,38 +16,9 @@
 package org.kuali.kra.bo;
 
 public class UnitCorrespondent extends Correspondent {
-
+	// ### Vivantech Fix : #28 / [#82749292] Overriding common fields from super class
     private static final long serialVersionUID = 1L;
-
-	private String unitNumber;
-	
-    private Unit unit;
     
     public UnitCorrespondent() {
     }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-    
-    public String getUnitNumber() {
-    	return unitNumber;
-    }
-    
-    public void setUnitNumber(String unitNumber) {
-    	this.unitNumber = unitNumber;
-    }
-    
-    public org.kuali.kra.irb.correspondence.CorrespondentType getCorrespondentType() {
-        return (org.kuali.kra.irb.correspondence.CorrespondentType) correspondentType;
-    }
-
-    public void setCorrespondentType(org.kuali.kra.irb.correspondence.CorrespondentType correspondentType) {
-        this.correspondentType = correspondentType;
-    }
-
 }
