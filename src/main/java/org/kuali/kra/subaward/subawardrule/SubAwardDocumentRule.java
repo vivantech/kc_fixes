@@ -17,30 +17,41 @@
 package org.kuali.kra.subaward.subawardrule;
 
 
+import static org.kuali.kra.infrastructure.KeyConstants.ERROR_REQUIRED_SUBAWARD_TEMPLATE_INFO_CARRY_FORWARD_REQUESTS_SENT_TO;
+import static org.kuali.kra.infrastructure.KeyConstants.SUBAWARD_ATTACHMENT_DESCRIPTION_REQUIRED;
+import static org.kuali.kra.infrastructure.KeyConstants.SUBAWARD_ATTACHMENT_FILE_REQUIRED;
+import static org.kuali.kra.infrastructure.KeyConstants.SUBAWARD_ATTACHMENT_TYPE_CODE_REQUIRED;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardService;
 import org.kuali.kra.bo.Unit;
+import org.kuali.kra.bo.versioning.VersionHistory;
+import org.kuali.kra.bo.versioning.VersionStatus;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.KraServiceLocator;
 import org.kuali.kra.rule.event.KraDocumentEventBaseExtension;
 import org.kuali.kra.rules.ResearchDocumentRuleBase;
-import org.kuali.kra.subaward.SubAwardForm;
-import org.kuali.kra.subaward.bo.*;
+import org.kuali.kra.service.VersionHistoryService;
+import org.kuali.kra.subaward.bo.SubAward;
+import org.kuali.kra.subaward.bo.SubAwardAmountInfo;
+import org.kuali.kra.subaward.bo.SubAwardCloseout;
+import org.kuali.kra.subaward.bo.SubAwardContact;
+import org.kuali.kra.subaward.bo.SubAwardFundingSource;
+import org.kuali.kra.subaward.bo.SubAwardReports;
+import org.kuali.kra.subaward.bo.SubAwardTemplateInfo;
 import org.kuali.kra.subaward.document.SubAwardDocument;
+import org.kuali.kra.subaward.subawardrule.events.AddSubAwardAttachmentEvent;
 import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.MessageMap;
-import org.kuali.kra.subaward.subawardrule.events.AddSubAwardAttachmentEvent;
-import org.kuali.kra.subaward.subawardrule.AddSubAwardAttachmentRule;
-import static org.kuali.kra.infrastructure.KeyConstants.SUBAWARD_ATTACHMENT_FILE_REQUIRED;
-import static org.kuali.kra.infrastructure.KeyConstants.SUBAWARD_ATTACHMENT_TYPE_CODE_REQUIRED;
-import static org.kuali.kra.infrastructure.KeyConstants.SUBAWARD_ATTACHMENT_DESCRIPTION_REQUIRED;
-import static org.kuali.kra.infrastructure.KeyConstants.ERROR_REQUIRED_SUBAWARD_TEMPLATE_INFO_CARRY_FORWARD_REQUESTS_SENT_TO;
-import org.apache.commons.lang.StringUtils;
-
-import java.util.Collections;
 
 /**
  * This class is for rule validation while
@@ -272,6 +283,11 @@ AddSubAwardAttachmentRule,SubAwardTemplateInfoRule {
     }
     protected boolean processSaveSubAwardFundingSourceBusinessRules(SubAwardFundingSource subAwardFundingSource,SubAward subAward){
         boolean rulePassed = true;   
+     // ### Vivantech Fix : #31 / [#84250170] Fixing award Number required error if fundingsource award number is entered manually
+        if(subAwardFundingSource!=null && subAwardFundingSource.getAwardId()==null && subAwardFundingSource.getAward() != null 
+                && StringUtils.isNotBlank(subAwardFundingSource.getAward().getAwardNumber())){
+            loadFundingSourceAward(subAwardFundingSource);
+        }  
         
         if(subAwardFundingSource==null 
                 || subAwardFundingSource.getAwardId()==null){
@@ -291,6 +307,47 @@ AddSubAwardAttachmentRule,SubAwardTemplateInfoRule {
             }
         }
         return rulePassed;
+    }
+
+    // ### Vivantech Fix : #31 / [#84250170] populate award data to new funding source line
+    private void loadFundingSourceAward(SubAwardFundingSource subAwardFundingSource) {
+        Award award = getActiveOrNewestAward(subAwardFundingSource.getAward().getAwardNumber());
+        Map<String, String> fieldMap = new HashMap<String, String>();
+        if (award != null) {
+            subAwardFundingSource.setAward(award);
+            subAwardFundingSource.setAwardId(award.getAwardId());
+            subAwardFundingSource.setAccountNumber(award.getAccountNumber());
+            subAwardFundingSource.setStatusCode(award.getStatusCode());
+            subAwardFundingSource.setSponsorCode(award.getSponsorCode());
+            subAwardFundingSource.setSponsorName(award.getSponsorName());
+            subAwardFundingSource.setAmountObligatedToDate(award.getAwardAmountInfo().getAmountObligatedToDate());
+            subAwardFundingSource.setObligationExpirationDate(award.getAwardAmountInfo().getObligationExpirationDate());
+        }
+        
+    }
+    
+    // This is different from the one in awardservice.  If there is 'active' one, then return the active.  Otherwise get the newest. 
+    private Award getActiveOrNewestAward(String awardNumber) {
+        List<VersionHistory> versions = getVersionHistoryService().loadVersionHistory(Award.class, awardNumber);
+        VersionHistory newest = null;
+        for (VersionHistory version: versions) {
+            if (version.getStatus() == VersionStatus.ACTIVE) {
+                newest = version;
+                break;
+            } else if (newest == null || (version.getStatus() != VersionStatus.CANCELED && version.getSequenceOwnerSequenceNumber() > newest.getSequenceOwnerSequenceNumber())) {
+                newest = version;
+            }  
+        }
+        if (newest != null) {
+            return (Award) newest.getSequenceOwner();
+        } else {
+            return null;
+        }
+        
+    }
+    
+    private VersionHistoryService getVersionHistoryService() {
+        return KraServiceLocator.getService(VersionHistoryService.class);
     }
 
     @Override
