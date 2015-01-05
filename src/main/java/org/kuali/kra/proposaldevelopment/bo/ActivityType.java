@@ -24,6 +24,9 @@ public class ActivityType extends KraPersistableBusinessObjectBase {
     private String description;
 
     private String higherEducationFunctionCode;
+
+    //  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete.
+    private boolean active;
     
     public String getHigherEducationFunctionCode() {
         return higherEducationFunctionCode;
@@ -48,6 +51,15 @@ public class ActivityType extends KraPersistableBusinessObjectBase {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    // ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
     
     
 }

@@ -4,13 +4,6 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
-
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:p="http://www.springframework.org/schema/p"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
-
   <bean id="ActivityType" parent="ActivityType-parentBean" />
 
   <bean id="ActivityType-parentBean" abstract="true" parent="BusinessObjectEntry">
@@ -29,6 +22,8 @@
         <ref bean="ActivityType-description" />
         <ref bean="ActivityType-higherEducationFunctionCode" />
         <ref bean="ActivityType-versionNumber" />
+        <!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
+        <ref bean="ActivityType-active" />
       </list>
     </property>
   </bean>
@@ -81,6 +76,18 @@
     <property name="description" value="Higher education function code" />
   </bean>
   
+  <!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
+  <bean id="ActivityType-active" parent="ActivityType-active-parentBean" />
+  <bean id="ActivityType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+	<property name="maxLength" value="1" />
+  </bean>
+  
 <!-- Business Object Inquiry Definition -->
 
   <bean id="ActivityType-inquiryDefinition" parent="ActivityType-inquiryDefinition-parentBean" />
@@ -89,6 +96,7 @@
     <property name="title" value="Activity Type" />
     <property name="inquirySections" >
       <list>
+      <!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Activity Type" />
           <property name="numberOfColumns" value="1" />
@@ -101,6 +109,8 @@
                     p:attributeName="description" />
               <bean parent="FieldDefinition"
               		p:attributeName="higherEducationFunctionCode" />
+              <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -120,6 +130,7 @@
       <bean parent="SortDefinition">
       </bean>
     </property>
+    <!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -128,6 +139,8 @@
               p:attributeName="description" />
         <bean parent="FieldDefinition"
         	  p:attributeName="higherEducationFunctionCode" />
+       	<bean parent="FieldDefinition"
+        	  p:attributeName="active" />
       </list>
     </property>
     <property name="resultFields" >
@@ -139,6 +152,8 @@
               p:attributeName="description" />
         <bean parent="FieldDefinition"
         	  p:attributeName="higherEducationFunctionCode" />
+        <bean parent="FieldDefinition"
+        	  p:attributeName="active" />
       </list>
     </property>
   </bean>
