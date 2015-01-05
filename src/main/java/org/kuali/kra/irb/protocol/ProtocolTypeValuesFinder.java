@@ -52,16 +52,18 @@ public class ProtocolTypeValuesFinder extends UifKeyValuesFinderBase {
         Collection protocolTypes = keyValuesService.findAllOrderBy(ProtocolType.class,"description",true);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();   
         boolean canViewNonGlobalProtocolTypes = getPermissionService().hasPermission(GlobalVariables.getUserSession().getPrincipalId(), KraAuthorizationConstants.KC_SYSTEM_NAMESPACE_CODE, PERMISSION_NAME);
+        
         for (Iterator iter = protocolTypes.iterator(); iter.hasNext();) {
-            ProtocolType protocolType = (ProtocolType) iter.next();
-           if(protocolType.isGlobalFlag() || canViewNonGlobalProtocolTypes ){
-            if (StringUtils.equals(protocolType.getDescription(), "Standard")) {
-                keyValues.add(0, new ConcreteKeyValue(protocolType.getProtocolTypeCode().toString(), protocolType.getDescription()));
-            } else {
-                keyValues.add(new ConcreteKeyValue(protocolType.getProtocolTypeCode().toString(), protocolType.getDescription()));
-            }
+        	ProtocolType protocolType = (ProtocolType) iter.next();
+        	if (protocolType.isActive() && (protocolType.isGlobalFlag() || canViewNonGlobalProtocolTypes) ) {
+        		if (StringUtils.equals(protocolType.getDescription(), "Standard")) {
+        			keyValues.add(0, new ConcreteKeyValue(protocolType.getProtocolTypeCode().toString(), protocolType.getDescription()));
+        		} else {
+        			keyValues.add(new ConcreteKeyValue(protocolType.getProtocolTypeCode().toString(), protocolType.getDescription()));
+        		}
+        	}
         }
-        }
+        
         return keyValues;
     }  
     public PermissionService getPermissionService() {
