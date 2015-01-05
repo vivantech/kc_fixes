@@ -34,6 +34,8 @@
 				<ref bean="ProtocolType-description"/>
 				<ref bean="ProtocolReviewType-globalFlag" />
 				<ref bean="ProtocolType-versionNumber"/>
+<!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
+		        <ref bean="ProtocolType-active" />
 			</list>
 		</property>
 	</bean>
@@ -77,6 +79,18 @@
 	<bean abstract="true" id="ProtocolType-versionNumber-parentBean" parent="AttributeReferenceDummy-versionNumber">
 	</bean>
 
+   <!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
+   <bean id="ProtocolType-active" parent="ProtocolType-active-parentBean" />
+   <bean id="ProtocolType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+ 	 <property name="name" value="active" />
+	 <property name="forceUppercase" value="false" />
+	 <property name="label" value="Active" />
+ 	 <property name="shortLabel" value="active" />
+	 <property name="summary" value="Active"/>
+	 <property name="description" value="Active"/>
+	 <property name="maxLength" value="1" />
+   </bean>
+  
 	<!-- Business Object Inquiry Definition -->
 	<bean id="ProtocolType-inquiryDefinition" parent="ProtocolType-inquiryDefinition-parentBean"/>
 	<bean abstract="true" id="ProtocolType-inquiryDefinition-parentBean" parent="InquiryDefinition">
@@ -86,12 +100,13 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Protocol Type Code"/>
 					<property name="numberOfColumns" value="1"/>
+					<!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields">
 						<list>
 							<bean p:attributeName="protocolTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 							<bean p:attributeName="description" parent="FieldDefinition"/>
-							<bean parent="FieldDefinition"
-								p:attributeName="globalFlag" />
+							<bean parent="FieldDefinition" p:attributeName="globalFlag" />
+							<bean parent="FieldDefinition" p:attributeName="active" />
 						</list>
 					</property>
 				</bean>
@@ -109,20 +124,21 @@
 			<bean parent="SortDefinition">
 		</bean>
 		</property>
+		<!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields">
 			<list>
 				<bean p:attributeName="protocolTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="description" parent="FieldDefinition"/>
-				<bean parent="FieldDefinition"
-					p:attributeName="globalFlag" />
+				<bean parent="FieldDefinition" p:attributeName="globalFlag" />
+				<bean parent="FieldDefinition" p:attributeName="active" />
 			</list>
 		</property>
 		<property name="resultFields">
 			<list>
 				<bean p:attributeName="protocolTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="description" parent="FieldDefinition"/>
-				<bean parent="FieldDefinition"
-					p:attributeName="globalFlag" />
+				<bean parent="FieldDefinition" p:attributeName="globalFlag" />
+				<bean parent="FieldDefinition" p:attributeName="active" />
 			</list>
 		</property>
 	</bean>

@@ -28,7 +28,8 @@
                 <value>protocolTypeCode</value>
             </list>
         </property>
-		<property name="allowsRecordDeletion" value="true" />
+	<!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
+		<property name="allowsRecordDeletion" value="false" />
 	
         
         
@@ -47,12 +48,14 @@
     <bean id="ProtocolTypeMaintenanceDocument-EditProtocolType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Protocol Type"/>
         <property name="title" value="Edit Protocol Type"/>
+        <!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems">
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="protocolTypeCode" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="globalFlag" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+                <bean parent="MaintainableFieldDefinition" p:name="active"/>
             </list>
         </property>
     </bean>

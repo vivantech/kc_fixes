@@ -29,6 +29,9 @@ public class ProtocolType extends ProtocolTypeBase {
     private String description;
     
     private boolean globalFlag;
+    
+    //  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public ProtocolType() {
     }
@@ -55,5 +58,14 @@ public class ProtocolType extends ProtocolTypeBase {
 
 	public void setGlobalFlag(boolean globalFlag) {
 		this.globalFlag = globalFlag;
+	}
+	
+    // ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }
