@@ -9,6 +9,17 @@
 	<url>http://www.vivantech.com</url>
 	
 	<properties>
+		<kc.liquibase.changeLogFile.update>src/main/db/liquibase/kc_fix_changelog.xml</kc.liquibase.changeLogFile.update>
+		<kc.liquibase.url>jdbc:mysql://localhost:3306/kualicoeus?allowMultiQueries=true&amp;jdbcCompliantTruncation=false&amp;createDatabaseIfNotExist=true</kc.liquibase.url>
+		<kc.liquibase.username>kualicoeus</kc.liquibase.username>
+		<kc.liquibase.password>kualicoeus</kc.liquibase.password>
+		
+		
+		<rice.liquibase.changeLogFile.update>src/main/db/liquibase/kc_fix_rice_changelog.xml</rice.liquibase.changeLogFile.update>
+		<rice.liquibase.url>jdbc:mysql://localhost:3306/kualirice?allowMultiQueries=true&amp;jdbcCompliantTruncation=false</rice.liquibase.url>
+		<rice.liquibase.username>kualirice</rice.liquibase.username>
+		<rice.liquibase.password>kualirice</rice.liquibase.password>
+	
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.java.version>1.7</project.java.version>
 		<project.compile.source>${project.java.version}</project.compile.source>
@@ -44,6 +55,12 @@
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
 			<scope>provided</scope>
+		</dependency>
+			<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.16</version>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
@@ -265,6 +282,74 @@
 								<scope>runtime</scope>
 							</dependency>
 						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>update-kc</id>
+			<activation>
+				<property>
+					<name>developer-init</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>liquibase-update-kc</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>update</goal>
+								</goals>
+								<configuration>
+									<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+									<changeLogFile>${kc.liquibase.changeLogFile.update}</changeLogFile>
+									<driver>${mysql.driver}</driver>
+									<url>${kc.liquibase.url}</url>
+									<username>${kc.liquibase.username}</username>
+									<password>${kc.liquibase.password}</password>
+									<verbose>true</verbose>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>update-rice</id>
+			<activation>
+				<property>
+					<name>developer-init</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>liquibase-update-rice</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>update</goal>
+								</goals>
+								<configuration>
+									<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+									<changeLogFile>${rice.liquibase.changeLogFile.update}</changeLogFile>
+									<driver>${mysql.driver}</driver>
+									<url>${rice.liquibase.url}</url>
+									<username>${rice.liquibase.username}</username>
+									<password>${rice.liquibase.password}</password>
+									<verbose>true</verbose>
+								</configuration>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
