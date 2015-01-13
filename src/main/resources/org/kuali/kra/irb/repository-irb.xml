@@ -125,8 +125,8 @@
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     </class-descriptor>
-
-<!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
+    
+    <!--  ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.irb.protocol.ProtocolType" table="PROTOCOL_TYPE">
         <field-descriptor name="protocolTypeCode" column="PROTOCOL_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true"/>
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
