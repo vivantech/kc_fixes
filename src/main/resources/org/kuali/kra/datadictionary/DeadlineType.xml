@@ -21,6 +21,8 @@
         <ref bean="DeadlineType-deadlineTypeCode" />
         <ref bean="DeadlineType-description" />
         <ref bean="DeadlineType-versionNumber" />
+        <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+        <ref bean="DeadlineType-active" />
       </list>
     </property>
   </bean>
@@ -52,6 +54,18 @@
   <bean id="DeadlineType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
 
+  <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+  <bean id="DeadlineType-active" parent="DeadlineType-active-parentBean" />
+  <bean id="DeadlineType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+	<property name="maxLength" value="1" />
+  </bean>
+  
 <!-- Business Object Inquiry Definition -->
 
 
@@ -59,6 +73,7 @@
 
   <bean id="DeadlineType-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition">
     <property name="title" value="Deadline Type" />
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="inquirySections" >
       <list>
         <bean parent="InquirySectionDefinition">
@@ -71,6 +86,8 @@
                     p:forceInquiry="true" />
               <bean parent="FieldDefinition"
                     p:attributeName="description" />
+              <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -97,12 +114,15 @@
             p:parameterName="deadlineTypeMaintenanceHelp"
             p:parameterDetailType="Document" />
     </property>    
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
               p:attributeName="deadlineTypeCode" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
     <property name="resultFields" >
@@ -112,6 +132,8 @@
               p:forceInquiry="true" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>
