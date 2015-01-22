@@ -14,7 +14,8 @@
       <list>
         <value>jobCode</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     
     
     
@@ -33,11 +34,13 @@
   <bean id="JobCodeMaintenanceDocument-EditJobCode-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Job Code"/>
     <property name="title" value="Edit Job Code"/>
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="jobCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="jobTitle" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active"/>
       </list>
     </property>
   </bean>
