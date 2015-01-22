@@ -78,8 +78,10 @@ public class ProposalDevelopmentAbstractsRule extends ResearchDocumentRuleBase i
     private boolean isInvalid(String abstractTypeCode) {
         if (abstractTypeCode != null) {
             BusinessObjectService businessObjectService = KraServiceLocator.getService(BusinessObjectService.class);
-            Map<String,String> fieldValues = new HashMap<String,String>();
+        //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+            Map<String,Object> fieldValues = new HashMap<String,Object>();
             fieldValues.put("abstractTypeCode", abstractTypeCode);
+            fieldValues.put("active", true);
             if (businessObjectService.countMatching(AbstractType.class, fieldValues) == 1) {
                 return false;
             }

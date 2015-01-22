@@ -63,7 +63,7 @@ public class AbstractTypeValuesFinder extends FormViewAwareUifKeyValuesFinderBas
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(new ConcreteKeyValue("", "select"));
         for (AbstractType abstractType : abstractTypes) {
-            if (!hasAbstract(doc, abstractType)) {
+            if (abstractType.isActive() && !hasAbstract(doc, abstractType)) {
                 keyValues.add(new ConcreteKeyValue(abstractType.getAbstractTypeCode(), abstractType.getDescription()));
             }
         }

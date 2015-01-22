@@ -15,7 +15,8 @@
         <value>abstractTypeCode</value>
       </list>
     </property>
-	<property name="allowsRecordDeletion" value="true" />
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+	<property name="allowsRecordDeletion" value="false" />
 	
     
     
@@ -36,11 +37,13 @@
   <bean id="AbstractTypeMaintenanceDocument-EditAbstractTypes-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Abstract Types"/>
     <property name="title" value="Edit Abstract Types"/>
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="abstractTypeCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active"/>
       </list>
     </property>
   </bean>
