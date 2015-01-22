@@ -28,6 +28,9 @@ public class DegreeType extends KraPersistableBusinessObjectBase {
     private Integer degreeLevel;
 
     private String description;
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
 
     /**
      * Retrieves the description attribute
@@ -82,4 +85,13 @@ public class DegreeType extends KraPersistableBusinessObjectBase {
     public void setDegreeLevel(Integer argDegreeLevel) {
         this.degreeLevel = argDegreeLevel;
     }
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

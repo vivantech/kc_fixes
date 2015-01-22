@@ -14,7 +14,8 @@
       <list>
         <value>degreeCode</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     
     
     
@@ -34,11 +35,13 @@
   <bean id="DegreeTypeMaintenanceDocument-EditDegreeType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Degree Type"/>
     <property name="title" value="Edit Degree Type"/>
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="degreeCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active"/>
       </list>
     </property>
   </bean>
