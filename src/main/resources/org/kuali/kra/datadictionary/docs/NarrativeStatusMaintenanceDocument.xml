@@ -14,7 +14,8 @@
       <list>
         <value>narrativeStatusCode</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     
     
     
@@ -34,11 +35,13 @@
   <bean id="NarrativeStatusMaintenanceDocument-EditNarrativeStatus-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit NarrativeStatus"/>
     <property name="title" value="Edit NarrativeStatus"/>
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="narrativeStatusCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active"/>
       </list>
     </property>
   </bean>

@@ -64,6 +64,8 @@ public class ProposalDevelopmentCustomDataHelper extends CustomDataHelperBase<Cu
                     narrativeStatus = new NarrativeStatus();
                     narrativeStatus.setNarrativeStatusCode(keyValue.getKey());
                     narrativeStatus.setDescription(keyValue.getValue());
+//                  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+                    narrativeStatus.setActive(true);
                     break;
                 }
             }
