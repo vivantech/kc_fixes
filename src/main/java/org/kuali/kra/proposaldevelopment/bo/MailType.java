@@ -27,6 +27,9 @@ public class MailType extends KraPersistableBusinessObjectBase {
 
     private String description;
 
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public String getDescription() {
         return description;
     }
@@ -38,6 +41,15 @@ public class MailType extends KraPersistableBusinessObjectBase {
     public String getMailType() {
         return mailType;
     }
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
     public void setMailType(String mailType) {
         this.mailType = mailType;
