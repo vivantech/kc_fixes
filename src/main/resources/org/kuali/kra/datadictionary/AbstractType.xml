@@ -125,7 +125,7 @@
         <bean parent="FieldDefinition"
               p:attributeName="description" />
         <bean parent="FieldDefinition"
-              		p:attributeName="active" />
+              p:attributeName="active" />
       </list>
     </property>
     <property name="resultFields" >
@@ -136,7 +136,7 @@
         <bean parent="FieldDefinition"
               p:attributeName="description" />
         <bean parent="FieldDefinition"
-              		p:attributeName="active" />
+              p:attributeName="active" />
       </list>
     </property>
   </bean>
