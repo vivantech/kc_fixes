@@ -29,6 +29,9 @@ public class RateClass extends KraPersistableBusinessObjectBase {
 
     private RateClassType rateClassTypeT;
 
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public String getRateClassCode() {
         return rateClassCode;
     }
@@ -68,4 +71,13 @@ public class RateClass extends KraPersistableBusinessObjectBase {
     public void setRateClassTypeT(RateClassType rateClassTypeT) {
         this.rateClassTypeT = rateClassTypeT;
     }
+
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
