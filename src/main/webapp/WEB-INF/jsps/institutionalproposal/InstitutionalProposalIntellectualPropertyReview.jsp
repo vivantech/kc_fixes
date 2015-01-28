@@ -32,15 +32,11 @@
 <kul:panelFooter />	
 
 <div id="globalbuttons" class="globalbuttons">
-	<!-- ### Vivantech Fix : #42 / [#86805502] Cannot verify that the methodToCall should be methodToCall.save -->
-	<html:submit value="Save" property="methodToCall.save" style="display:none;"/>
-	<!-- ### Vivantech Fix : #42 / [#86805502] Cannot verify that the methodToCall should be methodToCall.save -->
-	<html:submit value="Edit IP Review" property="methodToCall.editIntellectualPropertyReview" styleClass="btn btn-primary btn-xs" alt="Edit IP Review"
-		onclick="javascript: openNewWindow('institutionalProposalIntellectualPropertyReview','editIntellectualPropertyReview','','${KualiForm.formKey}','${KualiForm.document.sessionDocument}');return false"/>
-	<html:submit value="Reload" property="methodToCall.reload" styleClass="btn btn-primary btn-xs" alt="Reload"
-		onclick="excludeSubmitRestriction=true"/>
+    <html:image src="${ConfigProperties.kra.externalizable.images.url}buttonsmall_editipreview.gif" styleClass="globalbuttons" property="methodToCall.editIntellectualPropertyReview" title="Edit IP Review" alt="Edit Intellectual Property Review"
+    onclick="javascript: openNewWindow('institutionalProposalIntellectualPropertyReview','editIntellectualPropertyReview','','${KualiForm.formKey}','${KualiForm.document.sessionDocument}');return false" />
+    <html:image src="${ConfigProperties.kr.externalizable.images.url}buttonsmall_reload.gif" styleClass="globalbuttons" property="methodToCall.reload" title="reload" alt="reload" onclick="excludeSubmitRestriction=true"/>
     <c:if test="${!empty KualiForm.documentActions[Constants.KUALI_ACTION_CAN_CLOSE]}">
-		<html:submit value="Close" property="methodToCall.close" styleClass="btn btn-primary btn-xs" alt="Close"/>
+        <html:image src="${ConfigProperties.kr.externalizable.images.url}buttonsmall_close.gif" styleClass="globalbuttons" property="methodToCall.close" title="close" alt="close"/>
     </c:if>
 </div>
                 
