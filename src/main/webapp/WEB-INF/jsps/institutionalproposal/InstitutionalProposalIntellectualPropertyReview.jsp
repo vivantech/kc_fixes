@@ -32,6 +32,9 @@
 <kul:panelFooter />	
 
 <div id="globalbuttons" class="globalbuttons">
+	<!-- ### Vivantech Fix : #42 / [#86805502] Cannot verify that the methodToCall should be methodToCall.save -->
+	<html:submit value="Save" property="methodToCall.save" style="display:none;"/>
+	<!-- ### Vivantech Fix : #42 / [#86805502] Cannot verify that the methodToCall should be methodToCall.save -->
     <html:image src="${ConfigProperties.kra.externalizable.images.url}buttonsmall_editipreview.gif" styleClass="globalbuttons" property="methodToCall.editIntellectualPropertyReview" title="Edit IP Review" alt="Edit Intellectual Property Review"
     onclick="javascript: openNewWindow('institutionalProposalIntellectualPropertyReview','editIntellectualPropertyReview','','${KualiForm.formKey}','${KualiForm.document.sessionDocument}');return false" />
     <html:image src="${ConfigProperties.kr.externalizable.images.url}buttonsmall_reload.gif" styleClass="globalbuttons" property="methodToCall.reload" title="reload" alt="reload" onclick="excludeSubmitRestriction=true"/>
