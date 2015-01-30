@@ -99,7 +99,7 @@ public class ReportTrackingNotificationServiceImpl implements ReportTrackingNoti
                                     doDatesMatch(report.getDueDate(), checkFor, until) 
                                     && !hasSentNotification(report, notification)) {
                                 recordsMatched++;
-                                Award curAward = awardService.getActiveOrNewestAward(report.getAwardNumber());
+                                Award curAward = awardService.getNewestAward(report.getAwardNumber());  // calling same award service, new method name
                                 report.setAward(curAward);
                                 List<ReportTracking> curReports = matchedReports.get(curAward);
                                 if (curReports == null) {
