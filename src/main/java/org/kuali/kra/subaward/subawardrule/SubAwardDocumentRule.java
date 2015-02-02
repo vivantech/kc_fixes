@@ -410,6 +410,7 @@ AddSubAwardAttachmentRule,SubAwardTemplateInfoRule {
         return rulePassed;
     }
    
+    // ### Vivantech Fix : #31 / [#84250170] for subaward - Funding Source Award Number
     protected AwardService getAwardService(){
     	return KraServiceLocator.getService(AwardService.class);
     }

@@ -99,6 +99,7 @@ public class ReportTrackingNotificationServiceImpl implements ReportTrackingNoti
                                     doDatesMatch(report.getDueDate(), checkFor, until) 
                                     && !hasSentNotification(report, notification)) {
                                 recordsMatched++;
+                                // ### Vivantech Fix : #31 / [#84250170] rename method to better reflect functionality
                                 Award curAward = awardService.getNewestAward(report.getAwardNumber());  // calling same award service, new method name
                                 report.setAward(curAward);
                                 List<ReportTracking> curReports = matchedReports.get(curAward);

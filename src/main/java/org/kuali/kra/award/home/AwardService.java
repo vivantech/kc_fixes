@@ -70,6 +70,7 @@ public interface AwardService {
      */
     void updateAwardSequenceStatus(Award award, VersionStatus status);
     
+    // ### Vivantech Fix : #31 / [#84250170] rename method to better reflect functionality
     /**
      * Returns the newest non-cancelled award.
      * @param awardNumber

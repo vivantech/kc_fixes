@@ -212,6 +212,7 @@ public class AwardServiceImpl implements AwardService {
         }
     }
 
+    // ### Vivantech Fix : #31 / [#84250170] rename method to better reflect functionality
     /**
      * 
      * @see org.kuali.kra.award.home.AwardService#getNewestAward(java.lang.String)
