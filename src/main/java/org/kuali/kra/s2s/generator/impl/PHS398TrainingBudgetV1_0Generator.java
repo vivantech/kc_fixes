@@ -13,6 +13,7 @@ import gov.grants.apply.forms.phs398TrainingBudgetV10.PHS398TrainingBudgetDocume
 import gov.grants.apply.forms.phs398TrainingBudgetV10.PHS398TrainingBudgetDocument.PHS398TrainingBudget.BudgetType;
 import gov.grants.apply.forms.phs398TrainingBudgetV10.PHS398TrainingBudgetYearDataType;
 import gov.grants.apply.system.attachmentsV10.AttachedFileDataType;
+
 import org.apache.xmlbeans.XmlObject;
 import org.kuali.kra.bo.Organization;
 import org.kuali.kra.budget.BudgetDecimal;
@@ -1099,8 +1100,13 @@ public class PHS398TrainingBudgetV1_0Generator extends S2SBaseFormGenerator {
     }
     private BigDecimal getStipendAmount(BudgetPeriod budgetPeriod, String careerLevel, int experienceLevel, int numPeople) {
         BudgetDecimal stipendCost = BudgetDecimal.ZERO;
-        List<TrainingStipendRate> trainingStipendRates = (List<TrainingStipendRate>)businessObjectService.findAll(TrainingStipendRate.class);
-        QueryList<TrainingStipendRate> trainingStipendRatesQueryList = new QueryList<TrainingStipendRate>(trainingStipendRates);
+        
+        //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+        Map<String, Object> fieldValues = new HashMap<String, Object>();
+        fieldValues.put("active", true);
+		List<TrainingStipendRate> trainingStipendRates = (List<TrainingStipendRate>)businessObjectService.findMatching(TrainingStipendRate.class, fieldValues );
+        
+		QueryList<TrainingStipendRate> trainingStipendRatesQueryList = new QueryList<TrainingStipendRate>(trainingStipendRates);
         Equals eqStartDate = new Equals("effectiveDate",budgetPeriod.getStartDate());
         LesserThan ltStartDate = new LesserThan("effectiveDate",budgetPeriod.getStartDate());
         Or lessThanOrEqualsStartDate = new Or(eqStartDate,ltStartDate);

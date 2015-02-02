@@ -14,7 +14,8 @@
       <list>
         <value>rateId</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>	<!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+	<property name="allowsRecordDeletion" value="false" />	
 
     <property name="documentTypeName" value="TrainingStipendRateMaintenanceDocument"/>
     <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
@@ -28,6 +29,7 @@
   <bean id="TrainingStipendRateMaintenanceDocument-EditStipendRate-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Training Stipend Rate"/>
     <property name="title" value="Edit Training Stipend Rate"/>
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="careerLevel" p:required="true"/>
@@ -35,6 +37,7 @@
         <bean parent="MaintainableFieldDefinition" p:name="stipendRate" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="effectiveDate" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:required="true"/>
       </list>
     </property>
   </bean>
