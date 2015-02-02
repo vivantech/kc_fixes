@@ -26,6 +26,9 @@ public class S2sSubmissionType extends KraPersistableBusinessObjectBase {
     private String description;
 
     private String sortId;
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public String getS2sSubmissionTypeCode() {
         return s2sSubmissionTypeCode;
@@ -50,4 +53,13 @@ public class S2sSubmissionType extends KraPersistableBusinessObjectBase {
     public void setSortId(String sortId) {
         this.sortId = sortId;
     }
+
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

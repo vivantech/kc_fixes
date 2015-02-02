@@ -21,6 +21,7 @@ import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.service.KeyValuesService;
 import org.kuali.rice.krad.uif.control.UifKeyValuesFinderBase;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,9 +36,12 @@ public class S2sSubmissionTypeValuesFinderForResubmission extends UifKeyValuesFi
         Collection S2SSubmissionTypes = keyValuesService.findAllOrderBy(S2sSubmissionType.class,"sortId",true);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(new ConcreteKeyValue("", "select: "));
+    	//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.        
         for (Iterator iter = S2SSubmissionTypes.iterator(); iter.hasNext();) {
             S2sSubmissionType s2sSubmissionType = (S2sSubmissionType) iter.next();
-            keyValues.add(new ConcreteKeyValue(s2sSubmissionType.getS2sSubmissionTypeCode(), s2sSubmissionType.getDescription()));                            
+            if (ObjectUtils.isNotNull(s2sSubmissionType) && s2sSubmissionType.isActive()) {
+            	keyValues.add(new ConcreteKeyValue(s2sSubmissionType.getS2sSubmissionTypeCode(), s2sSubmissionType.getDescription()));
+            }
         }
         return keyValues;
     }
