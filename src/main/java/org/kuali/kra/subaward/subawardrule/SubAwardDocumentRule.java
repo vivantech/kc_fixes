@@ -24,7 +24,6 @@ import static org.kuali.kra.infrastructure.KeyConstants.SUBAWARD_ATTACHMENT_TYPE
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -32,13 +31,10 @@ import org.apache.commons.lang.StringUtils;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardService;
 import org.kuali.kra.bo.Unit;
-import org.kuali.kra.bo.versioning.VersionHistory;
-import org.kuali.kra.bo.versioning.VersionStatus;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.KraServiceLocator;
 import org.kuali.kra.rule.event.KraDocumentEventBaseExtension;
 import org.kuali.kra.rules.ResearchDocumentRuleBase;
-import org.kuali.kra.service.VersionHistoryService;
 import org.kuali.kra.subaward.bo.SubAward;
 import org.kuali.kra.subaward.bo.SubAwardAmountInfo;
 import org.kuali.kra.subaward.bo.SubAwardCloseout;
@@ -311,7 +307,7 @@ AddSubAwardAttachmentRule,SubAwardTemplateInfoRule {
 
     // ### Vivantech Fix : #31 / [#84250170] populate award data to new funding source line
     private void loadFundingSourceAward(SubAwardFundingSource subAwardFundingSource) {
-        Award award = getActiveOrNewestAward(subAwardFundingSource.getAward().getAwardNumber());
+        Award award = getAwardService().getActiveOrNewestAward(subAwardFundingSource.getAward().getAwardNumber());
         Map<String, String> fieldMap = new HashMap<String, String>();
         if (award != null) {
             subAwardFundingSource.setAward(award);
@@ -324,30 +320,6 @@ AddSubAwardAttachmentRule,SubAwardTemplateInfoRule {
             subAwardFundingSource.setObligationExpirationDate(award.getAwardAmountInfo().getObligationExpirationDate());
         }
         
-    }
-    
-    // This is different from the one in awardservice.  If there is 'active' one, then return the active.  Otherwise get the newest. 
-    private Award getActiveOrNewestAward(String awardNumber) {
-        List<VersionHistory> versions = getVersionHistoryService().loadVersionHistory(Award.class, awardNumber);
-        VersionHistory newest = null;
-        for (VersionHistory version: versions) {
-            if (version.getStatus() == VersionStatus.ACTIVE) {
-                newest = version;
-                break;
-            } else if (newest == null || (version.getStatus() != VersionStatus.CANCELED && version.getSequenceOwnerSequenceNumber() > newest.getSequenceOwnerSequenceNumber())) {
-                newest = version;
-            }  
-        }
-        if (newest != null) {
-            return (Award) newest.getSequenceOwner();
-        } else {
-            return null;
-        }
-        
-    }
-    
-    private VersionHistoryService getVersionHistoryService() {
-        return KraServiceLocator.getService(VersionHistoryService.class);
     }
 
     @Override
@@ -438,4 +410,8 @@ AddSubAwardAttachmentRule,SubAwardTemplateInfoRule {
         return rulePassed;
     }
    
+    // ### Vivantech Fix : #31 / [#84250170] for subaward - Funding Source Award Number
+    protected AwardService getAwardService(){
+    	return KraServiceLocator.getService(AwardService.class);
+    }
 }
