@@ -16,12 +16,14 @@
       <ref bean="RateType-lookupDefinition" />
     </property>
     <property name="titleAttribute" value="rateTypeCode" />
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="attributes" >
       <list>
         <ref bean="RateType-rateClassCode" />
         <ref bean="RateType-rateTypeCode" />
         <ref bean="RateType-description" />
         <ref bean="RateType-versionNumber" />
+        <ref bean="RateType-active" />
       </list>
     </property>
   </bean>
@@ -78,6 +80,18 @@
   <bean id="RateType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
 
+  <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+  <bean id="RateType-active" parent="RateType-active-parentBean" />
+  <bean id="RateType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+	<property name="maxLength" value="1" />
+  </bean>
+
 <!-- Business Object Inquiry Definition -->
 
 
@@ -85,6 +99,7 @@
 
   <bean id="RateType-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition">
     <property name="title" value="Rate Type" />
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="inquirySections" >
       <list>
         <bean parent="InquirySectionDefinition">
@@ -100,6 +115,8 @@
                     p:forceInquiry="true" />
               <bean parent="FieldDefinition"
                     p:attributeName="description" />
+              <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -126,6 +143,7 @@
             p:parameterName="proposalRateTypeMaintenanceHelp"
             p:parameterDetailType="Document" />
     </property>        
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -134,8 +152,11 @@
               p:attributeName="rateTypeCode" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="resultFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -146,6 +167,8 @@
               p:forceInquiry="true" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>

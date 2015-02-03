@@ -16,7 +16,8 @@
         <value>rateTypeCode</value>
       </list>
     </property>
-    <property name="allowsRecordDeletion" value="true" />
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+    <property name="allowsRecordDeletion" value="false" />
     
     
     
@@ -36,12 +37,14 @@
   <bean id="RateTypeMaintenanceDocument-EditRateType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Rate Type"/>
     <property name="title" value="Edit Rate Type"/>
+    <!-- ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="rateClassCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="rateTypeCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active"/>
       </list>
     </property>
   </bean>
