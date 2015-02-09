@@ -77,6 +77,7 @@ public class ProtocolGrantExemptionServiceImpl implements ProtocolGrantExemption
         
         protocol.setApprovalDate(actionBean.getApprovalDate());
         protocol.refreshReferenceObject("protocolStatus");
+        // ### Vivantech Fix : #46 / [#86930450] Workflow completes upon selecting Grant Exemption
         documentService.approveDocument(protocol.getProtocolDocument(), actionBean.getComments(), null);
     }
 }
