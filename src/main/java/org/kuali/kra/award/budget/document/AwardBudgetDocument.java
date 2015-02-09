@@ -147,6 +147,8 @@ public class AwardBudgetDocument extends BudgetDocument<org.kuali.kra.award.home
         newRateType.setRateClassCode(rate.getRateClassCode());
         newRateType.setRateTypeCode(awardRateType.getFandaRateTypeCode().toString());
         newRateType.setDescription(awardRateType.getDescription());
+    //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+        newRateType.setActive(true);
         return newRateType;
     }
 

@@ -26,6 +26,7 @@ import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.MessageMap;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -131,8 +132,8 @@ public class ValidCalcTypeMaintenanceDocumentRule extends KraMaintenanceDocument
             pkMap.put("rateClassCode", rateClassCode);
             pkMap.put("rateTypeCode", rateTypeCode);
             final RateType rateType = (RateType) this.boService.findByPrimaryKey(RateType.class, pkMap);
-            
-            if (rateType == null ) {
+        //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+            if (ObjectUtils.isNull(rateType) || !rateType.isActive()) {
                 final MessageMap errorMap = GlobalVariables.getMessageMap();
                 errorMap.putError("document.newMaintainableObject.rateTypeCode", KeyConstants.ERROR_RATE_TYPE_NOT_EXIST,
                         new String[] {rateClassCode, rateTypeCode });

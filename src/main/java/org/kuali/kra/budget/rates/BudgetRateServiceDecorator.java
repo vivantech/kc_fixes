@@ -193,7 +193,8 @@ public class BudgetRateServiceDecorator<T extends BudgetParent> extends BudgetRa
         rateType.setRateTypeCode(awardFnArateTypeCode);
         rateType.setRateClassCode(rateClassCode);
         rateType.setDescription(rateTypeDesc);
-        
+        // ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+        rateType.setActive(true);
         return rateType;
     }
 
