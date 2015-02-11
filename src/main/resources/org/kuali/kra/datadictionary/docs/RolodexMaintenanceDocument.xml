@@ -59,7 +59,8 @@
         <bean parent="MaintainableFieldDefinition" p:name="state"/>
         <bean parent="MaintainableFieldDefinition" p:name="suffix"/>
         <bean parent="MaintainableFieldDefinition" p:name="title"/>
-         <bean parent="MaintainableFieldDefinition" p:name="active"/>
+        <!-- ### Vivantech Fix : Issue #48 / [88157664] committing fix for defaulting the active indicator to be true. -->
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
       </list>
     </property>
