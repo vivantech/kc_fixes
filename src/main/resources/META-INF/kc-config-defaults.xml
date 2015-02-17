@@ -1,18 +1,4 @@
-<!--
- Copyright 2005-2014 The Kuali Foundation
- 
- Licensed under the Educational Community License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- 
- http://www.opensource.org/licenses/ecl2.php
- 
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
--->
+<!-- ### Vivantech Fix : #50 / [#86465282] Updating the mappings to correctly reference the appropriate copy button images -->
 <!-- 
 	This config should not reference other config locations.  It should only contain properties that are specific to
     kc or are different from the rice defaults.
@@ -184,6 +170,7 @@
 	<param name="transaction.timeout">3600</param>
 	
 	<!-- image overrides -->
+	<!-- ### Vivantech Fix : #50 / [#86465282] Updating the mappings to correctly reference the appropriate copy button images -->
 	<param name="application.custom.image.url.copyoneper">/${app.context.name}/static/images/buttonsmall_copyoneper.gif</param>
 	<param name="application.custom.image.url.copyallperiods">/${app.context.name}/static/images/buttonsmall_copyallperiods.gif</param>
 	<param name="application.custom.image.url.returntodocument">/${app.context.name}/static/images/buttonsmall_returntodocument.gif</param>
