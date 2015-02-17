@@ -13,8 +13,8 @@ public class CopyPeriodsQuestion extends QuestionBase {
     private static final ArrayList<String> BUTTONS;
     static {
         BUTTONS = new ArrayList<String>();
-        BUTTONS.add("copyoneper"); 
         BUTTONS.add("copyallperiods");
+        BUTTONS.add("copyoneper");        
     }
     
     /**
