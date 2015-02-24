@@ -343,7 +343,11 @@ public class SalaryCalculator {
             if (compareDateChange > 0) {
                 Calendar rateChangeCal = dateTimeService.getCalendar(rateChangeDate);
                 rateChangeCal.add(Calendar.DATE, -1);
-                tempEndDate = rateChangeCal.getTime();
+                // ### Vivantech Fix : #52 / [#86329522] problem with anniversary date not calculating correctly when its after the period end date.
+                // Only set the anniversary date as the new tempEndDate if its earlier. 
+                if((rateChangeDate.compareTo(tempEndDate)) < 0) {  
+                    tempEndDate = rateChangeCal.getTime();
+                }
                 Boundary boundary = new Boundary(tempStartDate, tempEndDate);
                 salaryDetails = new SalaryDetails();
                 salaryDetails.setBoundary(boundary);
@@ -719,11 +723,22 @@ public class SalaryCalculator {
         if (budgetPerson.getEffectiveDate().before(p1StartDate)) {
             p1StartDate = budgetPerson.getEffectiveDate();
         }
+        
+        /* ### Vivantech Fix : #52 / [#86329522] fix anniversary date not working when anniversary date falls before the end of the first period end date*/
+        Date salaryAnniversaryDate = budgetPerson.getSalaryAnniversaryDate();
         QueryList<BudgetRate> qlist = filterInflationRates(p1StartDate, startDate);
-        for (BudgetRate budgetProposalrate : qlist) {
-            if (budgetProposalrate.getStartDate().after(budgetPerson.getEffectiveDate())
-                    && budgetProposalrate.getStartDate().before(startDate)) {
-                calBase = calBase.add(calBase.multiply(budgetProposalrate.getApplicableRate()).divide(new BudgetDecimal(100.00)));
+        if(salaryAnniversaryDate==null){
+            for (BudgetRate budgetProposalrate : qlist) {
+                if (budgetProposalrate.getStartDate().after(budgetPerson.getEffectiveDate()) && budgetProposalrate.getStartDate().before(startDate)){
+                    calBase = calBase.add(calBase.multiply(budgetProposalrate.getApplicableRate()).divide(new BudgetDecimal(100.00)));
+                }
+            }
+        }else { 
+            for (BudgetRate budgetProposalrate : qlist) {        	
+                if (!budgetProposalrate.getStartDate().before(budgetPerson.getEffectiveDate()) && !budgetProposalrate.getStartDate().after(startDate) 
+                        && (salaryAnniversaryDate==null || budgetProposalrate.getStartDate().after(budgetPerson.getSalaryAnniversaryDate()))){
+                    calBase = calBase.add(calBase.multiply(budgetProposalrate.getApplicableRate()).divide(new BudgetDecimal(100.00)));
+                } 
             }
         }
         return calBase;
