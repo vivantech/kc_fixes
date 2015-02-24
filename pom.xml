@@ -4,7 +4,7 @@
 	<groupId>com.vivantech</groupId>
 	<artifactId>kc_fixes</artifactId>
 	<packaging>war</packaging>
-	<version>5.2.1-fixes-20150212-SNAPSHOT</version>
+	<version>5.2.1-fixes-20150212</version>
 	<name>Kuali Coeus with fixes from Vivantech</name>
 	<url>http://www.vivantech.com</url>
 	
