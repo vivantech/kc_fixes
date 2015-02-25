@@ -19,8 +19,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
                            
-    ${monitoring.spring.service}
-
     <import resource="classpath:org/kuali/kra/RiceOverridesSpringBeans.xml" />
     
     <bean id="kcCoreConfigurer" class="org.kuali.kra.config.CoreConfigurer" />
