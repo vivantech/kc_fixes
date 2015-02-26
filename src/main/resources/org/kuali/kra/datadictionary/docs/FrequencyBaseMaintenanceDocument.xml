@@ -29,7 +29,8 @@
 			<list>
 				<value>frequencyBaseCode</value>
 			</list>
-		</property>		<property name="allowsRecordDeletion" value="true" />	
+		</property>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />	
 		
 		
 		
@@ -47,11 +48,12 @@
 	<bean id="FrequencyBaseMaintenanceDocument-EditFrequencyBase-parentBean" abstract="true" parent="MaintainableSectionDefinition">
 		<property name="id" value="Edit Frequency Base"/>
 		<property name="title" value="Edit Frequency Base"/>
+		<!-- ### Vivantech Fix : #57 / [#86133652] defaulting active indicator field to true. -->
 		<property name="maintainableItems">
 			<list>
 				<bean parent="MaintainableFieldDefinition" p:name="frequencyBaseCode" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
-				<bean parent="MaintainableFieldDefinition" p:name="active" p:required="true"/>
+				<bean parent="MaintainableFieldDefinition" p:name="active" p:required="true" p:defaultValue="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
 			</list>
 		</property>
