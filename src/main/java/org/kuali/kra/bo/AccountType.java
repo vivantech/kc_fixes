@@ -29,6 +29,9 @@ public class AccountType extends KraPersistableBusinessObjectBase {
 
     private String description;
 
+    //  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+    private boolean active;
+
     public AccountType() {
     }
 
@@ -69,6 +72,17 @@ public class AccountType extends KraPersistableBusinessObjectBase {
         if (description == null) {
             if (OTHER.description != null) return false;
         } else if (!description.equals(OTHER.description)) return false;
+        // ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+        if (!(active == OTHER.active)) return false;
         return true;
     }
+    
+    // ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
