@@ -93,8 +93,6 @@ public class AwardStatus extends KraPersistableBusinessObjectBase {
         } else if (!statusCode.equals(other.statusCode)) {
             return false;
         }
-        // ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
-        if (!(active == other.active)) return false;
         return true;
     }
     
