@@ -25,12 +25,14 @@
 			<ref bean="ValidFrequencyBase-lookupDefinition"/>
 		</property>
 		<property name="titleAttribute" value="validFrequencyBaseId"/>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="attributes">
 			<list>
 				<ref bean="ValidFrequencyBase-validFrequencyBaseId"/>
 				<ref bean="ValidFrequencyBase-frequencyCode"/>
 				<ref bean="ValidFrequencyBase-frequencyBaseCode"/>
 				<ref bean="ValidFrequencyBase-versionNumber"/>
+				<ref bean="ValidFrequencyBase-active" />
 			</list>
 		</property>
 	</bean>
@@ -91,6 +93,18 @@
 	<bean id="ValidFrequencyBase-versionNumber" parent="ValidFrequencyBase-versionNumber-parentBean"/>
 	<bean abstract="true" id="ValidFrequencyBase-versionNumber-parentBean" parent="AttributeReferenceDummy-versionNumber">
 	</bean>
+	
+	<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
+  	<bean id="ValidFrequencyBase-active" parent="ValidFrequencyBase-active-parentBean" />
+  	<bean id="ValidFrequencyBase-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+  	</bean>
 
 	<!-- Business Object Inquiry Definition -->
 	<bean id="ValidFrequencyBase-inquiryDefinition" parent="ValidFrequencyBase-inquiryDefinition-parentBean"/>
@@ -101,11 +115,13 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Valid Frequency Base Id"/>
 					<property name="numberOfColumns" value="1"/>
+					<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields">
 						<list>
 							<bean p:attributeName="validFrequencyBaseId" p:forceInquiry="true" parent="FieldDefinition"/>
 							<bean p:attributeName="frequencyCode" parent="FieldDefinition"/>
 							<bean p:attributeName="frequencyBaseCode" parent="FieldDefinition"/>
+							<bean p:attributeName="active" parent="FieldDefinition"/>
 						</list>
 					</property>
 				</bean>
@@ -129,18 +145,22 @@
             	p:parameterName="validFrequencyBaseMaintenanceHelp"
        	   		p:parameterDetailType="Document" />
     	</property>  		
+    	<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields">
 			<list>
 				<bean p:attributeName="validFrequencyBaseId" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="frequencyCode" parent="FieldDefinition"/>
 				<bean p:attributeName="frequencyBaseCode" parent="FieldDefinition"/>
+				<bean p:attributeName="active" parent="FieldDefinition"/>
 			</list>
 		</property>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="resultFields">
 			<list>
 				<bean p:attributeName="validFrequencyBaseId" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="frequencyCode" parent="FieldDefinition"/>
 				<bean p:attributeName="frequencyBaseCode" parent="FieldDefinition"/>
+				<bean p:attributeName="active" parent="FieldDefinition"/>
 			</list>
 		</property>
 	</bean>

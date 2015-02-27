@@ -66,7 +66,10 @@ public class FrequencyBaseCodeValuesFinder extends UifKeyValuesFinderBase {
         if (GlobalVariables.getUserSession().retrieveObject("awfreqbase" + getFrequencyCode()) != null) {
             return (List<KeyValue>) GlobalVariables.getUserSession().retrieveObject("awfreqbase" + getFrequencyCode());
         } else {
-            Collection<ValidFrequencyBase> validFrequencyBaseCodes = getKeyValuesService().findAll(ValidFrequencyBase.class);
+            // ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+        	Map<String, Object> fieldValues = new HashMap<String, Object>();
+        	fieldValues.put("active", true);
+            Collection<ValidFrequencyBase> validFrequencyBaseCodes = getKeyValuesService().findMatching(ValidFrequencyBase.class, fieldValues);
 
             return getKeyValues(getUniqueRelevantFrequencyBaseCodes(validFrequencyBaseCodes));
         }
