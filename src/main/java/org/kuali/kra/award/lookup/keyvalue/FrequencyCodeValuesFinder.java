@@ -74,11 +74,11 @@ public class FrequencyCodeValuesFinder extends UifKeyValuesFinderBase {
             return (List<KeyValue>)GlobalVariables.getUserSession().retrieveObject("awfreqr"+getReportClassCode()+"c"+getReportCode());
         } else {
 
-            Collection<ValidClassReportFrequency> validClassReportFrequencies 
-            = (Collection<ValidClassReportFrequency>) getKeyValuesService().findAll(
-                    ValidClassReportFrequency.class);
-            return getKeyValues((Set<String>) 
-                    getUniqueRelevantFrequencyCodes(validClassReportFrequencies));
+        	Map<String, Object> fieldValues = new HashMap<String, Object>();
+        	fieldValues.put("active", true);
+        	Collection<ValidClassReportFrequency> validClassReportFrequencies = 
+        			(Collection<ValidClassReportFrequency>) getKeyValuesService().findMatching(ValidClassReportFrequency.class, fieldValues);
+        	return getKeyValues((Set<String>) getUniqueRelevantFrequencyCodes(validClassReportFrequencies));
         }
     }
     

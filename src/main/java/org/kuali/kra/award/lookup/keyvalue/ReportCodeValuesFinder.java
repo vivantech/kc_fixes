@@ -70,10 +70,11 @@ public class ReportCodeValuesFinder extends UifKeyValuesFinderBase {
             return (List<KeyValue>)GlobalVariables.getUserSession().retrieveObject("awreport"+getReportClassCode());
         } else {
 
-            Collection<ValidClassReportFrequency> validClassReportFrequencies =  
-                (Collection<ValidClassReportFrequency>) getKeyValuesService()
-                    .findAll(ValidClassReportFrequency.class);        
-       return getKeyValues(getUniqueRelevantReportClassCodes(validClassReportFrequencies));
+        	Map<String, Object> fieldValues = new HashMap<String, Object>();
+        	fieldValues.put("active", true);
+            Collection<ValidClassReportFrequency> validClassReportFrequencies = 
+                (Collection<ValidClassReportFrequency>) getKeyValuesService().findMatching(ValidClassReportFrequency.class, fieldValues);        
+            return getKeyValues(getUniqueRelevantReportClassCodes(validClassReportFrequencies));
         }
     }
     
