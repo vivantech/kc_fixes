@@ -33,7 +33,8 @@
                 <value>batchCorrespondenceTypeCode</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         
         <property name="documentTypeName" value="BatchCorrespondenceMaintenanceDocument" />
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" />
@@ -46,6 +47,7 @@
     <bean id="BatchCorrespondenceMaintenanceDocument-EditCorrespondenceBatch-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Batch Correspondence" />
         <property name="title" value="Edit Batch Correspondence" />
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems" >
             <list>
                 <bean parent="MaintainableFieldDefinition"
@@ -66,6 +68,8 @@
                     p:name="finalActionCorrespType" />
                 <bean parent="MaintainableFieldDefinition"
                     p:name="versionNumber" />
+                <bean parent="MaintainableFieldDefinition"
+                    p:name="active" />
             </list>
         </property>
     </bean>

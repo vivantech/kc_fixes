@@ -23,5 +23,15 @@ public class BatchCorrespondence extends BatchCorrespondenceBase {
      * Comment for <code>serialVersionUID</code>
      */
     private static final long serialVersionUID = 3467000376519170931L;
+    
+//  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

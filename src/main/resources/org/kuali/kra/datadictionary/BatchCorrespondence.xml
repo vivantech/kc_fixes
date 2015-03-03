@@ -33,6 +33,7 @@
             <bean parent="HelpDefinition" p:parameterNamespace="KC-COMMITTEE" p:parameterName="committeeBatchCorrespondenceHelpUrl" p:parameterDetailType="Document" />
         </property>
         <property name="titleAttribute" value="batchCorrespondenceTypeCode" />
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="attributes" >
             <list>
                 <ref bean="BatchCorrespondence-batchCorrespondenceTypeCode" />
@@ -43,6 +44,7 @@
                 <ref bean="BatchCorrespondence-finalActionTypeCode" />
                 <ref bean="BatchCorrespondence-finalActionCorrespType" />
                 <ref bean="BatchCorrespondence-versionNumber" />
+                <ref bean="BatchCorrespondence-active" />
             </list>
         </property>
     </bean>
@@ -172,6 +174,19 @@
     <bean id="BatchCorrespondence-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
     </bean>
 
+  <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
+  <bean id="BatchCorrespondence-active" parent="BatchCorrespondence-active-parentBean" />
+  <bean id="BatchCorrespondence-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+	<property name="maxLength" value="1" />
+  </bean>
+  
+
     <!-- Business Object Inquiry Definition -->
     <bean id="BatchCorrespondence-inquiryDefinition" parent="BatchCorrespondence-inquiryDefinition-parentBean" />
     <bean id="BatchCorrespondence-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition">
@@ -181,6 +196,7 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="Batch Correspondence Type Code" />
                     <property name="numberOfColumns" value="1" />
+                    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields" >
                         <list>
                             <bean parent="FieldDefinition"
@@ -196,6 +212,8 @@
                                 p:attributeName="finalActionTypeCode" />
                             <bean parent="FieldDefinition"
                                 p:attributeName="finalActionCorrespType" />
+                			<bean parent="FieldDefinition"
+                    			p:attributeName="active" />
                         </list>
                     </property>
                 </bean>
@@ -213,6 +231,7 @@
             <bean parent="SortDefinition" >
         </bean>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="lookupFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -228,8 +247,11 @@
                     p:attributeName="finalActionTypeCode" />
                 <bean parent="FieldDefinition"
                     p:attributeName="finalActionCorrespType" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="resultFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -245,6 +267,8 @@
                     p:attributeName="finalActionTypeCode" />
                 <bean parent="FieldDefinition"
                     p:attributeName="finalActionCorrespType" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
     </bean>
