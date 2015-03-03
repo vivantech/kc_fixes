@@ -19,7 +19,9 @@ import org.kuali.rice.krad.service.BusinessObjectService;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation of the Check List Service.
@@ -52,7 +54,10 @@ public class CheckListServiceImpl implements CheckListService {
      */
     @SuppressWarnings("unchecked")
     public List<ExemptStudiesCheckListItem> getExemptStudiesCheckList() {
-        Collection<ExemptStudiesCheckListItem> items = businessObjectService.findAll(ExemptStudiesCheckListItem.class);
+    	//  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+        Map<String, Object> fieldValues = new HashMap<String, Object>();
+        fieldValues.put("active", true);
+		Collection<ExemptStudiesCheckListItem> items = businessObjectService.findMatching(ExemptStudiesCheckListItem.class, fieldValues );
         List<ExemptStudiesCheckListItem> checkList = new ArrayList<ExemptStudiesCheckListItem>();
         checkList.addAll(items);
         return checkList;
