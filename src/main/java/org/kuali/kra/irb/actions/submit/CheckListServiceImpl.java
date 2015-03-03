@@ -43,7 +43,10 @@ public class CheckListServiceImpl implements CheckListService {
      */
     @SuppressWarnings("unchecked")
     public List<ExpeditedReviewCheckListItem> getExpeditedReviewCheckList() { 
-        Collection<ExpeditedReviewCheckListItem> items = businessObjectService.findAll(ExpeditedReviewCheckListItem.class);
+    	//  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+        Map<String, Object> fieldValues = new HashMap<String, Object>();
+        fieldValues.put("active", true);
+        Collection<ExpeditedReviewCheckListItem> items = businessObjectService.findMatching(ExpeditedReviewCheckListItem.class, fieldValues);
         List<ExpeditedReviewCheckListItem> checkList = new ArrayList<ExpeditedReviewCheckListItem>();
         checkList.addAll(items);
         return checkList;
@@ -57,7 +60,7 @@ public class CheckListServiceImpl implements CheckListService {
     	//  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
         Map<String, Object> fieldValues = new HashMap<String, Object>();
         fieldValues.put("active", true);
-		Collection<ExemptStudiesCheckListItem> items = businessObjectService.findMatching(ExemptStudiesCheckListItem.class, fieldValues );
+		Collection<ExemptStudiesCheckListItem> items = businessObjectService.findMatching(ExemptStudiesCheckListItem.class, fieldValues);
         List<ExemptStudiesCheckListItem> checkList = new ArrayList<ExemptStudiesCheckListItem>();
         checkList.addAll(items);
         return checkList;
