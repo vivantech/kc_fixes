@@ -123,8 +123,10 @@ public class OrganizationCorrespondentMaintainableImpl extends KraMaintainableIm
 
     private boolean isCorrespondentTypeCodeValid(Integer correspondentTypeCode) {
         BusinessObjectService businessObjectService = KraServiceLocator.getService(BusinessObjectService.class);
-        Map<String, String> validParams = new HashMap<String, String>();
+        //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+        Map<String, Object> validParams = new HashMap<String, Object>();
         validParams.put("correspondentTypeCode", correspondentTypeCode.toString());
+        validParams.put("active", true);
         return !businessObjectService.findMatching(CorrespondentType.class, validParams).isEmpty();
     }
 
