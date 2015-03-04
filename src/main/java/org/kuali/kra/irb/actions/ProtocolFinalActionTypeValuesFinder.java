@@ -41,7 +41,9 @@ public class ProtocolFinalActionTypeValuesFinder extends IrbActionsKeyValuesBase
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
 
         Map<String, Object> fieldValues = new HashMap<String, Object>();
+        //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
         fieldValues.put(FINAL_ACTION_FOR_BATCH_CORRESP_FIELD, "Y");
+        fieldValues.put("active", true);
         Collection<ProtocolActionType> protocolActionTypes = 
             this.getBusinessObjectService().findMatchingOrderBy(ProtocolActionType.class, fieldValues, DESCRIPTION_FIELD, true);
         

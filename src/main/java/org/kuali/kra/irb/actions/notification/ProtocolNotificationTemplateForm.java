@@ -95,12 +95,16 @@ public class ProtocolNotificationTemplateForm extends KualiForm {
             ProtocolActionType actionType = new ProtocolActionType();
             actionType.setProtocolActionTypeCode(actionTypeCode);
             actionType.setDescription("Assign Reviewer");
+            //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+            actionType.setActive(true);
             template.setProtocolActionType(actionType);
         }
         if (actionTypeCode.equals(ProtocolActionType.REVIEW_COMPLETE)) {
             ProtocolActionType actionType = new ProtocolActionType();
             actionType.setProtocolActionTypeCode(actionTypeCode);
             actionType.setDescription("Review Complete");
+            //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+            actionType.setActive(true);
             template.setProtocolActionType(actionType);
         }
         return template;

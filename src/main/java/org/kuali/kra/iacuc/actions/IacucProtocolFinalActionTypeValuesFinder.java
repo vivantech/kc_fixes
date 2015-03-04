@@ -43,8 +43,10 @@ public class IacucProtocolFinalActionTypeValuesFinder extends IacucActionsKeyVal
     public List<KeyValue> getKeyValues() {
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
 
+        //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
         Map<String, Object> fieldValues = new HashMap<String, Object>();
         fieldValues.put(FINAL_ACTION_FOR_BATCH_CORRESP_FIELD, "Y");
+        fieldValues.put("active", true);
         Collection<IacucProtocolActionType> protocolActionTypes = 
             this.getBusinessObjectService().findMatchingOrderBy(IacucProtocolActionType.class, fieldValues, DESCRIPTION_FIELD, true);
         

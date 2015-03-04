@@ -27,7 +27,8 @@
             <list>
                 <value>protocolActionTypeCode</value>
             </list>
-        </property>		<property name="allowsRecordDeletion" value="true" />	
+        </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />	
         
         <property name="documentTypeName" value="ProtocolActionTypeMaintenanceDocument"/>
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
@@ -39,6 +40,7 @@
     <bean id="ProtocolActionTypeMaintenanceDocument-EditProtocolActionType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Protocol Action Type"/>
         <property name="title" value="Edit Protocol Action Type"/>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems">
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="protocolActionTypeCode" p:required="true"/>
@@ -47,6 +49,7 @@
                 <bean parent="MaintainableFieldDefinition" p:name="triggerCorrespondence"/>
                 <bean parent="MaintainableFieldDefinition" p:name="finalActionForBatchCorrespondence"/>
                 <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>
