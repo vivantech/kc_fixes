@@ -27,7 +27,9 @@ public abstract class ProtocolAttachmentTypeBase extends KraPersistableBusinessO
     protected String code;
 
     protected String description;
-
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
     
     protected ProtocolAttachmentTypeBase() {
         super();
@@ -119,4 +121,13 @@ public abstract class ProtocolAttachmentTypeBase extends KraPersistableBusinessO
         }
         return true;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
