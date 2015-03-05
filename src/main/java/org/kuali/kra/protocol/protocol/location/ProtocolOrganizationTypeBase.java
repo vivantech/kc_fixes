@@ -31,6 +31,9 @@ public abstract class ProtocolOrganizationTypeBase extends KraPersistableBusines
     private String protocolOrganizationTypeCode;
 
     private String description;
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
     /**
 	 * Constructs a ProtocolOrganizationType.java.
@@ -69,4 +72,13 @@ public abstract class ProtocolOrganizationTypeBase extends KraPersistableBusines
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
