@@ -28,6 +28,9 @@ public abstract class ProtocolContingencyBase extends KraPersistableBusinessObje
     private String protocolContingencyCode;
 
     private String description;
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public ProtocolContingencyBase() {
     }
@@ -47,4 +50,13 @@ public abstract class ProtocolContingencyBase extends KraPersistableBusinessObje
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
