@@ -27,7 +27,8 @@
             <list>
                 <value>protocolPersonRoleId</value>
             </list>
-        </property>		<property name="allowsRecordDeletion" value="true" />	
+        </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />	
         
         <property name="documentTypeName" value="IacucProtocolPersonRoleMaintenanceDocument"/>
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
@@ -41,6 +42,7 @@
     <bean id="IacucProtocolPersonRoleMaintenanceDocument-EditProtocolPersonRole-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit IACUC Protocol Correspondence Type"/>
         <property name="title" value="Edit IACUC Protocol Correspondence Type"/>
+        <!-- ### Vivantech Fix : #61 / [#86133850] defaulting active indicator field to true. -->
         <property name="maintainableItems">
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="protocolPersonRoleId" p:required="true"/>
@@ -50,7 +52,7 @@
                 <bean parent="MaintainableFieldDefinition" p:name="trainingDetailsRequired" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="commentsDetailsRequired" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
-                <bean parent="MaintainableFieldDefinition" p:name="active"/>
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>
