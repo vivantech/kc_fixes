@@ -55,6 +55,7 @@ public class ProtocolTypeValuesFinder extends UifKeyValuesFinderBase {
         
         for (Iterator iter = protocolTypes.iterator(); iter.hasNext();) {
         	ProtocolType protocolType = (ProtocolType) iter.next();
+        	// ### Vivantech Fix : #34 / [#84890244] adding active indicator field and disabling the delete.
         	if (protocolType.isActive() && (protocolType.isGlobalFlag() || canViewNonGlobalProtocolTypes) ) {
         		if (StringUtils.equals(protocolType.getDescription(), "Standard")) {
         			keyValues.add(0, new ConcreteKeyValue(protocolType.getProtocolTypeCode().toString(), protocolType.getDescription()));

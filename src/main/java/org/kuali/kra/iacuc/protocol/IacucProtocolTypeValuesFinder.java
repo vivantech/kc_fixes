@@ -47,9 +47,12 @@ public class IacucProtocolTypeValuesFinder extends UifKeyValuesFinderBase {
         KeyValuesService keyValuesService = (KeyValuesService) KraServiceLocator.getService("keyValuesService");
         Collection protocolTypes = keyValuesService.findAllOrderBy(IacucProtocolType.class,"description",true);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();   
+        //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
         for (Iterator iter = protocolTypes.iterator(); iter.hasNext();) {
-            IacucProtocolType protocolType = (IacucProtocolType) iter.next();
-            keyValues.add(new ConcreteKeyValue(protocolType.getProtocolTypeCode().toString(), protocolType.getDescription()));
+        	IacucProtocolType protocolType = (IacucProtocolType) iter.next();
+        	if (protocolType.isActive()) {
+        		keyValues.add(new ConcreteKeyValue(protocolType.getProtocolTypeCode().toString(), protocolType.getDescription()));
+        	}
         }
         return keyValues;
     }  
