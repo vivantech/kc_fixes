@@ -53,6 +53,9 @@ public abstract class BatchCorrespondenceBase extends KraPersistableBusinessObje
 
     private ProtocolActionTypeBase protocolActionType;
 
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
+
     public BatchCorrespondenceBase() {
         setBatchCorrespondenceDetails(new ArrayList<BatchCorrespondenceDetailBase>());
     }
@@ -163,4 +166,13 @@ public abstract class BatchCorrespondenceBase extends KraPersistableBusinessObje
     public void setProtocolActionType(ProtocolActionTypeBase protocolActionType) {
         this.protocolActionType = protocolActionType;
     }
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
