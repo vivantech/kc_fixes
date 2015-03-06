@@ -9,6 +9,7 @@
 		
 		<include relativeToChangelogFile="true" file="kc_fixes_changeset_01.sql"/>
 		<include relativeToChangelogFile="true" file="kc_fixes_changeset_02.sql"/>
+		<include relativeToChangelogFile="true" file="kc_fixes_changeset_04.sql"/>
 		<include relativeToChangelogFile="true" file="minusMIT.sql"/>
 		
 </databaseChangeLog>
