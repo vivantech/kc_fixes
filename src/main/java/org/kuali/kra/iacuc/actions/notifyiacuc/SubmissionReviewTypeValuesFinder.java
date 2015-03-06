@@ -45,8 +45,11 @@ public class SubmissionReviewTypeValuesFinder extends IrbActionsKeyValuesBase {
             List<IacucProtocolReviewType> reviewTypes = (List<IacucProtocolReviewType>) getBusinessObjectService().findAll(
                     IacucProtocolReviewType.class);
             for (IacucProtocolReviewType reviewType : reviewTypes) {
-                keyValues.add(new ConcreteKeyValue(reviewType.getReviewTypeCode(), 
-                        reviewType.getDescription()));
+            	//  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+            	if (reviewType.isActive()) {
+            		keyValues.add(new ConcreteKeyValue(reviewType.getReviewTypeCode(), 
+            				reviewType.getDescription()));
+            	}
             }
             
         } else {

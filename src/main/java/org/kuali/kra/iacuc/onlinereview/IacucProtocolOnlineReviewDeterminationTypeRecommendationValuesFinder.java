@@ -52,7 +52,8 @@ public class IacucProtocolOnlineReviewDeterminationTypeRecommendationValuesFinde
         
         for (IacucProtocolOnlineReviewDeterminationTypeRecommendation reviewTypesUsed : reviewTypesUsedInDetermination) {
             for (IacucProtocolReviewType reviewType : allReviewTypes) {                        
-                if (reviewTypesUsed.getIacucProtocolReviewTypeCode() != null && reviewType.getReviewTypeCode() != null && 
+            	//  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+                if (reviewType.isActive() && (reviewTypesUsed.getIacucProtocolReviewTypeCode() != null) && (reviewType.getReviewTypeCode() != null) && 
                         reviewTypesUsed.getIacucProtocolReviewTypeCode().equalsIgnoreCase(reviewType.getReviewTypeCode())) {
                     found = true;
                     break;

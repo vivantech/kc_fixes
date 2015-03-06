@@ -29,6 +29,9 @@ public class ProtocolReviewTypeBase extends KraPersistableBusinessObjectBase {
     private String description;
 
     private boolean globalFlag;
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
     /**
      * Constructs a ProtocolReviewType.
@@ -59,4 +62,13 @@ public class ProtocolReviewTypeBase extends KraPersistableBusinessObjectBase {
     public void setGlobalFlag(boolean globalFlag) {
         this.globalFlag = globalFlag;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
