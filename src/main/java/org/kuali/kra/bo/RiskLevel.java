@@ -25,6 +25,9 @@ public class RiskLevel extends KraPersistableBusinessObjectBase {
     private String riskLevelCode;
 
     private String description;
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public RiskLevel() {
     }
@@ -68,4 +71,13 @@ public class RiskLevel extends KraPersistableBusinessObjectBase {
         } else if (!riskLevelCode.equals(other.riskLevelCode)) return false;
         return true;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

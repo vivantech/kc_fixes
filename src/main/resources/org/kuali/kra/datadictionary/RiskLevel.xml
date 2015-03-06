@@ -32,11 +32,13 @@
 			<ref bean="RiskLevel-lookupDefinition" />
 		</property>
 		<property name="titleAttribute" value="riskLevelCode" />
+		<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
 		<property name="attributes" >
 			<list>
 				<ref bean="RiskLevel-riskLevelCode" />
 				<ref bean="RiskLevel-description" />
 				<ref bean="RiskLevel-versionNumber" />
+				<ref bean="RiskLevel-active" />
 			</list>
 		</property>
 	</bean>
@@ -68,6 +70,18 @@
 	<bean id="RiskLevel-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
 	</bean>
 
+  	<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
+  	<bean id="RiskLevel-active" parent="RiskLevel-active-parentBean" />
+  	<bean id="RiskLevel-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+  	</bean>
+	
 	<!-- Business Object Inquiry Definition -->
 	<bean id="RiskLevel-inquiryDefinition" parent="RiskLevel-inquiryDefinition-parentBean" />
 	<bean id="RiskLevel-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition">
@@ -77,6 +91,7 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Risk Level Code" />
 					<property name="numberOfColumns" value="1" />
+					<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields" >
 						<list>
 							<bean parent="FieldDefinition"
@@ -84,6 +99,8 @@
 								p:forceInquiry="true" />
 							<bean parent="FieldDefinition"
 								p:attributeName="description" />
+							<bean parent="FieldDefinition"
+								p:attributeName="active" />
 						</list>
 					</property>
 				</bean>
@@ -101,6 +118,7 @@
 			<bean parent="SortDefinition" >
 		</bean>
 		</property>
+		<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -108,8 +126,11 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="description" />
+				<bean parent="FieldDefinition"
+					p:attributeName="active" />
 			</list>
 		</property>
+		<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
 		<property name="resultFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -117,6 +138,8 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="description" />
+				<bean parent="FieldDefinition"
+					p:attributeName="active" />
 			</list>
 		</property>
 	</bean>
