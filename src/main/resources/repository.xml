@@ -1361,6 +1361,7 @@
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     </class-descriptor>
     
+    <!--  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.bo.AccountType" table="ACCOUNT_TYPE">
 		<field-descriptor name="accountTypeCode" column="ACCOUNT_TYPE_CODE" jdbc-type="INTEGER" primarykey="true" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1368,6 +1369,7 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>
 
 	<class-descriptor class="org.kuali.kra.bo.versioning.VersionHistory" table="VERSION_HISTORY">
