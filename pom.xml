@@ -150,6 +150,24 @@
                     </dependency>
                 </dependencies>
             </plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/lb-tar-gz.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -228,6 +246,7 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+					<warSourceDirectory>${project.build.directory}/${project.artifactId}-${project.version}</warSourceDirectory>
                     <port>${kc.port}</port>
                     <path>${kc.context.path}</path>
                 </configuration>
@@ -1327,7 +1346,7 @@
         <jspc-maven-plugin.version>2.0.0</jspc-maven-plugin.version>
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-dependency-plugin.version>2.8</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>2.9</maven-dependency-plugin.version>
         <maven-deploy-plugin.version>2.8</maven-deploy-plugin.version>
         <maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
         <maven-install-plugin.version>2.5</maven-install-plugin.version>
@@ -1350,12 +1369,16 @@
         <enforcer.phase>validate</enforcer.phase>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.java.version>1.6</project.java.version>
-        <!-- These are used by multiple plugins (compiler, javadoc, xref, etc) -->
+        <project.java.version>1.7</project.java.version>
         <project.compile.source>${project.java.version}</project.compile.source>
         <project.compile.target>${project.java.version}</project.compile.target>
         <enforcer.require.java.version>${project.java.version}</enforcer.require.java.version>
         <enforcer.max.jdk.version>${project.java.version}</enforcer.max.jdk.version>
+
+		<build.timestamp>${maven.build.timestamp}</build.timestamp>
+		<build.version>${project.version} :: ${build.timestamp}</build.version>
+
+		<kc-project.version>5.2.1</kc-project.version>
 
         <!-- defaults to dev unless overriden -->
         <build.environment>dev</build.environment>
@@ -1376,5 +1399,15 @@
         <monitoring.spring.import/>
         <monitoring.spring.service/>
 
+
+		<kc.liquibase.changeLogFile.update>src/main/db/liquibase/kc_fix_changelog.xml</kc.liquibase.changeLogFile.update>
+		<kc.liquibase.url>jdbc:mysql://localhost:3306/kualicoeus?allowMultiQueries=true&amp;jdbcCompliantTruncation=false&amp;createDatabaseIfNotExist=true</kc.liquibase.url>
+		<kc.liquibase.username>kualicoeus</kc.liquibase.username>
+		<kc.liquibase.password>kualicoeus</kc.liquibase.password>
+			
+		<rice.liquibase.changeLogFile.update>src/main/db/liquibase/kc_fix_rice_changelog.xml</rice.liquibase.changeLogFile.update>
+		<rice.liquibase.url>jdbc:mysql://localhost:3306/kualirice?allowMultiQueries=true&amp;jdbcCompliantTruncation=false</rice.liquibase.url>
+		<rice.liquibase.username>kualirice</rice.liquibase.username>
+		<rice.liquibase.password>kualirice</rice.liquibase.password>
     </properties>
 </project>
