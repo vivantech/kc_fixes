@@ -8,6 +8,8 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 		
 		<include relativeToChangelogFile="true" file="kc_fixes_changeset_01.sql"/>
+		<include relativeToChangelogFile="true" file="kc_fixes_changeset_02.sql"/>
+		<include relativeToChangelogFile="true" file="kc_fixes_changeset_03.sql"/>
 		<include relativeToChangelogFile="true" file="minusMIT.sql"/>
 		
 </databaseChangeLog>
