@@ -1272,7 +1272,6 @@
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     </class-descriptor>
     
-    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.irb.correspondence.BatchCorrespondence" table="BATCH_CORRESPONDENCE">
         <field-descriptor name="batchCorrespondenceTypeCode" column="BATCH_CORRESPONDENCE_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1285,7 +1284,6 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
-		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 		
         <collection-descriptor name="batchCorrespondenceDetails" element-class-ref="org.kuali.kra.irb.correspondence.BatchCorrespondenceDetail" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="none">
             <inverse-foreignkey field-ref="batchCorrespondenceTypeCode" />
