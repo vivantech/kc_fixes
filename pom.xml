@@ -142,8 +142,8 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--
 			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.4</version>
 				<configuration>
@@ -161,7 +161,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -205,18 +204,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>${maven-source-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <useFile>${surefire.useFile}</useFile>
-                    <testFailureIgnore>${surefire.testFailureIgnore}</testFailureIgnore>
-                    <reportFormat>${surefire.reportFormat}</reportFormat>
-                    <forkMode>${surefire.forkMode}</forkMode>
-                    <argLine>${surefire.argLine}</argLine>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -1133,7 +1120,7 @@
 			</build>
 		</profile>
 		<profile>
-			<id>load-db</id>
+			<id>update-kc-db</id>
 			<activation>
 				<property>
 					<name>developer-init</name>
@@ -1142,42 +1129,65 @@
 			<build>
 				<plugins>
 					<plugin>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>1.7</version>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<version>3.3.2</version>
 						<executions>
 							<execution>
-								<phase>install</phase>
-								<configuration>
-									<target name="load-databases">
-										<echo message="reloading database vt-kc..." />
-										<exec executable="mysql" input="src/main/sql/vt-kc.sql">
-										    <arg value="-b"/>
-											<arg value="-n"/>
-											<arg value="-f"/>
-											<arg value="-uvt-kc"/>
-											<arg value="-pvt-kc"/>
-										</exec>
-										<echo message="reloading database vt-kc complete" />
-										<echo message="reloading database vt-kr..." />
-										<exec executable="mysql" input="src/main/sql/vt-kr.sql">
-										    <arg value="-b"/>
-											<arg value="-n"/>
-											<arg value="-f"/>
-											<arg value="-uvt-kr"/>
-											<arg value="-pvt-kr"/>
-										</exec>
-										<echo message="reloading database vt-kr complete" />
-									</target>
-								</configuration>
+								<id>liquibase-update-kc</id>
+								<phase>process-resources</phase>
 								<goals>
-									<goal>run</goal>
+									<goal>update</goal>
 								</goals>
+								<configuration>
+									<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+									<changeLogFile>${kc.liquibase.changeLogFile}</changeLogFile>
+									<driver>${mysql.driver}</driver>
+									<url>${kc.liquibase.url}</url>
+									<username>${kc.liquibase.username}</username>
+									<password>${kc.liquibase.password}</password>
+									<verbose>true</verbose>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>update-rice-db</id>
+			<activation>
+				<property>
+					<name>developer-init</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.liquibase</groupId>
+						<artifactId>liquibase-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>liquibase-update-rice</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>update</goal>
+								</goals>
+								<configuration>
+									<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+									<changeLogFile>${rice.liquibase.changeLogFile}</changeLogFile>
+									<driver>${mysql.driver}</driver>
+									<url>${rice.liquibase.url}</url>
+									<username>${rice.liquibase.username}</username>
+									<password>${rice.liquibase.password}</password>
+									<verbose>true</verbose>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>		
 
         <!--
             This profile defines plugins for running a rice standalone server.
@@ -1196,14 +1206,6 @@
          -->
         <profile>
             <id>rice-server</id>
-            <properties>
-                <enforcer.phase>none</enforcer.phase>
-                <rice.context.path>/kr-${build.environment}</rice.context.path>
-                <rice.port>8080</rice.port>
-                <rice.output.dir>${project.build.directory}/rice-server</rice.output.dir>
-                <rice.war.file>${rice.output.dir}/rice-standalone.war</rice.war.file>
-                <rice.war.dir>${rice.output.dir}/rice-standalone</rice.war.dir>
-            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -1311,76 +1313,6 @@
                 </plugins>
             </build>
         </profile>
-		<!-- 
-		<profile>
-			<id>update-kc</id>
-			<activation>
-				<property>
-					<name>developer-init</name>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.liquibase</groupId>
-						<artifactId>liquibase-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>liquibase-update-kc</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>update</goal>
-								</goals>
-								<configuration>
-									<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-									<changeLogFile>${kc.liquibase.changeLogFile.update}</changeLogFile>
-									<driver>${mysql.driver}</driver>
-									<url>${kc.liquibase.url}</url>
-									<username>${kc.liquibase.username}</username>
-									<password>${kc.liquibase.password}</password>
-									<verbose>true</verbose>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>update-rice</id>
-			<activation>
-				<property>
-					<name>developer-init</name>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.liquibase</groupId>
-						<artifactId>liquibase-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>liquibase-update-rice</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>update</goal>
-								</goals>
-								<configuration>
-									<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-									<changeLogFile>${rice.liquibase.changeLogFile.update}</changeLogFile>
-									<driver>${mysql.driver}</driver>
-									<url>${rice.liquibase.url}</url>
-									<username>${rice.liquibase.username}</username>
-									<password>${rice.liquibase.password}</password>
-									<verbose>true</verbose>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>		
-		-->
 	</profiles>
 
     <repositories>
@@ -1479,8 +1411,6 @@
         <struts.version>1.3.10</struts.version>
         <xalan.version>2.7.1</xalan.version>
         <xmlbeans.version>2.4.0</xmlbeans.version>
-        <extra-enforcer-rules.version>1.0-beta-1</extra-enforcer-rules.version>
-
 
         <!-- plugin versions -->
         <cxf-codegen-plugin.version>${cxf.version}</cxf-codegen-plugin.version>
@@ -1489,32 +1419,18 @@
         <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>2.9</maven-dependency-plugin.version>
         <maven-deploy-plugin.version>2.8</maven-deploy-plugin.version>
-        <maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
         <maven-install-plugin.version>2.5</maven-install-plugin.version>
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <maven-site-plugin.version>3.3</maven-site-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
         <maven-war-plugin.version>2.4</maven-war-plugin.version>
         <tomcat7-maven-plugin.version>2.1</tomcat7-maven-plugin.version>
-
-        <!-- Surefire config -->
-        <surefire.useFile>false</surefire.useFile>
-        <surefire.testFailureIgnore>false</surefire.testFailureIgnore>
-        <surefire.reportFormat>plain</surefire.reportFormat>
-        <surefire.forkMode>never</surefire.forkMode>
-        <surefire.argLine>-Xmx1024m -XX:MaxPermSize=512m</surefire.argLine>
-        <surefire.aggregate>true</surefire.aggregate>
-
-        <enforcer.phase>validate</enforcer.phase>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.java.version>1.7</project.java.version>
         <project.compile.source>${project.java.version}</project.compile.source>
         <project.compile.target>${project.java.version}</project.compile.target>
-        <enforcer.require.java.version>${project.java.version}</enforcer.require.java.version>
-        <enforcer.max.jdk.version>${project.java.version}</enforcer.max.jdk.version>
 
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<build.version>${project.version} :: ${build.timestamp}</build.version>
@@ -1524,31 +1440,30 @@
         <!-- defaults to dev unless overriden -->
         <build.environment>dev</build.environment>
 
-        <!-- jetty & tomcat properties -->
+        <!-- tomcat properties -->
         <kc.context.path>/kc-${build.environment}</kc.context.path>
         <kc.port>8090</kc.port>
-        <jetty.context.file>${basedir}/src/main/webapp/WEB-INF/jetty-web.xml</jetty.context.file>
+		<rice.context.path>/kr-${build.environment}</rice.context.path>
+		<rice.port>8080</rice.port>
+		<rice.output.dir>${project.build.directory}/rice-server</rice.output.dir>
+		<rice.war.file>${rice.output.dir}/rice-standalone.war</rice.war.file>
+		<rice.war.dir>${rice.output.dir}/rice-standalone</rice.war.dir>
 
         <!-- WSDL config -->
         <gg.wsdl.location>${basedir}/src/main/resources/wsdl</gg.wsdl.location>
         <account.wsdl.packaged.location>wsdl/AccountCreationService.wsdl</account.wsdl.packaged.location>
         <budget.wsdl.packaged.location>wsdl/BudgetAdjustmentService.wsdl</budget.wsdl.packaged.location>
 
-        <monitoring.filter/>
-        <monitoring.mapping/>
-        <monitoring.listener/>
-        <monitoring.spring.import/>
-        <monitoring.spring.service/>
+		<mysql.driver>com.mysql.jdbc.Driver</mysql.driver>
 
-
-		<kc.liquibase.changeLogFile.update>src/main/db/liquibase/kc_fix_changelog.xml</kc.liquibase.changeLogFile.update>
-		<kc.liquibase.url>jdbc:mysql://localhost:3306/kualicoeus?allowMultiQueries=true&amp;jdbcCompliantTruncation=false&amp;createDatabaseIfNotExist=true</kc.liquibase.url>
-		<kc.liquibase.username>kualicoeus</kc.liquibase.username>
-		<kc.liquibase.password>kualicoeus</kc.liquibase.password>
+		<kc.liquibase.changeLogFile>src/main/db/liquibase/kc_vt_changelog.xml</kc.liquibase.changeLogFile>
+		<kc.liquibase.url>jdbc:mysql://localhost:3306/kc_vt?allowMultiQueries=true&amp;jdbcCompliantTruncation=false&amp;createDatabaseIfNotExist=true</kc.liquibase.url>
+		<kc.liquibase.username>kc_vt</kc.liquibase.username>
+		<kc.liquibase.password>kc_vt</kc.liquibase.password>
 			
-		<rice.liquibase.changeLogFile.update>src/main/db/liquibase/kc_fix_rice_changelog.xml</rice.liquibase.changeLogFile.update>
-		<rice.liquibase.url>jdbc:mysql://localhost:3306/kualirice?allowMultiQueries=true&amp;jdbcCompliantTruncation=false</rice.liquibase.url>
-		<rice.liquibase.username>kualirice</rice.liquibase.username>
-		<rice.liquibase.password>kualirice</rice.liquibase.password>
+		<rice.liquibase.changeLogFile>src/main/db/liquibase/kr_vt_changelog.xml</rice.liquibase.changeLogFile>
+		<rice.liquibase.url>jdbc:mysql://localhost:3306/kr_vt?allowMultiQueries=true&amp;jdbcCompliantTruncation=false</rice.liquibase.url>
+		<rice.liquibase.username>kr_vt</rice.liquibase.username>
+		<rice.liquibase.password>kr_vt</rice.liquibase.password>
     </properties>
 </project>
