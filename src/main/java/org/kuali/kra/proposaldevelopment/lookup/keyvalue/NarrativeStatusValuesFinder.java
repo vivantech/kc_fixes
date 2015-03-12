@@ -50,6 +50,7 @@ public class NarrativeStatusValuesFinder extends UifKeyValuesFinderBase {
         Collection<NarrativeStatus> statuses = keyValuesService.findAll(NarrativeStatus.class);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(new ConcreteKeyValue("", "select"));
+    	//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.  
         for (NarrativeStatus status : statuses) {
         	if (status.isActive())
         		keyValues.add(new ConcreteKeyValue(status.getNarrativeStatusCode(), status.getDescription()));
