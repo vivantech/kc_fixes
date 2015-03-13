@@ -479,6 +479,7 @@
         </collection-descriptor>
     </class-descriptor>
      
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.actions.IacucProtocolStatus" table="IACUC_PROTOCOL_STATUS">
         <field-descriptor name="protocolStatusCode" column="PROTOCOL_STATUS_CODE" jdbc-type="VARCHAR" primarykey="true"/>
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -486,6 +487,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
      
      
@@ -571,6 +573,7 @@
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
     </class-descriptor>
     
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.actions.submit.IacucProtocolReviewType" table="IACUC_PROTO_REVIEW_TYPE">
         <field-descriptor name="reviewTypeCode" column="PROTOCOL_REVIEW_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -579,6 +582,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
     
     <class-descriptor class="org.kuali.kra.iacuc.onlinereview.IacucProtocolOnlineReviewDeterminationTypeRecommendation" table="IACUC_PROTO_REVIEW_TYPE_DETER">
@@ -592,6 +596,7 @@
         </reference-descriptor>        
     </class-descriptor>    
     
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.protocol.IacucProtocolType" table="IACUC_PROTOCOL_TYPE">
         <field-descriptor name="protocolTypeCode" column="PROTOCOL_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true"/>
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -599,6 +604,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
     
     <class-descriptor class="org.kuali.kra.iacuc.protocol.IacucProtocolProjectType" table="IACUC_PROTOCOL_PROJECT_TYPE">
@@ -610,6 +616,7 @@
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     </class-descriptor>
     
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.actions.IacucProtocolActionType" table="IACUC_PROTOCOL_ACTION_TYPE">
         <field-descriptor name="protocolActionTypeCode" column="PROTOCOL_ACTION_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -620,8 +627,10 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
     
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.actions.submit.IacucProtocolReviewerType" table="IACUC_PROTOCOL_REVIEWER_TYPE">
         <field-descriptor name="reviewerTypeCode" column="REVIEWER_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true"/>
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -629,6 +638,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
     
     <class-descriptor class="org.kuali.kra.iacuc.actions.submit.IacucProtocolSubmission" table="IACUC_PROTOCOL_SUBMISSION">
@@ -880,6 +890,7 @@
         </reference-descriptor>
     </class-descriptor>
 
+	<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.noteattachment.IacucProtocolAttachmentType" table="IACUC_PROTOCOL_ATTACHMENT_TYPE">
         <field-descriptor name="code" column="TYPE_CD" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -887,6 +898,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
 
     <class-descriptor class="org.kuali.kra.iacuc.threers.IacucAlternateSearchDatabase" table="IACUC_ALT_SEARCH_DB">
@@ -1041,6 +1053,7 @@
         
     </class-descriptor>     
 
+	<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.protocol.location.IacucProtocolOrganizationType" table="IACUC_PROTOCOL_ORG_TYPE">
         <field-descriptor name="protocolOrganizationTypeCode" column="PROTOCOL_ORG_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1048,6 +1061,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false"/>
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
 
     <class-descriptor class="org.kuali.kra.iacuc.protocol.location.IacucProtocolLocation" table="IACUC_PROTOCOL_LOCATION">
@@ -1158,6 +1172,7 @@
         </reference-descriptor>
     </class-descriptor>
     
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.noteattachment.IacucProtocolAttachmentStatus" table="IACUC_PROTO_ATTACHMENT_STATUS">
         <field-descriptor name="code" column="STATUS_CD" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1165,8 +1180,10 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
 
+	<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.noteattachment.IacucProtocolAttachmentGroup" table="IACUC_PROTO_ATTACHMENT_GROUP">
         <field-descriptor name="code" column="GROUP_CD" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1174,8 +1191,10 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
 
+	<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.noteattachment.IacucProtocolAttachmentTypeGroup" table="IACUC_PROTO_ATTACH_TYPE_GROUP">
         <field-descriptor name="id" column="TYPE_GROUP_ID" jdbc-type="BIGINT" primarykey="true" sequence-name="SEQ_PROTO_ATTCHTYPEGRP_ID" autoincrement="true"/>
         <field-descriptor name="typeCode" column="TYPE_CD" jdbc-type="VARCHAR"/>
@@ -1184,6 +1203,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
         
         <reference-descriptor name="type" class-ref="org.kuali.kra.iacuc.noteattachment.IacucProtocolAttachmentType" auto-retrieve="true" auto-update="none" auto-delete="none"> 
             <foreignkey field-ref="typeCode"/>
@@ -1648,6 +1668,7 @@
     	<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 	</class-descriptor>
 	
+	<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.bo.IacucOrganizationCorrespondent" table="IACUC_ORG_CORRESPONDENT">
 		<field-descriptor name="correspondentId" column="CORRESPONDENT_ID" jdbc-type="INTEGER" primarykey="true" sequence-name="SEQ_ORG_CORRESP_ID" autoincrement="true" />
 		<field-descriptor name="organizationId" column="ORGANIZATION_ID" jdbc-type="VARCHAR" />
@@ -1659,6 +1680,8 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
+		
 		<reference-descriptor name="organization" class-ref="org.kuali.kra.bo.Organization" auto-retrieve="false" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="organizationId"/>
 		</reference-descriptor>
@@ -1667,6 +1690,7 @@
 		</reference-descriptor>
 	</class-descriptor>
 	
+	<!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.bo.IacucUnitCorrespondent" table="IACUC_UNIT_CORRESPONDENT">
 		<field-descriptor name="correspondentId" column="CORRESPONDENT_ID" jdbc-type="INTEGER" primarykey="true" sequence-name="SEQ_UNIT_CORRESP_ID" autoincrement="true" />
 		<field-descriptor name="unitNumber" column="UNIT_NUMBER" jdbc-type="VARCHAR" />
@@ -1678,6 +1702,8 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
+		
 		<reference-descriptor name="unit" class-ref="org.kuali.kra.bo.Unit" auto-retrieve="false" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="unitNumber"/>
 		</reference-descriptor>
@@ -1732,6 +1758,7 @@
         <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
     
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.iacuc.correspondence.IacucCorrespondentType" table="IACUC_CORRESPONDENT_TYPE">
         <field-descriptor name="correspondentTypeCode" column="CORRESPONDENT_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
         <field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1740,6 +1767,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
 
     

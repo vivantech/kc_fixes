@@ -133,9 +133,11 @@ public class IacucProtocolSubmitActionServiceImpl implements IacucProtocolSubmit
         protocolAction.setCreatedSubmission(true);
         protocol.getProtocolActions().add(protocolAction);
         
+        // ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
         IacucProtocolStatus protocolStatus = new IacucProtocolStatus();
         protocolStatus.setProtocolStatusCode(IacucProtocolActionType.SUBMITTED_TO_IACUC);
         protocolStatus.setDescription(SUBMITTED_TO_IACUC);
+        protocolStatus.setActive(true);
         protocol.setProtocolStatus(protocolStatus);
         protocol.setProtocolStatusCode(IacucProtocolActionType.SUBMITTED_TO_IACUC);
         

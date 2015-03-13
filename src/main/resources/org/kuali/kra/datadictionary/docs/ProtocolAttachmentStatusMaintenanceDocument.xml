@@ -27,7 +27,8 @@
             <list>
                 <value>code</value>
             </list>
-        </property>		<property name="allowsRecordDeletion" value="true" />	
+        </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />	
         
         
         
@@ -45,11 +46,13 @@
     <bean id="ProtocolAttachmentStatusMaintenanceDocument-EditProtocolAttachmentStatus-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Protocol Attachment Status"/>
         <property name="title" value="Edit Protocol Attachment Status"/>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems">
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="code" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>

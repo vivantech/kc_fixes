@@ -189,9 +189,12 @@ public class ProtocolSubmitActionServiceImpl implements ProtocolSubmitActionServ
         protocol.getProtocolActions().add(protocolAction);
         
         //TODO this is for workflow testing, but we do need to plumb the status change in here somewhere.
+        
+        //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
         ProtocolStatus protocolStatus = new ProtocolStatus();
         protocolStatus.setProtocolStatusCode(ProtocolActionType.SUBMIT_TO_IRB);
         protocolStatus.setDescription(SUBMIT_TO_IRB);
+        protocolStatus.setActive(true);
         protocol.setProtocolStatus(protocolStatus);
         protocol.setProtocolStatusCode(ProtocolActionType.SUBMIT_TO_IRB);
         

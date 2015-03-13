@@ -30,12 +30,14 @@
             <ref bean="ProtocolAttachmentTypeGroup-lookupDefinition" />
         </property>
         <property name="titleAttribute" value="id" />
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="attributes" >
             <list>
                 <ref bean="ProtocolAttachmentTypeGroup-id" />
                 <ref bean="ProtocolAttachmentTypeGroup-typeCode" />
                 <ref bean="ProtocolAttachmentTypeGroup-groupCode" />
                 <ref bean="ProtocolAttachmentTypeGroup-versionNumber" />
+                <ref bean="ProtocolAttachmentTypeGroup-active" />
             </list>
         </property>
     </bean>
@@ -97,6 +99,18 @@
 
     <bean id="ProtocolAttachmentTypeGroup-versionNumber" parent="ProtocolAttachmentTypeGroup-versionNumber-parentBean" />
     <bean id="ProtocolAttachmentTypeGroup-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber"/>
+    
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
+	<bean id="ProtocolAttachmentTypeGroup-active" parent="ProtocolAttachmentTypeGroup-active-parentBean" />
+	<bean id="ProtocolAttachmentTypeGroup-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+	</bean>
 
     <!-- Business Object Inquiry Definition -->
     <bean id="ProtocolAttachmentTypeGroup-inquiryDefinition" parent="ProtocolAttachmentTypeGroup-inquiryDefinition-parentBean" />
@@ -107,6 +121,7 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="id" />
                     <property name="numberOfColumns" value="1" />
+                    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields" >
                         <list>
                             <bean parent="FieldDefinition"
@@ -118,6 +133,9 @@
                             <bean parent="FieldDefinition"
                                 p:attributeName="groupCode" 
                                 p:forceInquiry="true" />
+                			<bean parent="FieldDefinition"
+			                    p:attributeName="active" 
+                    			p:forceInquiry="true" />
                         </list>
                     </property>
                 </bean>
@@ -135,6 +153,7 @@
             <bean parent="SortDefinition" >
         </bean>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="lookupFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -145,9 +164,13 @@
                     p:forceInquiry="true" />
                 <bean parent="FieldDefinition"
                     p:attributeName="groupCode" 
+                    p:forceInquiry="true" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" 
                     p:forceInquiry="true" />                
             </list>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="resultFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -158,6 +181,9 @@
                     p:forceInquiry="true" />
                 <bean parent="FieldDefinition"
                     p:attributeName="groupCode" 
+                    p:forceInquiry="true" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" 
                     p:forceInquiry="true" />
             </list>
         </property>

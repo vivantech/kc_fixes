@@ -36,7 +36,9 @@ public abstract class Correspondent extends KraPersistableBusinessObjectBase {
     private String unitNumber;
     
     private Unit unit;
-
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
     
     public Correspondent() {
         super();
@@ -109,4 +111,13 @@ public abstract class Correspondent extends KraPersistableBusinessObjectBase {
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

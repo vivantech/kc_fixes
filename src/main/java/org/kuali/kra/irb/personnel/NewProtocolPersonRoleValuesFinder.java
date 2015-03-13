@@ -47,8 +47,11 @@ public class NewProtocolPersonRoleValuesFinder extends UifKeyValuesFinderBase {
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(0, new ConcreteKeyValue(PrefixValuesFinder.getPrefixKey(), PrefixValuesFinder.getDefaultPrefixValue()));    
         for (Iterator iter = protocolPersonRoles.iterator(); iter.hasNext();) {
-            ProtocolPersonRole protocolPersonRole = (ProtocolPersonRole) iter.next();
-            keyValues.add(new ConcreteKeyValue(protocolPersonRole.getProtocolPersonRoleId(), protocolPersonRole.getDescription()));                            
+        	ProtocolPersonRole protocolPersonRole = (ProtocolPersonRole) iter.next();
+            //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+        	if (protocolPersonRole.isActive()) {
+        		keyValues.add(new ConcreteKeyValue(protocolPersonRole.getProtocolPersonRoleId(), protocolPersonRole.getDescription()));
+        	}
         }
         return keyValues;
     }

@@ -33,6 +33,9 @@ public abstract class ProtocolAttachmentTypeGroupBase extends KraPersistableBusi
     private String groupCode;
 
     private ProtocolAttachmentGroupBase group;
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
     /**
      * empty ctor to satisfy JavaBean convention.
@@ -183,4 +186,13 @@ public abstract class ProtocolAttachmentTypeGroupBase extends KraPersistableBusi
         }
         return true;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

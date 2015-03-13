@@ -12,6 +12,7 @@
         <property name="lookupDefinition" >
             <ref bean="IacucOrganizationCorrespondent-lookupDefinition" />
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="attributes">
         	<list>
                 <ref bean="IacucOrganizationCorrespondent-personId" />
@@ -23,6 +24,7 @@
                 <ref bean="IacucOrganizationCorrespondent-nonEmployeeFlag" />
                 <ref bean="IacucOrganizationCorrespondent-description" />
                 <ref bean="IacucOrganizationCorrespondent-versionNumber" />
+                <ref bean="IacucOrganizationCorrespondent-active" />
         	</list>
         </property>
     </bean>
@@ -78,6 +80,11 @@
     <bean id="IacucOrganizationCorrespondent-versionNumber" parent="IacucOrganizationCorrespondent-versionNumber-parentBean" />
     <bean id="IacucOrganizationCorrespondent-versionNumber-parentBean" abstract="true" parent="Correspondent-versionNumber">
     </bean>
+    
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
+    <bean id="IacucOrganizationCorrespondent-active" parent="IacucOrganizationCorrespondent-active-parentBean" />
+    <bean id="IacucOrganizationCorrespondent-active-parentBean" abstract="true" parent="Correspondent-active">
+    </bean>
 
     <!-- Business Object Inquiry Definition -->
     <bean id="IacucOrganizationCorrespondent-inquiryDefinition" parent="IacucOrganizationCorrespondent-inquiryDefinition-parentBean" />
@@ -88,6 +95,7 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="Iacuc Organization Correspondent Inquiry" />
                     <property name="numberOfColumns" value="1" />
+                    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields" >
                         <list>
 			                <bean parent="FieldDefinition"
@@ -99,6 +107,8 @@
                                 p:attributeName="correspondentType.description" />
                             <bean parent="FieldDefinition"
                                 p:attributeName="nonEmployeeFlag" />
+                			<bean parent="FieldDefinition"
+                    			p:attributeName="active" />
                         </list>
                     </property>
                 </bean>
@@ -116,6 +126,7 @@
             <bean parent="SortDefinition" >
             </bean>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="lookupFields" >
             <list merge="true">
 		        <bean parent="FieldDefinition"
@@ -126,8 +137,11 @@
                     p:attributeName="correspondentTypeCode" />
                 <bean parent="FieldDefinition"
                     p:attributeName="nonEmployeeFlag" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="resultFields" >
             <list merge="true">
 		        <bean parent="FieldDefinition"
@@ -140,6 +154,8 @@
 		            p:forceInquiry="true" />
                 <bean parent="FieldDefinition"
                     p:attributeName="nonEmployeeFlag" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
     </bean>

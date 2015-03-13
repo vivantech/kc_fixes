@@ -67,8 +67,9 @@ public class ParticipantTypeValuesFinder extends FormViewAwareUifKeyValuesFinder
         Collection<ParticipantType> participantTypes = keyValuesService.findAll(ParticipantType.class);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(new ConcreteKeyValue("", "select"));
+        //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
         for (ParticipantType participantType : participantTypes) {
-            if (!hasParticipant(doc, participantType)) {
+            if (participantType.isActive() && !hasParticipant(doc, participantType)) {
                 keyValues.add(new ConcreteKeyValue(participantType.getParticipantTypeCode(), 
                         participantType.getDescription()));
             }

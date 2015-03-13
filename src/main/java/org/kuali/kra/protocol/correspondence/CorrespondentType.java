@@ -26,7 +26,10 @@ public class CorrespondentType extends KraPersistableBusinessObjectBase {
     private String description;
 
     private String qualifier;
-
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public CorrespondentType() {
     }
 
@@ -52,5 +55,14 @@ public class CorrespondentType extends KraPersistableBusinessObjectBase {
 
     public void setQualifier(String qualifier) {
         this.qualifier = qualifier;
+    }
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

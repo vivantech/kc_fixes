@@ -28,6 +28,9 @@ public abstract class ProtocolTypeBase extends KraPersistableBusinessObjectBase 
     private String protocolTypeCode;
 
     private String description;
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public ProtocolTypeBase() {
     }
@@ -47,4 +50,13 @@ public abstract class ProtocolTypeBase extends KraPersistableBusinessObjectBase 
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

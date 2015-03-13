@@ -25,6 +25,9 @@ public class ExemptStudiesCheckListItem extends KraPersistableBusinessObjectBase
     private String description;
 
     private transient boolean checked = false;
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public ExemptStudiesCheckListItem() {
     }
@@ -52,4 +55,14 @@ public class ExemptStudiesCheckListItem extends KraPersistableBusinessObjectBase
     public boolean getChecked() {
         return checked;
     }
+    
+    //  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 }

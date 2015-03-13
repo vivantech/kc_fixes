@@ -32,12 +32,14 @@
             <ref bean="IacucCorrespondentType-lookupDefinition" />
         </property>
         <property name="titleAttribute" value="correspondentTypeCode" />
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="attributes" >
             <list>
                 <ref bean="IacucCorrespondentType-correspondentTypeCode" />
                 <ref bean="IacucCorrespondentType-description" />
                 <ref bean="IacucCorrespondentType-qualifier" />
                 <ref bean="IacucCorrespondentType-versionNumber" />
+                <ref bean="IacucCorrespondentType-active" />
             </list>
         </property>
     </bean>
@@ -58,6 +60,11 @@
     <bean id="IacucCorrespondentType-versionNumber" parent="IacucCorrespondentType-versionNumber-parentBean" />
     <bean id="IacucCorrespondentType-versionNumber-parentBean" abstract="true" parent="CorrespondentType-versionNumber">
     </bean>
+    
+    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
+    <bean id="IacucCorrespondentType-active" parent="IacucCorrespondentType-active-parentBean" />
+    <bean id="IacucCorrespondentType-active-parentBean" abstract="true" parent="CorrespondentType-active">
+    </bean>
 
     <!-- Business Object Inquiry Definition -->
     <bean id="IacucCorrespondentType-inquiryDefinition" parent="IacucCorrespondentType-inquiryDefinition-parentBean" />
@@ -68,6 +75,7 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="Correspondent Type Code" />
                     <property name="numberOfColumns" value="1" />
+                    <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields" >
                         <list>
                             <bean parent="FieldDefinition"
@@ -77,6 +85,8 @@
                                 p:attributeName="description" />
                             <bean parent="FieldDefinition"
                                 p:attributeName="qualifier" />
+			                <bean parent="FieldDefinition"
+                    			p:attributeName="active" />
                         </list>
                     </property>
                 </bean>
@@ -93,6 +103,7 @@
             <bean parent="SortDefinition" >
         </bean>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="lookupFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -102,8 +113,11 @@
                     p:attributeName="description" />
                 <bean parent="FieldDefinition"
                     p:attributeName="qualifier" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="resultFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -113,6 +127,8 @@
                     p:attributeName="description" />
                 <bean parent="FieldDefinition"
                     p:attributeName="qualifier" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
     </bean>

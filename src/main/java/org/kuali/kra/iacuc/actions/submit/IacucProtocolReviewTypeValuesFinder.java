@@ -58,7 +58,8 @@ public class IacucProtocolReviewTypeValuesFinder extends IacucActionsKeyValuesBa
                 GlobalVariables.getUserSession().getPrincipalId(), KraAuthorizationConstants.KC_SYSTEM_NAMESPACE_CODE , PERMISSION_NAME);
         
         for (IacucProtocolReviewType item : getAllReviewTypes()) {
-            if (item.isGlobalFlag() || canViewNonGlobalReviewTypes) {
+        	//  ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete.
+        	if (item.isActive() && (item.isGlobalFlag() || canViewNonGlobalReviewTypes)) {
                 filteredKeyValues.add(new ConcreteKeyValue(item.getReviewTypeCode(), item.getDescription()));
             }
         }
