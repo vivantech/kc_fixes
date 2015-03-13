@@ -27,6 +27,9 @@ public class MailBy extends KraPersistableBusinessObjectBase {
 
     private String description;
 
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public String getDescription() {
         return description;
     }
@@ -42,4 +45,13 @@ public class MailBy extends KraPersistableBusinessObjectBase {
     public void setMailByCode(String mailByCode) {
         this.mailByCode = mailByCode;
     }
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

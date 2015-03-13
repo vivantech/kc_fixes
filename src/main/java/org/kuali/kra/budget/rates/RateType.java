@@ -26,6 +26,9 @@ public class RateType extends KraPersistableBusinessObjectBase implements Compar
     private String description;
 
     private RateClass rateClass;
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public String getRateClassCode() {
         return rateClassCode;
@@ -83,4 +86,13 @@ public class RateType extends KraPersistableBusinessObjectBase implements Compar
         this.refreshReferenceObject("rateClass");
         return this.rateClass.getRateClassCode().compareTo(rateType.rateClass.getRateClassCode());
     }
+
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

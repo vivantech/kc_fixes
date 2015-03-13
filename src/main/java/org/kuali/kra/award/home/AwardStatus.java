@@ -32,6 +32,9 @@ public class AwardStatus extends KraPersistableBusinessObjectBase {
 
     private String description;
 
+    //  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+    private boolean active;
+
     public AwardStatus() {
     }
 
@@ -92,4 +95,13 @@ public class AwardStatus extends KraPersistableBusinessObjectBase {
         }
         return true;
     }
+    
+    // ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

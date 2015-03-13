@@ -27,7 +27,8 @@
 			<list>
 				<value>statusCode</value>
 			</list>
-		</property>		<property name="allowsRecordDeletion" value="true" />	
+		</property>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />	
 		
 		
 		
@@ -45,11 +46,13 @@
 	<bean id="AwardStatusMaintenanceDocument-EditAwardStatus-parentBean" abstract="true" parent="MaintainableSectionDefinition">
 		<property name="id" value="Edit Award Status"/>
 		<property name="title" value="Edit Award Status"/>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="maintainableItems">
 			<list>
 				<bean parent="MaintainableFieldDefinition" p:name="statusCode" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+				<bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
 			</list>
 		</property>
 	</bean>

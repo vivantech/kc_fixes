@@ -24,6 +24,9 @@ public class ProposalLogType extends KraPersistableBusinessObjectBase {
     private String proposalLogTypeCode;
 
     private String description;
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public ProposalLogType() {
     }
@@ -43,4 +46,13 @@ public class ProposalLogType extends KraPersistableBusinessObjectBase {
     public void setDescription(String description) {
         this.description = description;
     }
+
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

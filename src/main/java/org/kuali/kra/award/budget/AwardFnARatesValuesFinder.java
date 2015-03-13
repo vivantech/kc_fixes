@@ -56,7 +56,8 @@ public class AwardFnARatesValuesFinder extends UifKeyValuesFinderBase {
         String fnaRateClassCode = parameterService.getParameterValueAsString(AwardBudgetDocument.class, Constants.AWARD_BUDGET_DEFAULT_FNA_RATE_CLASS_CODE);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();        
         for (RateType rateType : awardFnARateTypes) {
-            if(rateType.getRateClassCode().equals(fnaRateClassCode)){
+        //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+            if(rateType.isActive() && rateType.getRateClassCode().equals(fnaRateClassCode)){
                 keyValues.add(new ConcreteKeyValue(rateType.getRateTypeCode(),rateType.getDescription()));
             }
         }

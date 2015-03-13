@@ -79,9 +79,12 @@ public class ProposalLogStatusValuesFinder extends FormViewAwareUifKeyValuesFind
             // when Disclosure Type is implemented, the above else might need to be separated into 2 different options
         }
         for (ProposalLogStatus status : statuses) {
-            if (!filterResults || validStatuses.contains(status.getProposalLogStatusCode())) {
-                retval.add(new ConcreteKeyValue(status.getProposalLogStatusCode(), status.getDescription()));
-            }
+        //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+        	if (status.isActive()) {
+        		if (!filterResults || validStatuses.contains(status.getProposalLogStatusCode())) {
+        			retval.add(new ConcreteKeyValue(status.getProposalLogStatusCode(), status.getDescription()));
+        		}
+        	}
         }
         return retval;
     }

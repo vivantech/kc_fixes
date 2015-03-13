@@ -21,6 +21,8 @@
         <ref bean="AbstractType-abstractTypeCode" />
         <ref bean="AbstractType-description" />
         <ref bean="AbstractType-versionNumber" />
+        <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+        <ref bean="AbstractType-active" />
       </list>
     </property>
   </bean>
@@ -55,6 +57,18 @@
   <bean id="AbstractType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
 
+  <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+  <bean id="AbstractType-active" parent="AbstractType-active-parentBean" />
+  <bean id="AbstractType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+	<property name="maxLength" value="1" />
+  </bean>
+  
 <!-- Business Object Inquiry Definition -->
 
 
@@ -67,6 +81,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Abstract Type" />
           <property name="numberOfColumns" value="1" />
+          <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition"
@@ -74,6 +89,8 @@
                     p:forceInquiry="true" />
               <bean parent="FieldDefinition"
                     p:attributeName="description" />
+              <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -100,12 +117,15 @@
             p:parameterName="abstractTypeMaintenanceHelp"
             p:parameterDetailType="Document" />
     </property>
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
               p:attributeName="abstractTypeCode" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
     <property name="resultFields" >
@@ -115,6 +135,8 @@
               p:forceInquiry="true" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>

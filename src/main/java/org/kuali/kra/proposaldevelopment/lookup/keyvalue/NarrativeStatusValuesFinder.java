@@ -51,7 +51,8 @@ public class NarrativeStatusValuesFinder extends UifKeyValuesFinderBase {
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(new ConcreteKeyValue("", "select"));
         for (NarrativeStatus status : statuses) {
-             keyValues.add(new ConcreteKeyValue(status.getNarrativeStatusCode(), status.getDescription()));
+        	if (status.isActive())
+        		keyValues.add(new ConcreteKeyValue(status.getNarrativeStatusCode(), status.getDescription()));
       
         }
         return keyValues;

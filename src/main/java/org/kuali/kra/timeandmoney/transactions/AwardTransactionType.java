@@ -27,6 +27,9 @@ public class AwardTransactionType extends AwardAssociate {
 
     private boolean showInActionSummary;
 
+    //  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+    private boolean active;
+
     public AwardTransactionType() {
     }
 
@@ -53,6 +56,15 @@ public class AwardTransactionType extends AwardAssociate {
     public void setShowInActionSummary(boolean showInActionSummary) {
         this.showInActionSummary = showInActionSummary;
     }
+    
+    // ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
     public void resetPersistenceState() {
     }

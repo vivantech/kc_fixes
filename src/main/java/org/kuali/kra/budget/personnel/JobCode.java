@@ -23,6 +23,9 @@ public class JobCode extends KraPersistableBusinessObjectBase {
 
     private String jobTitle;
 
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public String getJobCode() {
         return jobCode;
     }
@@ -38,4 +41,13 @@ public class JobCode extends KraPersistableBusinessObjectBase {
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
     }
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

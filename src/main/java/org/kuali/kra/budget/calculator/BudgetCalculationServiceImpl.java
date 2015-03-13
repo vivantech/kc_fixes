@@ -743,6 +743,8 @@ public class BudgetCalculationServiceImpl implements BudgetCalculationService {
         rateType.setRateTypeCode(budgetLineItemCalculatedAmount.getRateTypeCode());
         rateType.setDescription(budgetLineItemCalculatedAmount.getRateTypeDescription());
         rateType.setRateClass(budgetLineItemCalculatedAmount.getRateClass());
+        //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+        rateType.setActive(true);
         return rateType;
     }
 

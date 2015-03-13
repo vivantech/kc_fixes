@@ -25,11 +25,13 @@
 			<ref bean="AwardType-lookupDefinition"/>
 		</property>
 		<property name="titleAttribute" value="awardTypeCode"/>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="attributes">
 			<list>
 				<ref bean="AwardType-awardTypeCode"/>
 				<ref bean="AwardType-description"/>
 				<ref bean="AwardType-versionNumber"/>
+				<ref bean="AwardType-active"/>
 			</list>
 		</property>
 	</bean>
@@ -71,11 +73,24 @@
 	<bean id="AwardType-versionNumber" parent="AwardType-versionNumber-parentBean"/>
 	<bean abstract="true" id="AwardType-versionNumber-parentBean" parent="AttributeReferenceDummy-versionNumber">
 	</bean>
+	
+	<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
+  	<bean id="AwardType-active" parent="AwardType-active-parentBean" />
+  	<bean id="AwardType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+  	</bean>
 
 	<!-- Business Object Inquiry Definition -->
 	<bean id="AwardType-inquiryDefinition" parent="AwardType-inquiryDefinition-parentBean"/>
 	<bean abstract="true" id="AwardType-inquiryDefinition-parentBean" parent="InquiryDefinition">
 		<property name="title" value="Award Type Code"/>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="inquirySections">
 			<list>
 				<bean parent="InquirySectionDefinition">
@@ -85,6 +100,7 @@
 						<list>
 							<bean p:attributeName="awardTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 							<bean p:attributeName="description" parent="FieldDefinition"/>
+							<bean p:attributeName="active" parent="FieldDefinition"/>
 						</list>
 					</property>
 				</bean>
@@ -108,16 +124,20 @@
             	p:parameterName="awardTypeMaintenanceHelp"
        	   		p:parameterDetailType="Document" />
     	</property>   				
+    	<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields">
 			<list>
 				<bean p:attributeName="awardTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="description" parent="FieldDefinition"/>
+				<bean p:attributeName="active" parent="FieldDefinition"/>
 			</list>
 		</property>
+		<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 		<property name="resultFields">
 			<list>
 				<bean p:attributeName="awardTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="description" parent="FieldDefinition"/>
+				<bean p:attributeName="active" parent="FieldDefinition"/>
 			</list>
 		</property>
 	</bean>

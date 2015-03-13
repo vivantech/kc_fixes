@@ -25,12 +25,14 @@
             <ref bean="AwardTransactionType-lookupDefinition"/>
         </property>
         <property name="titleAttribute" value="awardTransactionTypeCode"/>
+        <!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
         <property name="attributes">
             <list>
                 <ref bean="AwardTransactionType-awardTransactionTypeCode"/>
                 <ref bean="AwardTransactionType-description"/>
                 <ref bean="AwardTransactionType-showInActionSummary"/>
                 <ref bean="AwardTransactionType-versionNumber"/>
+                <ref bean="AwardTransactionType-active" />
             </list>
         </property>
     </bean>
@@ -81,11 +83,25 @@
     <bean id="AwardTransactionType-versionNumber" parent="AwardTransactionType-versionNumber-parentBean"/>
     <bean abstract="true" id="AwardTransactionType-versionNumber-parentBean" parent="AttributeReferenceDummy-versionNumber">
     </bean>
+	
+	<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
+  	<bean id="AwardTransactionType-active" parent="AwardTransactionType-active-parentBean" />
+  	<bean id="AwardTransactionType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+  	</bean>
+    
 
     <!-- Business Object Inquiry Definition -->
     <bean id="AwardTransactionType-inquiryDefinition" parent="AwardTransactionType-inquiryDefinition-parentBean"/>
     <bean abstract="true" id="AwardTransactionType-inquiryDefinition-parentBean" parent="InquiryDefinition">
         <property name="title" value="Award Transaction Type Code"/>
+        <!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
         <property name="inquirySections">
             <list>
                 <bean parent="InquirySectionDefinition">
@@ -96,6 +112,7 @@
                             <bean p:attributeName="awardTransactionTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
                             <bean p:attributeName="description" parent="FieldDefinition"/>
                             <bean p:attributeName="showInActionSummary" parent="FieldDefinition"/>
+                            <bean p:attributeName="active" parent="FieldDefinition"/>
                         </list>
                     </property>
                 </bean>
@@ -118,19 +135,23 @@
         	    p:parameterNamespace="KC-M"
             	p:parameterName="awardTransactionTypeMaintenanceHelp"
        	   		p:parameterDetailType="Document" />
-    	</property>         
+    	</property>    
+    	<!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->     
         <property name="lookupFields">
             <list>
                 <bean p:attributeName="awardTransactionTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
                 <bean p:attributeName="description" parent="FieldDefinition"/>
                 <bean p:attributeName="showInActionSummary" parent="FieldDefinition"/>
+                <bean p:attributeName="active" parent="FieldDefinition"/>
             </list>
         </property>
+        <!-- ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
         <property name="resultFields">
             <list>
                 <bean p:attributeName="awardTransactionTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
                 <bean p:attributeName="description" parent="FieldDefinition"/>
                 <bean p:attributeName="showInActionSummary" parent="FieldDefinition"/>
+                <bean p:attributeName="active" parent="FieldDefinition"/>
             </list>
         </property>
     </bean>

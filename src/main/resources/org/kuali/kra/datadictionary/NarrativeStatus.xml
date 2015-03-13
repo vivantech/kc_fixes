@@ -16,11 +16,13 @@
       <ref bean="NarrativeStatus-lookupDefinition" />
     </property>
     <property name="titleAttribute" value="narrativeStatusCode" />
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="attributes" >
       <list>
         <ref bean="NarrativeStatus-narrativeStatusCode" />
         <ref bean="NarrativeStatus-description" />
         <ref bean="NarrativeStatus-versionNumber" />
+        <ref bean="NarrativeStatus-active" />
       </list>
     </property>
   </bean>
@@ -69,6 +71,18 @@
   <bean id="NarrativeStatus-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
 
+  <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
+  <bean id="NarrativeStatus-active" parent="NarrativeStatus-active-parentBean" />
+  <bean id="NarrativeStatus-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+	<property name="maxLength" value="1" />
+  </bean>
+  
 <!-- Business Object Inquiry Definition -->
 
 
@@ -81,6 +95,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Narrative Status" />
           <property name="numberOfColumns" value="1" />
+          <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition"
@@ -88,6 +103,8 @@
                     p:forceInquiry="true" />
               <bean parent="FieldDefinition"
                     p:attributeName="description" />
+        	  <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -114,12 +131,15 @@
             p:parameterName="narrativeStatusMaintenanceHelp"
             p:parameterDetailType="Document" />
     </property>     
+    <!--  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
               p:attributeName="narrativeStatusCode" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
     <property name="resultFields" >
@@ -129,6 +149,8 @@
               p:forceInquiry="true" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>

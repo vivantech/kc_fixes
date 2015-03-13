@@ -45,8 +45,11 @@ public class ReportClassValuesFinder extends UifKeyValuesFinderBase {
         
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         
+        //  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
         for(ReportClass reportClass: reportClasses){
-            keyValues.add(new ConcreteKeyValue(reportClass.getReportClassCode(), reportClass.getDescription()));
+        	if (reportClass.isActive()) {
+        		keyValues.add(new ConcreteKeyValue(reportClass.getReportClassCode(), reportClass.getDescription()));
+        	}
         }
         
         return keyValues;

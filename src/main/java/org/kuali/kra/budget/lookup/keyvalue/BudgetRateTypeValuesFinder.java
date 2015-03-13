@@ -32,8 +32,10 @@ public class BudgetRateTypeValuesFinder extends UifKeyValuesFinderBase {
     @Override
     public List<KeyValue> getKeyValues() {
         KeyValueFinderService keyValueFinderService= (KeyValueFinderService)KraServiceLocator.getService("keyValueFinderService");
-        Map<String,String> queryMap = new HashMap<String,String>();
+    //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+        Map<String,Object> queryMap = new HashMap<String,Object>();
         queryMap.put("rateClassType", "O");
+        queryMap.put("active", true);
         List<KeyValue> keyValueList = keyValueFinderService.getKeyValues(RateClass.class, "rateClassCode", "description", queryMap);
         KeyValue KeyValueSelect = new ConcreteKeyValue("", "select");
         for (KeyValue KeyValue : keyValueList) {

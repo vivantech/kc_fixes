@@ -824,6 +824,7 @@
 		</collection-descriptor>-->
 	</class-descriptor>
 	
+	<!--  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.award.paymentreports.ValidClassReportFrequency" table="VALID_CLASS_REPORT_FREQ">
 		<field-descriptor name="validClassReportFreqId" column="VALID_CLASS_REPORT_FREQ_ID" jdbc-type="INTEGER" primarykey="true" />
 		<field-descriptor name="reportClassCode" column="REPORT_CLASS_CODE" jdbc-type="VARCHAR" />
@@ -833,6 +834,7 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 		<reference-descriptor name="frequency" class-ref="org.kuali.kra.award.paymentreports.Frequency" auto-retrieve="false" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="frequencyCode"/>
 		</reference-descriptor>
@@ -845,7 +847,7 @@
 	</class-descriptor>
 	
 	
-	
+	<!--  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.award.paymentreports.ValidFrequencyBase" table="VALID_FREQUENCY_BASE">
 		<field-descriptor name="validFrequencyBaseId" column="VALID_FREQUENCY_BASE_ID" jdbc-type="INTEGER" primarykey="true" />
 		<field-descriptor name="frequencyCode" column="FREQUENCY_CODE" jdbc-type="VARCHAR" />
@@ -854,6 +856,7 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 		<reference-descriptor name="frequency" class-ref="org.kuali.kra.award.paymentreports.Frequency" auto-retrieve="false" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="frequencyCode"/>
 		</reference-descriptor>
@@ -928,13 +931,17 @@
 			<foreignkey field-ref="templateCode"/>
 		</reference-descriptor>
 	</class-descriptor>	
+	
+	<!--  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.award.home.AwardStatus" table="AWARD_STATUS">
 		<field-descriptor name="statusCode" column="STATUS_CODE" jdbc-type="VARCHAR" primarykey="true" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT"  locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
 		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP" />
-		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" /><!--
+		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
+		<!--
 		<collection-descriptor name="template" proxy="true" element-class-ref="org.kuali.kra.award.home.AwardTemplate" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="none">
 			<inverse-foreignkey field-ref="statusCode"/>
 		</collection-descriptor>
@@ -942,6 +949,7 @@
 			<inverse-foreignkey field-ref="statusCode"/>
 		</collection-descriptor>
 	--></class-descriptor>	
+	
 	<class-descriptor class="org.kuali.kra.award.home.AwardBasisOfPayment" table="AWARD_BASIS_OF_PAYMENT">
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT"   locking="false"/>
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
@@ -1136,6 +1144,7 @@
 		</reference-descriptor>
 	</class-descriptor>
 	
+	<!--  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.award.home.AwardType" table="AWARD_TYPE">
 		<field-descriptor name="awardTypeCode" column="AWARD_TYPE_CODE" jdbc-type="INTEGER" primarykey="true" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1143,6 +1152,7 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>
 	
 	<class-descriptor class="org.kuali.kra.award.home.ValidAwardBasisPayment" table="VALID_AWARD_BASIS_PAYMENT">

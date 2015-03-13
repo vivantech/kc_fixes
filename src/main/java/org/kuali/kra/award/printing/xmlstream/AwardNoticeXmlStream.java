@@ -105,7 +105,8 @@ public class AwardNoticeXmlStream extends AwardBaseStream {
 		this.award = award;
 		List<AwardAmountInfo> awardAmountInfos = award.getAwardAmountInfos();
 		if (awardAmountInfos != null && !awardAmountInfos.isEmpty()) {
-			awardAmountInfo = awardAmountInfos.get(0);
+			  // ### Vivantech Fix : #63 / [#89250412] get last award amount info for latest data, not the first.
+			awardAmountInfo = award.getLastAwardAmountInfo();
 		}
 	}
 

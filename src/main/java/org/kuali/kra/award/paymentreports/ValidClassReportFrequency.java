@@ -42,6 +42,9 @@ public class ValidClassReportFrequency extends KraPersistableBusinessObjectBase 
 
     private ReportClass reportClass;
 
+    //  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+    private boolean active;
+
     /**
      * 
      * Constructs a ValidClassReportFrequency.java.
@@ -227,4 +230,13 @@ public class ValidClassReportFrequency extends KraPersistableBusinessObjectBase 
         }
         return true;
     }
+    
+    // ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

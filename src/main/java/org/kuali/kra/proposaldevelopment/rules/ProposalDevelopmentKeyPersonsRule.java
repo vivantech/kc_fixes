@@ -20,6 +20,7 @@ import org.kuali.kra.bo.DegreeType;
 import org.kuali.kra.bo.Rolodex;
 import org.kuali.kra.bo.Unit;
 import org.kuali.kra.infrastructure.KeyConstants;
+import org.kuali.kra.infrastructure.KraServiceLocator;
 import org.kuali.kra.proposaldevelopment.bo.*;
 import org.kuali.kra.proposaldevelopment.document.ProposalDevelopmentDocument;
 import org.kuali.kra.proposaldevelopment.rule.AddKeyPersonRule;
@@ -32,9 +33,12 @@ import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.krad.bo.BusinessObject;
 import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Collections.sort;
 import static org.apache.commons.lang.StringUtils.isBlank;
@@ -425,7 +429,8 @@ public class ProposalDevelopmentKeyPersonsRule extends ResearchDocumentRuleBase 
             return false;
         }
         
-        if (isNotBlank(source.getDegreeCode()) && isInvalid(DegreeType.class, keyValue("degreeCode", source.getDegreeCode()))) {
+        //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+        if (isNotBlank(source.getDegreeCode()) && isInvalidDegreeType(source.getDegreeCode())) {
             retval = false;
         }
         if(StringUtils.isBlank(source.getDegreeCode())){
@@ -495,6 +500,27 @@ public class ProposalDevelopmentKeyPersonsRule extends ResearchDocumentRuleBase 
             i++;
         }
         return retval;
+    }
+    
+    //  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    /**
+     * Is this an invalid abstract type code?  Query the database for a matching abstract
+     * type code.  If found, it is valid; otherwise it is invalid.
+     * 
+     * @param abstractTypeCode the abstract type code to test against.
+     * @return true if invalid; false if valid
+     */
+    private boolean isInvalidDegreeType(String degreeTypeCode) {
+        if (degreeTypeCode != null) {
+            BusinessObjectService businessObjectService = KraServiceLocator.getService(BusinessObjectService.class);
+            Map<String,Object> fieldValues = new HashMap<String,Object>();
+            fieldValues.put("degreeCode", degreeTypeCode);
+            fieldValues.put("active", true);
+            if (businessObjectService.countMatching(DegreeType.class, fieldValues) == 1) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

@@ -26,7 +26,10 @@ public class DeadlineType extends KraPersistableBusinessObjectBase {
     private String deadlineTypeCode;
 
     private String description;
-
+    
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     /**
      * Gets the deadlineTypeCode attribute. 
      * @return Returns the deadlineTypeCode.
@@ -60,4 +63,13 @@ public class DeadlineType extends KraPersistableBusinessObjectBase {
     public void setDescription(String description) {
         this.description = description;
     }
+
+//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
