@@ -48,12 +48,13 @@
 	<bean id="IacucExceptionCategoryMaintenanceDocument-EditIacucExceptionCategory-parentBean" abstract="true" parent="MaintainableSectionDefinition">
 		<property name="id" value="Edit Exception Category"/>
 		<property name="title" value="Edit Exception Category"/>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="maintainableItems">
 			<list>
 				<bean parent="MaintainableFieldDefinition" p:name="exceptionCategoryCode" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="exceptionCategoryDesc" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
-				<bean parent="MaintainableFieldDefinition" p:name="active" p:required="true"/>
+				<bean parent="MaintainableFieldDefinition" p:name="active" p:required="true" p:defaultValue="true"/>
 			</list>
 		</property>
 	</bean>
