@@ -34,6 +34,9 @@ public class IacucPersonTraining extends KraPersistableBusinessObjectBase {
     private IacucSpecies iacucSpecies; 
     private IacucProcedure iacucProcedure; 
     
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public IacucPersonTraining() { 
 
     } 
@@ -114,4 +117,13 @@ public class IacucPersonTraining extends KraPersistableBusinessObjectBase {
     public KcPerson getPerson() {
         return getKcPersonService().getKcPersonByPersonId(personId);
     }
+
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
