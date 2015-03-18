@@ -30,7 +30,8 @@
                 <value>affiliationTypeCode</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />       
+        <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />       
         <property name="documentTypeName" value="IacucProtocolAffiliationTypeMaintenanceDocument"/>
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
     </bean>
@@ -41,12 +42,13 @@
     <bean id="IacucProtocolAffiliationTypeMaintenanceDocument-EditIacucAffiliationType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Iacuc Affiliation Type"/>
         <property name="title" value="Edit Iacuc Affiliation Type"/>
+        <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems">
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="affiliationTypeCode" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
-                <bean parent="MaintainableFieldDefinition" p:name="active" p:required="true"/>
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:required="true" p:defaultValue="true/>
             </list>
         </property>
     </bean>
