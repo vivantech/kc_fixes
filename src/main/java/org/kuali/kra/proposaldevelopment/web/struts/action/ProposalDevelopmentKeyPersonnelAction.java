@@ -560,6 +560,11 @@ public class ProposalDevelopmentKeyPersonnelAction extends ProposalDevelopmentAc
         // if the rule evaluation passed, then save. It is possible that invoking save without checking rules first will
         // let the document save anyhow, so let's check first.
         if (rulePassed) {
+            // ### Vivantech Fix: #66 ERA Commons error causes exception when saving twice.
+        	// This issue is occurring because the code is manually saving business objects such as AnswerHeader and Key Personnels occuring 
+        	// before datadictionary validation happens and rejects the save in super.save parent.  Then when we try to save again, exception is thrown
+        	// with error as document already been modified by another user.
+        	ActionForward forward = super.save(mapping, form, request, response);
             //save the answer headers
             List<AnswerHeader> answerHeadersToSave = new ArrayList<AnswerHeader>();
             for (ProposalPersonQuestionnaireHelper helper : pdform.getProposalPersonQuestionnaireHelpers()) {
@@ -618,8 +623,7 @@ public class ProposalDevelopmentKeyPersonnelAction extends ProposalDevelopmentAc
                 }
             }
             pdform.setPropsoalPersonsToDelete(new ArrayList<ProposalPerson>());
-            
-            return super.save(mapping, form, request, response);
+        	return forward;
         }
         return mapping.findForward(MAPPING_BASIC);
     }
