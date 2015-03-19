@@ -49,10 +49,6 @@ public class IacucProtocolProjectType extends KraPersistableBusinessObjectBase {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    public void setAlternateSearchDbName(String alternateSearchDbName) {
-        this.alternateSearchDbName = alternateSearchDbName;
-    }
 
     //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
 	public boolean isActive() {
