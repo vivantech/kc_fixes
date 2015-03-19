@@ -48,7 +48,7 @@
                 <bean parent="MaintainableFieldDefinition" p:name="affiliationTypeCode" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
-                <bean parent="MaintainableFieldDefinition" p:name="active" p:required="true" p:defaultValue="true/>
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:required="true" p:defaultValue="true" />
             </list>
         </property>
     </bean>
