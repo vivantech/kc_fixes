@@ -12,5 +12,6 @@
 		<include relativeToChangelogFile="true" file="kc_vt_changeset_02.sql"/>
 		<include relativeToChangelogFile="true" file="kc_vt_changeset_03.sql"/>
 		<include relativeToChangelogFile="true" file="kc_vt_changeset_04.sql"/>
+		<include relativeToChangelogFile="true" file="90560752-add-active-ind-iacuc-documents.sql"/>
 		
 </databaseChangeLog>
