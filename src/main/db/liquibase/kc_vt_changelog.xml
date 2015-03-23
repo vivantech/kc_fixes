@@ -7,6 +7,11 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 		
+		<include relativeToChangelogFile="true" file="kc_vt_changeset_00.xml"/>
+		<include relativeToChangelogFile="true" file="kc_vt_changeset_01.sql"/>
+		<include relativeToChangelogFile="true" file="kc_vt_changeset_02.sql"/>
+		<include relativeToChangelogFile="true" file="kc_vt_changeset_03.sql"/>
+		<include relativeToChangelogFile="true" file="kc_vt_changeset_04.sql"/>
 		<include relativeToChangelogFile="true" file="kc_vt_90560752_add_active_ind_iacuc_documents.sql"/>
 		
 </databaseChangeLog>
