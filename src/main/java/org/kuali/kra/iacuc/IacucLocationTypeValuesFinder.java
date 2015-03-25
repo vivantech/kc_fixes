@@ -50,8 +50,11 @@ public class IacucLocationTypeValuesFinder extends UifKeyValuesFinderBase {
         keyValues.add(0, new ConcreteKeyValue(PrefixValuesFinder.getPrefixKey(), PrefixValuesFinder.getDefaultPrefixValue()));
         for (Iterator<IacucLocationType> iter = iacucLocationTypes.iterator(); iter.hasNext();) {
             IacucLocationType iacucLocationType = (IacucLocationType) iter.next();
-            keyValues.add(new ConcreteKeyValue(iacucLocationType.getLocationTypeCode().toString(),
-                    iacucLocationType.getLocation()));
+            //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+            if (iacucLocationType.isActive()) {
+            	keyValues.add(new ConcreteKeyValue(iacucLocationType.getLocationTypeCode().toString(),
+            			iacucLocationType.getLocation()));
+            }
         }
         return keyValues;
     }

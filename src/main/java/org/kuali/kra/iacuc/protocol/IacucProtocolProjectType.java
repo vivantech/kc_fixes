@@ -27,6 +27,9 @@ public class IacucProtocolProjectType extends KraPersistableBusinessObjectBase {
     private String projectTypeCode;
 
     private String description;
+    
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public IacucProtocolProjectType() {
     }
@@ -46,5 +49,14 @@ public class IacucProtocolProjectType extends KraPersistableBusinessObjectBase {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 }
