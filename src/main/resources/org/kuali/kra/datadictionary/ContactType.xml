@@ -27,11 +27,13 @@
 			<ref bean="ContactType-lookupDefinition"/>
 		</property>
 		<property name="titleAttribute" value="contactTypeCode"/>
+		<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 		<property name="attributes">
 			<list>
 				<ref bean="ContactType-contactTypeCode"/>
 				<ref bean="ContactType-description"/>
 				<ref bean="ContactType-versionNumber"/>
+				<ref bean="ContactType-active"/>
 			</list>
 		</property>
 	</bean>
@@ -73,6 +75,18 @@
 	<bean id="ContactType-versionNumber" parent="ContactType-versionNumber-parentBean"/>
 	<bean abstract="true" id="ContactType-versionNumber-parentBean" parent="AttributeReferenceDummy-versionNumber">
 	</bean>
+	
+	<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+	<bean id="ContactType-active" parent="ContactType-active-parentBean" />
+  	<bean id="ContactType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+	  	<property name="maxLength" value="1" />
+  	</bean>
 
 	<!-- Business Object Inquiry Definition -->
 	<bean id="ContactType-inquiryDefinition" parent="ContactType-inquiryDefinition-parentBean"/>
@@ -83,10 +97,12 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Contact Type Code"/>
 					<property name="numberOfColumns" value="1"/>
+					<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields">
 						<list>
 							<bean p:attributeName="contactTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 							<bean p:attributeName="description" parent="FieldDefinition"/>
+							<bean p:attributeName="active" parent="FieldDefinition"/>
 						</list>
 					</property>
 				</bean>
@@ -110,16 +126,20 @@
             	p:parameterName="contactTypeMaintenanceHelp"
        	   		p:parameterDetailType="Document" />
     	</property>  		
+    	<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields">
 			<list>
 				<bean p:attributeName="contactTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="description" parent="FieldDefinition"/>
+				<bean p:attributeName="active" parent="FieldDefinition"/>
 			</list>
 		</property>
+		<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 		<property name="resultFields">
 			<list>
 				<bean p:attributeName="contactTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
 				<bean p:attributeName="description" parent="FieldDefinition"/>
+				<bean p:attributeName="active" parent="FieldDefinition"/>
 			</list>
 		</property>
 	</bean>
