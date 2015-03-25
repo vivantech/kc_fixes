@@ -27,6 +27,7 @@
             <ref bean="ContactUsage-lookupDefinition"/>
         </property>
         <property name="titleAttribute" value="contactUsageId"/>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="attributes">
             <list> 
                 <ref bean="ContactUsage-contactUsageId"/>
@@ -35,6 +36,7 @@
                 <ref bean="ContactUsage-moduleCode"/>
                 <ref bean="ContactUsage-coeusModule.description" /> 
                 <ref bean="ContactUsage-versionNumber"/>
+                <ref bean="ContactUsage-active"/>
             </list>
         </property>
     </bean>
@@ -112,7 +114,19 @@
     <bean id="ContactUsage-versionNumber" parent="ContactUsage-versionNumber-parentBean"/>
     <bean abstract="true" id="ContactUsage-versionNumber-parentBean" parent="AttributeReferenceDummy-versionNumber">
     </bean>
-
+  
+  	<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  	<bean id="ContactUsage-active" parent="ContactUsage-active-parentBean" />
+  	<bean id="ContactUsage-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+  		<property name="maxLength" value="1" />
+  	</bean>
+  	
     <!-- Business Object Inquiry Definition -->
     <bean id="ContactUsage-inquiryDefinition" parent="ContactUsage-inquiryDefinition-parentBean"/>
     <bean abstract="true" id="ContactUsage-inquiryDefinition-parentBean" parent="InquiryDefinition">
@@ -122,11 +136,13 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="Contact Usage Id"/>
                     <property name="numberOfColumns" value="1"/>
+                    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields">
                         <list>
                             <bean p:attributeName="contactUsageId" p:forceInquiry="true" parent="FieldDefinition" />
                             <bean p:attributeName="contactTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
                             <bean p:attributeName="moduleCode" p:forceInquiry="true" parent="FieldDefinition"/>
+                			<bean p:attributeName="active" parent="FieldDefinition"/>
                         </list>
                     </property>
                 </bean>
@@ -150,12 +166,15 @@
                 p:parameterName="contactUsageMaintenanceHelp"
                 p:parameterDetailType="Document" />
         </property>         
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="lookupFields">
             <list>
                 <bean p:attributeName="contactTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
                 <bean p:attributeName="moduleCode" p:forceInquiry="true" parent="FieldDefinition"/>
+                <bean p:attributeName="active" parent="FieldDefinition"/>
             </list>
         </property>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="resultFields">
             <list>
                 <bean p:attributeName="contactUsageId" p:forceInquiry="true" parent="FieldDefinition"/>
@@ -163,6 +182,7 @@
                 <bean p:attributeName="contactType.description" p:forceInquiry="true" parent="FieldDefinition"/>
                 <bean p:attributeName="moduleCode" p:forceInquiry="true" parent="FieldDefinition"/>
                 <bean p:attributeName="coeusModule.description" p:forceInquiry="true" parent="FieldDefinition"/>
+                <bean p:attributeName="active" parent="FieldDefinition"/>
             </list>
         </property>
     </bean>

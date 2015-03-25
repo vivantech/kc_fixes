@@ -58,8 +58,10 @@ public class ContactUsageMaintenanceDocumentRule extends KraMaintenanceDocumentR
     private boolean validateContactType(ContactUsage contactUsage) {
         boolean valid = true;
         if (StringUtils.isNotBlank(contactUsage.getContactTypeCode())) {
-            Map<String, String> fieldValues = new HashMap<String, String>();
-            fieldValues.put("contactTypeCode", contactUsage.getContactTypeCode());            
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            Map<String, Object> fieldValues = new HashMap<String, Object>();
+            fieldValues.put("contactTypeCode", contactUsage.getContactTypeCode());   
+            fieldValues.put("active", true);   
             List<ContactType> contactTypes = (List<ContactType>) boService.findMatching(ContactType.class, fieldValues);
             if (contactTypes.isEmpty()) {
                 GlobalVariables.getMessageMap().putError("document.newMaintainableObject.contactTypeCode", KeyConstants.ERROR_CONTACT_TYPE_NOT_EXISTS,
@@ -88,9 +90,11 @@ public class ContactUsageMaintenanceDocumentRule extends KraMaintenanceDocumentR
     private boolean checkContactTypeModuleExists(ContactUsage contactUsage, String maintenanceAction) {
         boolean valid = true;
         if (StringUtils.isNotBlank(contactUsage.getContactTypeCode()) && StringUtils.isNotBlank(contactUsage.getModuleCode())) {
-            Map<String, String> fieldValues = new HashMap<String, String>();
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            Map<String, Object> fieldValues = new HashMap<String, Object>();
             fieldValues.put("contactTypeCode", contactUsage.getContactTypeCode());
             fieldValues.put("moduleCode", contactUsage.getModuleCode());
+            fieldValues.put("active", true);
             List<ContactUsage> contactUsages = (List<ContactUsage>) boService.findMatching(ContactUsage.class, fieldValues);
             if (!contactUsages.isEmpty()) {
                 ContactUsage existValidContactTypeModule = contactUsages.get(0);
