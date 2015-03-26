@@ -63,8 +63,10 @@ public class RateClassTypeExistenceRule extends KraMaintenanceDocumentRuleBase {
         }
         RateClass rateClass = (RateClass) maintenanceDocument.getNewMaintainableObject().getDataObject();
 
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
         Map pkMap = new HashMap();
         pkMap.put("rateClassType", rateClass.getRateClassType());
+        pkMap.put("active", true);
         valid=checkExistenceFromTable(RateClassType.class,pkMap,"rateClassType", "Rate Class Type");
 
 
