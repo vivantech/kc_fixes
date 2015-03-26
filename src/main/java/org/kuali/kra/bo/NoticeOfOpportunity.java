@@ -24,6 +24,9 @@ public class NoticeOfOpportunity extends KraPersistableBusinessObjectBase {
     private String noticeOfOpportunityCode;
 
     private String description;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     /**
      * Retrieves the description attribute
@@ -59,4 +62,13 @@ public class NoticeOfOpportunity extends KraPersistableBusinessObjectBase {
     public void setNoticeOfOpportunityCode(String noticeOfOpportunityCode) {
         this.noticeOfOpportunityCode = noticeOfOpportunityCode;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
