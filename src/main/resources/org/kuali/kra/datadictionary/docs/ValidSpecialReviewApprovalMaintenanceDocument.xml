@@ -14,7 +14,8 @@
       <list>
         <value>validSpecialReviewApprovalId</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     
     
     
@@ -35,6 +36,7 @@
   <bean id="ValidSpecialReviewApprovalMaintenanceDocument-EditValidSpecialReviewApproval-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Valid Special Review Approval"/>
     <property name="title" value="Edit Valid Special Review Approval"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="validSpecialReviewApprovalId" p:required="true"/>
@@ -45,6 +47,7 @@
         <bean parent="MaintainableFieldDefinition" p:name="protocolNumberFlag"/>
         <bean parent="MaintainableFieldDefinition" p:name="exemptNumberFlag"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
       </list>
     </property>
   </bean>

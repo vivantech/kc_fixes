@@ -32,7 +32,7 @@
             <ref bean="ValidSpecialReviewApproval-lookupDefinition" />
 	    </property>
         <property name="titleAttribute" value="validSpecialReviewApprovalId" />
-
+    	<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="attributes" >
 			<list>
 			    <ref bean="ValidSpecialReviewApproval-validSpecialReviewApprovalId" />
@@ -43,6 +43,7 @@
 				<ref bean="ValidSpecialReviewApproval-protocolNumberFlag" />
 				<ref bean="ValidSpecialReviewApproval-exemptNumberFlag" />
 				<ref bean="ValidSpecialReviewApproval-versionNumber" />
+				<ref bean="ValidSpecialReviewApproval-active" />
 			</list>
 	    </property>
     </bean>
@@ -111,6 +112,19 @@
 
     <bean id="ValidSpecialReviewApproval-versionNumber" parent="ValidSpecialReviewApproval-versionNumber-parentBean" />
     <bean id="ValidSpecialReviewApproval-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" />
+    
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+    <bean id="ValidSpecialReviewApproval-active" parent="ValidSpecialReviewApproval-active-parentBean" />
+  	<bean id="ValidSpecialReviewApproval-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+	  	<property name="maxLength" value="1" />
+	  </bean>
+  	
 
     <!-- Business Object Inquiry Definition -->
 
@@ -122,6 +136,7 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Valid Special Review Approval" />
 					<property name="numberOfColumns" value="1" />
+					<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields" >
 						<list>
 						    <bean parent="FieldDefinition"
@@ -139,6 +154,8 @@
 							      p:attributeName="protocolNumberFlag" />
 							<bean parent="FieldDefinition"
 							      p:attributeName="exemptNumberFlag" />
+							<bean parent="FieldDefinition"
+				      			  p:attributeName="active" />
 						</list>
 					</property>
 				</bean>
@@ -155,6 +172,7 @@
 	    <property name="defaultSort" >
             <bean parent="SortDefinition" />
 	    </property>
+	    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	    <property name="lookupFields" >
 			<list>
                 <bean parent="FieldDefinition"
@@ -172,8 +190,11 @@
 				      p:attributeName="protocolNumberFlag" />
 				<bean parent="FieldDefinition"
 				      p:attributeName="exemptNumberFlag" />
+				<bean parent="FieldDefinition"
+				      p:attributeName="active" />
 			</list>
 	    </property>
+	    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	    <property name="resultFields" >
 			<list>
 			    <bean parent="FieldDefinition"
@@ -192,6 +213,8 @@
 				      p:attributeName="protocolNumberFlag" />
 				<bean parent="FieldDefinition"
 				      p:attributeName="exemptNumberFlag" />
+				<bean parent="FieldDefinition"
+				      p:attributeName="active" />
 			</list>
 	    </property>
     </bean>
