@@ -61,6 +61,9 @@ public class Question extends KraPersistableBusinessObjectBase implements Compar
     private Integer maxAnswers;
 
     private Integer answerMaxLength;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     private QuestionCategory questionCategory;
 
@@ -401,4 +404,13 @@ public class Question extends KraPersistableBusinessObjectBase implements Compar
     public void resetPersistenceState() {
         this.questionRefId = null;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
