@@ -257,6 +257,7 @@ public class Award extends KraPersistableBusinessObjectBase implements KeywordsM
     private List<SubAward> subAwardList;
     
     private transient boolean allowUpdateTimestampToBeReset = true;
+    private transient boolean allowUpdateUserToBeReset = true;
     
     private VersionHistorySearchBo versionHistory;
 
@@ -3546,7 +3547,30 @@ public class Award extends KraPersistableBusinessObjectBase implements KeywordsM
         }
     }
     
-    public List<Award> getAwardVersions() {
+    // ###Vivantech Fix: #71 / [89656862] Award T&M Should Not Change updateUser on History Panel for Prior Award Versions Upon User Versioning the Award
+    public boolean isAllowUpdateUserToBeReset() {
+		return allowUpdateUserToBeReset;
+	}
+
+    /**
+     * 
+     * Setting this value to false will prevent the update user field from being updated just once.  After that, the update user field will update as regular.
+     * @param allowUpdateUserToBeReset
+     */
+	public void setAllowUpdateUserToBeReset(boolean allowUpdateUserToBeReset) {
+		this.allowUpdateUserToBeReset = allowUpdateUserToBeReset;
+	}
+	
+	@Override
+	public void setUpdateUser(String updateUser) {
+		if (isAllowUpdateUserToBeReset()) {
+            super.setUpdateUser(updateUser);
+        } else {
+            setAllowUpdateUserToBeReset(true);
+        }
+	}
+
+	public List<Award> getAwardVersions() {
         Map<String, String> fieldValues = new HashMap<String,String>();
         fieldValues.put("awardNumber", getAwardNumber());
         BusinessObjectService businessObjectService =  KraServiceLocator.getService(BusinessObjectService.class);
