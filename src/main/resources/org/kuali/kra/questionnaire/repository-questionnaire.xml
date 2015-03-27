@@ -18,6 +18,7 @@
 
 <descriptor-repository version="1.0">
 
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.questionnaire.question.Question" table="QUESTION">
         <field-descriptor name="questionRefId" column="QUESTION_REF_ID" jdbc-type="BIGINT" primarykey="true" sequence-name="SEQ_QUESTIONNAIRE_REF_ID" autoincrement="true" />
         <field-descriptor name="documentNumber" column="DOCUMENT_NUMBER" jdbc-type="VARCHAR" />
@@ -37,6 +38,8 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
+        
         <reference-descriptor name="questionCategory" class-ref="org.kuali.kra.questionnaire.question.QuestionCategory" auto-retrieve="true" auto-update="none" auto-delete="none">
             <foreignkey field-ref="categoryTypeCode"/>
         </reference-descriptor>
