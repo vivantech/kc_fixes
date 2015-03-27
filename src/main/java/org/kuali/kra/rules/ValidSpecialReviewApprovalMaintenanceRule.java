@@ -30,6 +30,7 @@ public class ValidSpecialReviewApprovalMaintenanceRule extends KraMaintenanceDoc
     
     private static final String SPECIAL_REVIEW_TYPE_CODE = "specialReviewTypeCode";
     private static final String SPECIAL_REVIEW_TYPE_TITLE = "Special Review Type Code";
+    private static final String ACTIVE = "active";
     
     private static final String APPROVAL_TYPE_CODE = "approvalTypeCode";
     private static final String APPROVAL_TYPE_TITLE = "Approval Type Code";
@@ -56,8 +57,10 @@ public class ValidSpecialReviewApprovalMaintenanceRule extends KraMaintenanceDoc
     private boolean validate(ValidSpecialReviewApproval specialReviewApproval) {
         boolean valid = true;
 
-        Map<String, String> specialReviewTypePk = new HashMap<String, String>();
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+        Map<String, Object> specialReviewTypePk = new HashMap<String, Object>();
         specialReviewTypePk.put(SPECIAL_REVIEW_TYPE_CODE, specialReviewApproval.getSpecialReviewTypeCode());
+        specialReviewTypePk.put(ACTIVE, true);
         valid &= checkExistenceFromTable(SpecialReviewType.class, specialReviewTypePk, SPECIAL_REVIEW_TYPE_CODE, SPECIAL_REVIEW_TYPE_TITLE);
         
         Map<String, String> approvalTypePk = new HashMap<String, String>();
