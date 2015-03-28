@@ -108,9 +108,11 @@ public class ValidWatermarkStatusMaintenanceDocumentRule extends KraMaintenanceD
     private boolean validateWatermarkStatusCode(final String watermarkStatusCode, final String watermarkGroupName ) {
         boolean valid = true;
         if ((watermarkStatusCode != null && StringUtils.isNotBlank(watermarkStatusCode)) && (watermarkGroupName != null && StringUtils.isNotBlank(watermarkGroupName))) {
-            final Map<String, String> pkMap = new HashMap<String, String>();
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            final Map<String, Object> pkMap = new HashMap<String, Object>();
             pkMap.put("statusCode", watermarkStatusCode);
             pkMap.put("groupName", watermarkGroupName);
+            pkMap.put("active", true);
             final int watermarkMatchingCount = KraServiceLocator.getService(BusinessObjectService.class).countMatching(
                     Watermark.class, pkMap);
 
