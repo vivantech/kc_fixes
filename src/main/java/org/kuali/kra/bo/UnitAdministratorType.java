@@ -45,6 +45,9 @@ public class UnitAdministratorType extends KraPersistableBusinessObjectBase impl
     private String defaultGroupFlag;
 
     private UnitContactType unitContactType;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public UnitAdministratorType() {
         super();
@@ -119,4 +122,13 @@ public class UnitAdministratorType extends KraPersistableBusinessObjectBase impl
     public void setDefaultGroupFlag(String defaultGroupFlag) {
         this.defaultGroupFlag = defaultGroupFlag;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }
