@@ -62,6 +62,7 @@
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     </class-descriptor>
     
+    <!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.questionnaire.question.QuestionCategory" table="GROUP_TYPES">
         <field-descriptor name="categoryTypeCode" column="GROUP_TYPE_CODE" jdbc-type="INTEGER" primarykey="true" />
         <field-descriptor name="categoryName" column="GROUP_NAME" jdbc-type="VARCHAR" />
@@ -69,8 +70,10 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
 
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <class-descriptor class="org.kuali.kra.questionnaire.question.QuestionType" table="QUESTION_TYPES">
         <field-descriptor name="questionTypeId" column="QUESTION_TYPE_ID" jdbc-type="INTEGER" primarykey="true" />
         <field-descriptor name="questionTypeName" column="QUESTION_TYPE_NAME" jdbc-type="VARCHAR" />
@@ -78,6 +81,7 @@
         <field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
         <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
         <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+        <field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
     </class-descriptor>
 
     <class-descriptor class="org.kuali.kra.bo.ArgValueLookup" table="ARG_VALUE_LOOKUP">
