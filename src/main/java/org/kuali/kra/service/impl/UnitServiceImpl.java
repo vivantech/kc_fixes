@@ -109,6 +109,31 @@ public class UnitServiceImpl implements UnitService {
         return units;
     }
     
+    
+    // ### Vivantech Fix #77 [91135976] Unit Hierarchy: Units that have been INACTIVATED are still appearing in the "Visual Unit Hierarchy"
+    public List<Unit> getActiveSubUnits(String unitNumber) {
+        List<Unit> units = new ArrayList<Unit>();
+        Map<String, Object> fieldValues = new HashMap<String, Object>();
+        fieldValues.put("parentUnitNumber", unitNumber);
+        fieldValues.put("active", true);
+        units.addAll(businessObjectService.findMatching(Unit.class, fieldValues));
+        return units;
+    }
+    
+    protected String getActiveSubUnits (Unit unit, int level) {
+        String subUnits="";
+        int parentNum = numberOfUnits;
+        level--;
+        for (Unit unit1 : getActiveSubUnits(unit.getUnitNumber())) {
+            subUnits = subUnits + parentNum + DASH + unit1.getUnitNumber()+KRADConstants.BLANK_SPACE+COLUMN+KRADConstants.BLANK_SPACE+unit1.getUnitName()+SEPARATOR;
+            numberOfUnits++;
+            if (level > 0) {
+                subUnits = subUnits +  getActiveSubUnits(unit1, level);
+            }
+        }
+        return subUnits;        
+    }
+    
     /**
      * @see org.kuali.kra.service.UnitService#getAllSubUnits(java.lang.String)
      */
@@ -239,12 +264,12 @@ public class UnitServiceImpl implements UnitService {
         int parentIdx = 0;
         String subUnits = instituteUnit.getUnitNumber() +KRADConstants.BLANK_SPACE+COLUMN+KRADConstants.BLANK_SPACE+instituteUnit.getUnitName()+SEPARATOR;
         numberOfUnits = 0;
-        for (Unit unit : getSubUnits(instituteUnit.getUnitNumber())) {
+        for (Unit unit : getActiveSubUnits(instituteUnit.getUnitNumber())) {
             subUnits = subUnits + parentIdx + DASH + unit.getUnitNumber()+KRADConstants.BLANK_SPACE+COLUMN+KRADConstants.BLANK_SPACE+unit.getUnitName()+SEPARATOR;
             // we can make it more flexible, to add a while loop and with a 'depth' argument.
             numberOfUnits++;
             if (depth - 2 > 0) {
-                subUnits = subUnits +  getSubUnits(unit, depth - 2);
+                subUnits = subUnits +  getActiveSubUnits(unit, depth - 2);
             }
         }
         subUnits = subUnits.substring(0, subUnits.length() - 3);
