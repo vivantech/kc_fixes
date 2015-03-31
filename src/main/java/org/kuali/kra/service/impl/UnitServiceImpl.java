@@ -204,7 +204,7 @@ public class UnitServiceImpl implements UnitService {
         String subUnits = null;
         // Following index check maybe changed if refactor jsp page to align buttons.
         int startIdx = unitNumber.indexOf("px\">", unitNumber.indexOf("<tr>"));
-        for (Unit unit : getSubUnits(unitNumber.substring(startIdx+4, unitNumber.indexOf(COLUMN, startIdx) - 1))) {
+        for (Unit unit : getActiveSubUnits(unitNumber.substring(startIdx+4, unitNumber.indexOf(COLUMN, startIdx) - 1))) {
             if (StringUtils.isNotBlank(subUnits)) {
                 subUnits = subUnits +"#SEPARATOR#" +unit.getUnitNumber()+KRADConstants.BLANK_SPACE+COLUMN+KRADConstants.BLANK_SPACE+unit.getUnitName();
             } else {
