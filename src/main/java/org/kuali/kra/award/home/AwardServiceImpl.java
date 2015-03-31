@@ -208,6 +208,8 @@ public class AwardServiceImpl implements AwardService {
         for (Award award : awards) {
             award.setAwardSequenceStatus(VersionStatus.ARCHIVED.name());
             award.setAllowUpdateTimestampToBeReset(false);
+            // ###Vivantech Fix: #71 / [89656862] Award T&M Should Not Change updateUser on History Panel for Prior Award Versions Upon User Versioning the Award
+            award.setAllowUpdateUserToBeReset(false);
             businessObjectService.save(award);
         }
     }

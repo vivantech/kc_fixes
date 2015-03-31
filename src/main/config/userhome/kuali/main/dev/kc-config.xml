@@ -5,9 +5,9 @@
 <param name="app.context.name">kc-dev</param>
 
 	<!-- KC Client DB -->
-	<param name="datasource.url">jdbc:mysql://localhost:3306/vt-kc</param>
-	<param name="datasource.username">vt-kc</param>
-	<param name="datasource.password">vt-kc</param>
+	<param name="datasource.url">jdbc:mysql://localhost:3306/kc_vt</param>
+	<param name="datasource.username">kc_vt</param>
+	<param name="datasource.password">kc_vt</param>
 	<param name="datasource.ojb.platform">MySQL</param>
 
 	<!-- For Embedded Mode -->
@@ -28,9 +28,9 @@
 
 	<!-- Rice Server DB -->
 	<!-- Should be the same as KC Client DB when running bundled mode -->
-	<param name="server.datasource.url">jdbc:mysql://localhost:3306/vt-kr</param>
-	<param name="server.datasource.username">vt-kr</param>
-	<param name="server.datasource.password">vt-kr</param>
+	<param name="server.datasource.url">jdbc:mysql://localhost:3306/kr_vt</param>
+	<param name="server.datasource.username">kr_vt</param>
+	<param name="server.datasource.password">kr_vt</param>
 	<param name="datasource.ojb.platform">MySQL</param>
 
 	<!-- Keystore Configuration -->

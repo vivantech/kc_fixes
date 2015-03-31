@@ -16,7 +16,8 @@
 		        <value>personId</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         <property name="documentTypeName" value="UnitCorrespondentMaintenanceDocument" />
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" />
     </bean>
@@ -27,6 +28,7 @@
     <bean id="UnitCorrespondentMaintenanceDocument-EditUnitCorrespondent-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Unit Correspondent" />
         <property name="title" value="Edit Unit Correspondent" />
+        <!-- ### Vivantech Fix : #61 / [#86133850] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems" >
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="personId" p:required="true" />
@@ -37,6 +39,7 @@
                 <bean parent="MaintainableFieldDefinition" p:name="correspondentTypeCode" p:required="true" />
                 <bean parent="MaintainableFieldDefinition" p:name="nonEmployeeFlag" p:required="true" />
                 <bean parent="MaintainableFieldDefinition" p:name="description" />
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>

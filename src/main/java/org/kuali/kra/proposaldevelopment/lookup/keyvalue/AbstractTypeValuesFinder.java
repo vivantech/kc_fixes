@@ -62,6 +62,7 @@ public class AbstractTypeValuesFinder extends FormViewAwareUifKeyValuesFinderBas
         Collection<AbstractType> abstractTypes = keyValuesService.findAll(AbstractType.class);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(new ConcreteKeyValue("", "select"));
+    	//  ### Vivantech Fix : #39 / [#86133644] adding active indicator field and disabling the delete.  
         for (AbstractType abstractType : abstractTypes) {
             if (abstractType.isActive() && !hasAbstract(doc, abstractType)) {
                 keyValues.add(new ConcreteKeyValue(abstractType.getAbstractTypeCode(), abstractType.getDescription()));
