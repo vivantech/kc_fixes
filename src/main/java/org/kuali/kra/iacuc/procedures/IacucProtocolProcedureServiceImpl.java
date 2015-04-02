@@ -63,7 +63,10 @@ public class IacucProtocolProcedureServiceImpl implements IacucProtocolProcedure
      * @see org.kuali.kra.iacuc.procedures.IacucProtocolProcedureService#getAllProcedures()
      */
     public List<IacucProcedure> getAllProcedures() {
-        return (List<IacucProcedure>)getBusinessObjectService().findAllOrderBy(IacucProcedure.class, "procedureCategoryCode", true);
+        //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+        Map<String, Object> keyMap = new HashMap<String, Object> ();
+        keyMap.put("active", true);
+        return (List<IacucProcedure>) getBusinessObjectService().findMatchingOrderBy(IacucProcedure.class, keyMap, "procedureCategoryCode", true);
     }
 
     /**

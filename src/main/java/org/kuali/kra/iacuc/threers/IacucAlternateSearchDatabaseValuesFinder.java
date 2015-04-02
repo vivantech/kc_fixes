@@ -31,7 +31,10 @@ public class IacucAlternateSearchDatabaseValuesFinder extends UifKeyValuesFinder
         List<IacucAlternateSearchDatabase> databases = (List<IacucAlternateSearchDatabase>) getBusinessObjectService().findAll(IacucAlternateSearchDatabase.class);
         List<KeyValue> activeLabels = new ArrayList<KeyValue>();
         for (IacucAlternateSearchDatabase db : databases) {
-            activeLabels.add(new ConcreteKeyValue(db.getAlternateSearchDbName(), db.getAlternateSearchDbName()));
+            //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+        	if (db.isActive()) {
+        		activeLabels.add(new ConcreteKeyValue(db.getAlternateSearchDbName(), db.getAlternateSearchDbName()));
+        	}
         }
         return activeLabels;
     }

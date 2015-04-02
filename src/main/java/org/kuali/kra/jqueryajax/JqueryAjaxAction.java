@@ -111,6 +111,7 @@ public class JqueryAjaxAction extends KualiDocumentActionBase {
         JqueryAjaxForm ajaxForm = (JqueryAjaxForm) form;
         String locationTypeCode = ajaxForm.getCode();
 
+        // ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
         Map<String, Object> filterValues = new HashMap<String, Object>();
         filterValues.put("locationTypeCode", locationTypeCode);
         List<IacucLocationName> iacucLocationNames = (List<IacucLocationName>)getBusinessObjectService().findMatching(IacucLocationName.class, filterValues);
@@ -118,11 +119,13 @@ public class JqueryAjaxAction extends KualiDocumentActionBase {
         StringBuffer buffer = new StringBuffer();
         buffer.append("[ ");
         for (IacucLocationName value : iacucLocationNames) {
-            buffer.append("{ 'key' :'");
-            buffer.append(value.getLocationId());
-            buffer.append("', 'value' : '");
-            buffer.append(value.getLocationName());
-            buffer.append("'} , ");
+        	if (value.isActive()) {
+        		buffer.append("{ 'key' :'");
+        		buffer.append(value.getLocationId());
+        		buffer.append("', 'value' : '");
+        		buffer.append(value.getLocationName());
+        		buffer.append("'} , ");
+        	}
         }
         buffer.append("]");
         ajaxForm.setReturnVal(buffer.toString());

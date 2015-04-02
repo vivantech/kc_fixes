@@ -50,8 +50,11 @@ public class IacucSpeciesCountTypeValuesFinder extends UifKeyValuesFinderBase {
         keyValues.add(0, new ConcreteKeyValue(PrefixValuesFinder.getPrefixKey(), PrefixValuesFinder.getDefaultPrefixValue()));
         for (Iterator<IacucSpeciesCountType> iter = iacucSpeciesCountTypes.iterator(); iter.hasNext();) {
             IacucSpeciesCountType iacucSpeciesCountType = (IacucSpeciesCountType) iter.next();
-            keyValues.add(new ConcreteKeyValue(iacucSpeciesCountType.getSpeciesCountCode().toString(),
-                    iacucSpeciesCountType.getDescription()));
+            //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+            if (iacucSpeciesCountType.isActive()) {
+            	keyValues.add(new ConcreteKeyValue(iacucSpeciesCountType.getSpeciesCountCode().toString(),
+            			iacucSpeciesCountType.getDescription()));
+            }
         }
         return keyValues;
     }

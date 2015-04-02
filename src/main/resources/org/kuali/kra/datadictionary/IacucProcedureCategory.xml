@@ -126,6 +126,7 @@
 			<bean parent="SortDefinition" >
 		</bean>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -133,6 +134,7 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="procedureCategory" />
+				<bean parent="FieldDefinition" p:attributeName="active" />
 			</list>
 		</property>
 		<property name="resultFields" >

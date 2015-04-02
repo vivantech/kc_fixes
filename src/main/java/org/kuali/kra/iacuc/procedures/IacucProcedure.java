@@ -27,6 +27,9 @@ public class IacucProcedure extends KraPersistableBusinessObjectBase {
     
     private IacucProcedureCategory iacucProcedureCategory; 
     
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     private boolean procedureSelected;
     
     public IacucProcedure() { 
@@ -121,6 +124,15 @@ public class IacucProcedure extends KraPersistableBusinessObjectBase {
     public void setProcedureSelected(boolean procedureSelected) {
         this.procedureSelected = procedureSelected;
     }
+
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
     
 }

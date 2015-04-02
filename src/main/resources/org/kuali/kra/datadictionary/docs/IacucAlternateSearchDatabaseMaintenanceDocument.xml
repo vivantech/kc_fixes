@@ -27,7 +27,8 @@
             <list>
                 <value>alternateSearchDbCode</value>
             </list>
-        </property>		<property name="allowsRecordDeletion" value="true" />  
+        </property>
+        <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />  
         
         <property name="documentTypeName" value="IacucAlternateSearchDatabaseMaintenanceDocument"/>
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
@@ -41,11 +42,13 @@
     <bean id="IacucAlternateSearchDatabaseMaintenanceDocument-EditAlternateSearchDatabase-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit IACUC Alternate Search Database"/>
         <property name="title" value="Edit IACUC Alternate Search Database"/>
+        <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems">
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="alternateSearchDbCode" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="alternateSearchDbName" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>

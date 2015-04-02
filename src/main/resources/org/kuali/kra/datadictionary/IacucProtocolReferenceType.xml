@@ -30,11 +30,13 @@
             <ref bean="IacucProtocolReferenceType-lookupDefinition" />
         </property>
         <property name="titleAttribute" value="protocolReferenceTypeCode" />
+        <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
         <property name="attributes" >
             <list>
                 <ref bean="IacucProtocolReferenceType-protocolReferenceTypeCode" />
                 <ref bean="IacucProtocolReferenceType-description" />
                 <ref bean="IacucProtocolReferenceType-versionNumber" />
+                <ref bean="IacucProtocolReferenceType-active" />
             </list>
         </property>
     </bean>
@@ -80,6 +82,18 @@
     <bean id="IacucProtocolReferenceType-versionNumber" parent="IacucProtocolReferenceType-versionNumber-parentBean" />
     <bean id="IacucProtocolReferenceType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
     </bean>
+    
+    <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
+	<bean id="IacucProtocolReferenceType-active" parent="IacucProtocolReferenceType-active-parentBean" />
+  	<bean id="IacucProtocolReferenceType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+  	</bean>
 
     <!-- Business Object Inquiry Definition -->
     <bean id="IacucProtocolReferenceType-inquiryDefinition" parent="IacucProtocolReferenceType-inquiryDefinition-parentBean" />
@@ -90,6 +104,7 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="Protocol Reference Type Code" />
                     <property name="numberOfColumns" value="1" />
+                    <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields" >
                         <list>
                             <bean parent="FieldDefinition"
@@ -97,6 +112,8 @@
                                 p:forceInquiry="true" />
                             <bean parent="FieldDefinition"
                                 p:attributeName="description" />
+                			<bean parent="FieldDefinition"
+                    			p:attributeName="active" />
                         </list>
                     </property>
                 </bean>
@@ -113,6 +130,7 @@
             <bean parent="SortDefinition" >
         </bean>
         </property>
+        <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
         <property name="lookupFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -120,8 +138,11 @@
                     p:forceInquiry="true" />
                 <bean parent="FieldDefinition"
                     p:attributeName="description" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
+        <!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
         <property name="resultFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -129,6 +150,8 @@
                     p:forceInquiry="true" />
                 <bean parent="FieldDefinition"
                     p:attributeName="description" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
     </bean>
