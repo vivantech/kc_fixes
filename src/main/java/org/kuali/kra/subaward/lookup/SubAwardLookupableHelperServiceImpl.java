@@ -18,6 +18,7 @@ package org.kuali.kra.subaward.lookup;
 import org.apache.commons.lang.StringUtils;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.bo.versioning.VersionHistory;
+import org.kuali.kra.bo.versioning.VersionStatus;
 import org.kuali.kra.lookup.KraLookupableHelperServiceImpl;
 import org.kuali.kra.service.ServiceHelper;
 import org.kuali.kra.service.VersionHistoryService;
@@ -171,24 +172,32 @@ public class SubAwardLookupableHelperServiceImpl extends KraLookupableHelperServ
       protected List<SubAward> filterForActiveSubAwards(
               Collection<SubAward> collectionByQuery, String awardNumber,
               String subrecipientName, String requisitionerUserName, String statusCode) throws WorkflowException {
-          Set<String> subAwardCodes = new TreeSet<String>();
+    	  
+    	  // ### Vivantech Fix : #76 / [#91136756] Fixing sub award lookup to only return latest version entries. - BEGIN
+    	  Map<Integer, Integer> subAwardCodes = new HashMap<Integer, Integer>();
           List<Integer> subAwardCodeList = new ArrayList<Integer>();
-          List<String> subAwardCodeSortedList = new ArrayList<String>();
+          
           for (SubAward subAward: collectionByQuery) {
-              subAwardCodes.add(subAward.getSubAwardCode());
+        	  int key = Integer.parseInt(subAward.getSubAwardCode());
+        	  if (subAwardCodes.containsKey(key)) {
+        		  if(subAward.getSequenceNumber() > subAwardCodes.get(key)) {
+        			  subAwardCodes.put(key, subAward.getSequenceNumber());
+        		  }
+        	  }
+        	  else 
+        		  subAwardCodes.put(key, subAward.getSequenceNumber());
           }
-          for (String subAwardCode: subAwardCodes) {
-              subAwardCodeList.add(Integer.parseInt(subAwardCode));
+          
+          for (Integer subAwardCode: subAwardCodes.keySet()) {
+              subAwardCodeList.add(subAwardCode);
           }
+          
           Collections.sort(subAwardCodeList);
-          for (Integer subAward: subAwardCodeList) {
-              subAwardCodeSortedList.add(Integer.toString(subAward));
-          }
+          
           List<SubAward> activeSubAwards = new ArrayList<SubAward>();
-          for (String versionName: subAwardCodeSortedList) {
-              VersionHistory versionHistory = versionHistoryService.
-              findActiveVersion(SubAward.class, versionName);
-              if (versionHistory != null) {
+          for (Integer versionName: subAwardCodeList) {
+              VersionHistory versionHistory = versionHistoryService.getVersionHistory(SubAward.class, versionName.toString(), subAwardCodes.get(versionName));
+              if (versionHistory != null && VersionStatus.ACTIVE.equals(versionHistory.getStatus())) {
                   SubAward activeSubAward =
                       (SubAward) versionHistory.getSequenceOwner();
                   if (activeSubAward != null) {
@@ -196,8 +205,9 @@ public class SubAwardLookupableHelperServiceImpl extends KraLookupableHelperServ
                   }
               }
           }
+    	  // ### Vivantech Fix : #76 / [#91136756] Fixing sub award lookup to only return latest version entries. - END
+          
           List<SubAward> filteredSubAwards = new ArrayList<SubAward>();
-
           for (SubAward subAward : activeSubAwards) {
               if (subrecipientName != null
                       && !subrecipientName.equals("")

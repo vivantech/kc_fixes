@@ -93,4 +93,15 @@ public interface VersionHistoryService {
      * @return
      */
     VersionHistory getActiveOrNewestVersion(Class<? extends SequenceOwner> klass, String versionName);
+    
+	// ### Vivantech Fix : #76 / [#91136756] Fixing sub award lookup to only return latest version entries.
+    /**
+     * Find the VersionHistory for a given SequenceOwner type, version name and sequence number
+     * 
+     * @param klass
+     * @param versionName
+     * @param sequenceNumber
+     * @return
+     */
+    VersionHistory getVersionHistory(Class<? extends SequenceOwner> klass, String versionName, Integer sequenceNumber);
 }
