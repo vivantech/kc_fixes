@@ -53,6 +53,8 @@
         <bean parent="MaintainableFieldDefinition" p:name="sponsorTypeCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="state"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <!-- ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable -->
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
       </list>
     </property>
   </bean>
