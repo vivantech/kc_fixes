@@ -74,6 +74,7 @@
         </reference-descriptor>     
     </class-descriptor>
 	
+	<!--  ### Vivantech Fix : #57 / [#86133652] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.timeandmoney.transactions.AwardTransactionType" table="AWARD_TRANSACTION_TYPE">
 		<field-descriptor name="awardTransactionTypeCode" column="AWARD_TRANSACTION_TYPE_CODE" jdbc-type="INTEGER" primarykey="true" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -82,6 +83,7 @@
 		<field-descriptor name="showInActionSummary" column="SHOW_IN_ACTION_SUMMARY" jdbc-type="VARCHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion"/>
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>
 	
 	<class-descriptor class="org.kuali.kra.timeandmoney.transactions.PendingTransaction" table="PENDING_TRANSACTIONS">
