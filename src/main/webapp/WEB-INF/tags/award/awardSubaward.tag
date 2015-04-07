@@ -118,9 +118,9 @@
                   	<c:forEach var="awardLinkedSubawards" items="${KualiForm.document.awardList[0].subAwardList}" varStatus="status">
                   	<tr>
                   					 <td width="8%" valign="middle"> 
-						    
+						    <!-- Issue #80 / [91135264] enabling the edit button to show on the subaward document-->
 						    <a
-						href="${ConfigProperties.application.url}/subAwardHome.do?methodToCall=docHandler&command=displayDocSearchView&docId=${awardLinkedSubawards.subAwardDocument.documentNumber}&medusaOpenedDoc=true&viewOnly=true"
+						href="${ConfigProperties.application.url}/subAwardHome.do?methodToCall=docHandler&command=displayDocSearchView&docId=${awardLinkedSubawards.subAwardDocument.documentNumber}&medusaOpenedDoc=true"
 						target="_blank" class="medusaOpenLink">Open Subaward</a>
 						</td>
                  					<td>${awardLinkedSubawards.organizationName}&nbsp; </td>
