@@ -42,8 +42,10 @@ public class IacucLocationNameValuesFinder extends UifKeyValuesFinderBase {
      */
     @Override
     public List<KeyValue> getKeyValues() {
+        //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
         Map<String, Object> filterValues = new HashMap<String, Object>();
         filterValues.put("locationTypeCode", getLocationTypeCode());
+        filterValues.put("active", true);
         Collection<IacucLocationName> iacucLocationNames = getKeyValuesService().findMatching(IacucLocationName.class,
                 filterValues);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();

@@ -32,6 +32,7 @@
 			<ref bean="IacucProcedure-lookupDefinition" />
 		</property>
 		<property name="titleAttribute" value="procedureCode" />
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="attributes" >
 			<list>
 				<ref bean="IacucProcedure-procedureCode" />
@@ -40,9 +41,7 @@
 				<ref bean="IacucProcedure-procedureSelected" />
 				
 				<ref bean="IacucProcedure-versionNumber" />
-				<!--  
 				<ref bean="IacucProcedure-active" />
-				-->
 			</list>
 		</property>
 	</bean>
@@ -67,7 +66,7 @@
 		<property name="description" value="Procedure Code" />
 	</bean>
 	
-	<!--  
+	<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->  
 	<bean id="IacucProcedure-active" parent="IacucProcedure-active-parentBean"/>
 	<bean abstract="true" id="IacucProcedure-active-parentBean" parent="AttributeReferenceDummy-genericBoolean">
 	    <property name="name" value="active"/>
@@ -76,7 +75,6 @@
 	    <property name="summary" value="Active"/>
 	    <property name="description" value="Active"/>
 	</bean>
-	-->
 
 	<bean id="IacucProcedure-procedureDescription" parent="IacucProcedure-procedureDescription-parentBean"/>
 	<bean id="IacucProcedure-procedureDescription-parentBean" abstract="true" parent="AttributeDefinition">
@@ -132,6 +130,7 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Procedure Category" />
 					<property name="numberOfColumns" value="1" />
+					<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields" >
 						<list>
 							<bean parent="FieldDefinition"
@@ -141,10 +140,7 @@
 								p:attributeName="procedureDescription" />
 							<bean parent="FieldDefinition"
 								p:attributeName="procedureCategoryCode" />
-								
-							<!--  	
 							<bean parent="FieldDefinition" p:attributeName="active" />
-							-->
 						</list>
 					</property>
 				</bean>
@@ -162,6 +158,7 @@
 			<bean parent="SortDefinition" >
 		</bean>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -169,8 +166,10 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="procedureDescription" />
+				<bean parent="FieldDefinition" p:attributeName="active" />
 			</list>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="resultFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -180,9 +179,7 @@
 					p:attributeName="procedureDescription" />
 				<bean parent="FieldDefinition"
 					p:attributeName="procedureCategoryCode" />
-				<!--  	
 				<bean parent="FieldDefinition" p:attributeName="active" />
-				-->
 			</list>
 		</property>
 	</bean>

@@ -32,6 +32,7 @@
 			<ref bean="IacucPersonTraining-lookupDefinition" />
 		</property>
 		<property name="titleAttribute" value="iacucPersonTrainingId" />
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="attributes" >
 			<list>
 				<ref bean="IacucPersonTraining-iacucPersonTrainingId" />
@@ -44,6 +45,7 @@
         		<ref bean="IacucPersonTraining-person.userName" />
 				<ref bean="IacucPersonTraining-person.fullName" />
 				<ref bean="IacucPersonTraining-versionNumber" />
+				<ref bean="IacucPersonTraining-active" />
 			</list>
 		</property>
 	</bean>
@@ -118,6 +120,18 @@
 	<bean id="IacucPersonTraining-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
 	</bean>
 
+	<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
+	<bean id="IacucPersonTraining-active" parent="IacucPersonTraining-active-parentBean" />
+  	<bean id="IacucPersonTraining-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+  	</bean>
+  	
 	<!-- Business Object Inquiry Definition -->
 	<bean id="IacucPersonTraining-inquiryDefinition" parent="IacucPersonTraining-inquiryDefinition-parentBean" />
 	<bean id="IacucPersonTraining-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition">
@@ -127,6 +141,7 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Person Training" />
 					<property name="numberOfColumns" value="1" />
+					<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields" >
 						<list>
 							<bean parent="FieldDefinition"
@@ -136,6 +151,8 @@
 								p:attributeName="speciesCode" />
 							<bean parent="FieldDefinition"
 								p:attributeName="procedureCode" />
+							<bean parent="FieldDefinition"
+								p:attributeName="active" />
 						</list>
 					</property>
 				</bean>
@@ -154,6 +171,7 @@
 			<bean parent="SortDefinition" >
 		</bean>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -161,8 +179,11 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="person.userName" />
+				<bean parent="FieldDefinition"
+					p:attributeName="active" />
 			</list>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="resultFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -176,6 +197,8 @@
 					p:attributeName="iacucSpecies.speciesName" />
 				<bean parent="FieldDefinition"
 					p:attributeName="iacucProcedure.procedureDescription" />
+				<bean parent="FieldDefinition"
+					p:attributeName="active" />
 			</list>
 		</property>
 	</bean>

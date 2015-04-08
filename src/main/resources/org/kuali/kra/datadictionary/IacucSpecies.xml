@@ -32,14 +32,13 @@
 			<ref bean="IacucSpecies-lookupDefinition" />
 		</property>
 		<property name="titleAttribute" value="speciesCode" />
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="attributes" >
 			<list>
 				<ref bean="IacucSpecies-speciesCode" />
 				<ref bean="IacucSpecies-speciesName" />
 				<ref bean="IacucSpecies-versionNumber" />
-				<!--  
 				<ref bean="IacucSpecies-active" />
-				-->
 			</list>
 		</property>
 	</bean>
@@ -64,16 +63,17 @@
 		<property name="description" value="Species Code" />
 	</bean>
 	
-	<!-- 
+	<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 	<bean id="IacucSpecies-active" parent="IacucSpecies-active-parentBean"/>
 	<bean abstract="true" id="IacucSpecies-active-parentBean" parent="AttributeReferenceDummy-genericBoolean">
-	    <property name="name" value="active"/>
-	    <property name="label" value="Active"/>
-	    <property name="shortLabel" value="Active"/>
-	    <property name="summary" value="Active"/>
-	    <property name="speciesName" value="Active"/>
+	    <property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
 	</bean>
-	 -->
 
 	<bean id="IacucSpecies-speciesName" parent="IacucSpecies-speciesName-parentBean" />
 	<bean id="IacucSpecies-speciesName-parentBean" abstract="true" parent="KraAttributeReferenceDummy-description">
@@ -97,6 +97,7 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Species" />
 					<property name="numberOfColumns" value="1" />
+					<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields" >
 						<list>
 							<bean parent="FieldDefinition"
@@ -104,9 +105,7 @@
 								p:forceInquiry="true" />
 							<bean parent="FieldDefinition"
 								p:attributeName="speciesName" />
-							<!--  	
 							<bean parent="FieldDefinition" p:attributeName="active" />
-							-->
 						</list>
 					</property>
 				</bean>
@@ -124,6 +123,7 @@
 			<bean parent="SortDefinition" >
 		</bean>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -131,8 +131,10 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="speciesName" />
+					<bean parent="FieldDefinition" p:attributeName="active" />
 			</list>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="resultFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -140,9 +142,7 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="speciesName" />
-				<!-- 	
 				<bean parent="FieldDefinition" p:attributeName="active" />
-				 -->
 			</list>
 		</property>
 	</bean>

@@ -75,7 +75,8 @@ public class VersionHistoryServiceImpl implements VersionHistoryService {
         }
     }
     
-    protected VersionHistory getVersionHistory(Class klass, String versionName, Integer sequenceNumber) {
+	// ### Vivantech Fix : #76 / [#91136756] Fixing sub award lookup to only return latest version entries.
+    public VersionHistory getVersionHistory(Class<? extends SequenceOwner> klass, String versionName, Integer sequenceNumber) {
         Map<String, Object> fieldValues = new HashMap<String, Object>();
         fieldValues.put(SEQUENCE_OWNER_CLASS_NAME_FIELD, klass.getName());
         fieldValues.put(SEQUENCE_OWNER_REFERENCE_VERSION_NAME, versionName);     

@@ -32,15 +32,14 @@
 			<ref bean="IacucLocationName-lookupDefinition" />
 		</property>
 		<property name="titleAttribute" value="locationId" />
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="attributes" >
 			<list>
 				<ref bean="IacucLocationName-locationId" />
 				<ref bean="IacucLocationName-locationName" />
 				<ref bean="IacucLocationName-locationTypeCode" />
 				<ref bean="IacucLocationName-versionNumber" />
-				<!--  
 				<ref bean="IacucLocationName-active" />
-				-->
 			</list>
 		</property>
 	</bean>
@@ -73,16 +72,17 @@
 		</property>
 	</bean>	
 	
-	<!--  
-	<bean id="IacucLocationName-active" parent="IacucLocationName-active-parentBean"/>
-	<bean abstract="true" id="IacucLocationName-active-parentBean" parent="AttributeReferenceDummy-genericBoolean">
-	    <property name="name" value="active"/>
-	    <property name="label" value="Active"/>
-	    <property name="shortLabel" value="Active"/>
-	    <property name="summary" value="Active"/>
-	    <property name="description" value="Active"/>
-	</bean>
-	-->
+	<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
+	<bean id="IacucLocationName-active" parent="IacucLocationName-active-parentBean" />
+  	<bean id="IacucLocationName-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+		<property name="maxLength" value="1" />
+  	</bean>
 
 	<bean id="IacucLocationName-locationName" parent="IacucLocationName-locationName-parentBean"/>
 	<bean id="IacucLocationName-locationName-parentBean" abstract="true" parent="AttributeDefinition">
@@ -99,8 +99,6 @@
 		<property name="description" value="Location Name"/>
 	</bean>
 
-
-
 	<bean id="IacucLocationName-versionNumber" parent="IacucLocationName-versionNumber-parentBean" />
 	<bean id="IacucLocationName-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
 	</bean>
@@ -114,6 +112,7 @@
 				<bean parent="InquirySectionDefinition">
 					<property name="title" value="Location Name" />
 					<property name="numberOfColumns" value="1" />
+					<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 					<property name="inquiryFields" >
 						<list>
 							<bean parent="FieldDefinition"
@@ -121,9 +120,8 @@
 								p:forceInquiry="true" />
 							<bean parent="FieldDefinition"
 								p:attributeName="locationName" />
-							<!--  	
-							<bean parent="FieldDefinition" p:attributeName="active" />
-							-->
+							<bean parent="FieldDefinition" 
+								p:attributeName="active" />
 						</list>
 					</property>
 				</bean>
@@ -141,6 +139,7 @@
 			<bean parent="SortDefinition" >
 		</bean>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="lookupFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -148,8 +147,11 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="locationName" />
+				<bean parent="FieldDefinition" 
+					p:attributeName="active" />
 			</list>
 		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="resultFields" >
 			<list>
 				<bean parent="FieldDefinition"
@@ -157,9 +159,8 @@
 					p:forceInquiry="true" />
 				<bean parent="FieldDefinition"
 					p:attributeName="locationName" />
-					<!--  
-				<bean parent="FieldDefinition" p:attributeName="active" />
-				-->
+				<bean parent="FieldDefinition" 
+					p:attributeName="active" />
 			</list>
 		</property>
 	</bean>

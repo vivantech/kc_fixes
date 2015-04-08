@@ -30,7 +30,8 @@
 			<list>
 				<value>protocolReferenceTypeCode</value>
 			</list>
-		</property>		<property name="allowsRecordDeletion" value="true" />		<property name="documentTypeName" value="IacucProtocolReferenceTypeMaintenanceDocument"/>
+		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />		<property name="documentTypeName" value="IacucProtocolReferenceTypeMaintenanceDocument"/>
 		<property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
 	</bean>
 
@@ -40,10 +41,12 @@
 	<bean id="IacucProtocolReferenceTypeMaintenanceDocument-EditIacucProtocolReferenceType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
 		<property name="id" value="Edit IACUC Protocol Reference Type Code"/>
 		<property name="title" value="Edit IACUC Protocol Reference Type Code"/>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="maintainableItems">
 			<list>
 				<bean parent="MaintainableFieldDefinition" p:name="protocolReferenceTypeCode" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
+				<bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
 			</list>
 		</property>
 	</bean>

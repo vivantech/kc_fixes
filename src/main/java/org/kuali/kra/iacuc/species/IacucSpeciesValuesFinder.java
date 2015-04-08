@@ -50,8 +50,11 @@ public class IacucSpeciesValuesFinder extends UifKeyValuesFinderBase {
         keyValues.add(0, new ConcreteKeyValue(PrefixValuesFinder.getPrefixKey(), PrefixValuesFinder.getDefaultPrefixValue()));
         for (Iterator<IacucSpecies> iter = iacucSpeciesList.iterator(); iter.hasNext();) {
             IacucSpecies iacucSpecies = (IacucSpecies) iter.next();
-            keyValues.add(new ConcreteKeyValue(iacucSpecies.getSpeciesCode().toString(),
-                    iacucSpecies.getSpeciesName()));
+            //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+            if (iacucSpecies.isActive()) {
+            	keyValues.add(new ConcreteKeyValue(iacucSpecies.getSpeciesCode().toString(),
+            			iacucSpecies.getSpeciesName()));
+            }
         }
         return keyValues;
     }
