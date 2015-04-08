@@ -42,8 +42,8 @@
         <bean parent="MaintainableFieldDefinition" p:name="specialReviewTypeCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="moduleCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="global"/>
-        <bean parent="MaintainableFieldDefinition" p:name="active"/>
-        <bean parent="MaintainableFieldDefinition" p:name="versionNumber" p:defaultValue="true"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
+        <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
       </list>
     </property>
   </bean>

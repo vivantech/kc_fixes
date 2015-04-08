@@ -15,7 +15,7 @@
         <value>organizationTypeCode</value>
       </list>
     </property>
-    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value=false" />	
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     
     
     

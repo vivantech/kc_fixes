@@ -40,11 +40,10 @@
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="invCreditTypeCode" p:required="true"/>
-        <bean parent="MaintainableFieldDefinition" p:name="active"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description"/>
         <bean parent="MaintainableFieldDefinition" p:name="addsToHundred"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
-        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
       </list>
     </property>
   </bean>

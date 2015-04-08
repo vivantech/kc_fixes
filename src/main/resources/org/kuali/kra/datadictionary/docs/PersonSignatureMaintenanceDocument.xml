@@ -63,9 +63,7 @@
                     p:name="templateFile" />
                <bean parent="MaintainableFieldDefinition"
                     p:name="signatureActive" 
-                    p:required="false"  />           
-        	   <bean parent="MaintainableFieldDefinition" 
-        	   		p:name="active" p:defaultValue="true"/>   
+                    p:required="false" p:defaultValue="true"/>
             </list>
         </property>
     </bean>
