@@ -34,8 +34,6 @@ import java.util.Map;
 public class OrganizationServiceImpl implements OrganizationService {
     private BusinessObjectService businessObjectService;
     private static final String ORGANIZATION_ID = "organizationId";
-    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
-    private static final String ACTIVE = "active";
 
     /**
      * @see org.kuali.kra.service.OrganizationService#getOrganizationName(java.lang.String)
@@ -55,10 +53,8 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Organization getOrganization(String organizationId) {
         Organization organization = null;
         if (StringUtils.isNotEmpty(organizationId)) {
-            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
             Map<String, Object> primaryKeys = new HashMap<String, Object>();
             primaryKeys.put(ORGANIZATION_ID, organizationId);
-            primaryKeys.put(ACTIVE, true);
             organization = (Organization) businessObjectService.findByPrimaryKey(Organization.class, primaryKeys);
         }
 

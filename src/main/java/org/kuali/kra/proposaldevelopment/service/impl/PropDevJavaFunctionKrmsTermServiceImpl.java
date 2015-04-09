@@ -973,11 +973,7 @@ public class PropDevJavaFunctionKrmsTermServiceImpl extends KcKrmsJavaFunctionTe
      */
     public String piAppointmentTypeRule(DevelopmentProposal developmentProposal) {
         List<ProposalPerson> people = developmentProposal.getProposalPersons();
-        
-		// Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
-        Map<String, Object> fieldValues = new HashMap<String, Object>();
-        fieldValues.put("active", true);
-        List<AppointmentType> appointmentTypes = (List<AppointmentType>)getBusinessObjectService().findMatching(AppointmentType.class, fieldValues );
+        List<AppointmentType> appointmentTypes = (List<AppointmentType>)getBusinessObjectService().findAll(AppointmentType.class);
         for (ProposalPerson person : people) {
             if ((person.isInvestigator() && person.getRole().isPrincipalInvestigatorRole()) || (person.isMultiplePi())) {
                 List<PersonAppointment> appointments = person.getProposalPersonExtendedAttributes().getPersonAppointments();

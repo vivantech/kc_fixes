@@ -32,9 +32,7 @@ public class QuestionServiceImpl implements QuestionService {
     private static final String QUESTION_ID = "questionId";
     private static final String QUESTION_QUESTION_ID = "questionnaireQuestions.question.questionId";
     private static final String QUESTIONNAIRE_ID = "questionnaireId";
-	// Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
-    private static final String ACTIVE = "active";
-    
+
     private BusinessObjectService businessObjectService;
 
     /**
@@ -53,10 +51,8 @@ public class QuestionServiceImpl implements QuestionService {
     public Question getQuestionByRefId(String questionRefId) {
         Question question = null;
         if (!StringUtils.isBlank(questionRefId)) {
-        	// Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
             Map<String, Object> fieldValues = new HashMap<String, Object>();
             fieldValues.put(QUESTION_REF_ID, questionRefId);
-            fieldValues.put(ACTIVE, true);
             question = (Question) businessObjectService.findByPrimaryKey(Question.class, fieldValues);
         }
         return question;
@@ -70,10 +66,8 @@ public class QuestionServiceImpl implements QuestionService {
     public Question getQuestionById(String questionId) {
         Question question = null;
         if (questionId != null) {
-            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
             Map<String, Object> fieldValues = new HashMap<String, Object>();
             fieldValues.put(QUESTION_ID, questionId);
-            fieldValues.put(ACTIVE, true);
             Collection<Question> questions = businessObjectService.findMatching(Question.class, fieldValues);
             if (questions.size() > 0) {
                 /*

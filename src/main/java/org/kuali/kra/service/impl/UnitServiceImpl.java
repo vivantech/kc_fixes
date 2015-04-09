@@ -41,9 +41,6 @@ public class UnitServiceImpl implements UnitService {
     private static final String SEPARATOR = ";1;";
     private static final String DASH = "-";
     private static final String UNIT_NUMBER = "unitNumber";
-    
-    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
-    private static final String ACTIVE = "active";
     private int numberOfUnits;
     private UnitLookupDao unitLookupDao;
    
@@ -297,11 +294,9 @@ public class UnitServiceImpl implements UnitService {
     
     @SuppressWarnings("unchecked")
     public List<UnitAdministrator> retrieveUnitAdministratorsByUnitNumber(String unitNumber) {
-        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
         this.businessObjectService = KraServiceLocator.getService(BusinessObjectService.class);
-        Map<String, Object> queryMap = new HashMap<String, Object>();
+        Map<String, String> queryMap = new HashMap<String, String>();
         queryMap.put(UNIT_NUMBER, unitNumber);
-        queryMap.put(ACTIVE, true);
         List<UnitAdministrator> unitAdministrators = 
             (List<UnitAdministrator>) getBusinessObjectService().findMatching(UnitAdministrator.class, queryMap);
         return unitAdministrators;
