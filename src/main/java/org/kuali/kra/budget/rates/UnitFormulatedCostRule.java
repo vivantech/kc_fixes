@@ -55,12 +55,9 @@ public class UnitFormulatedCostRule extends KraMaintenanceDocumentRuleBase {
         UnitFormulatedCost newCost = (UnitFormulatedCost) maintenanceDocument.getNewMaintainableObject().getDataObject();
 
         BusinessObjectService businessObjectService = KraServiceLocator.getService(BusinessObjectService.class);
-        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("formulatedTypeCode", newCost.getFormulatedTypeCode());
         values.put("unitNumber", newCost.getUnitNumber());
-        values.put("active", true);
-        
         Collection<UnitFormulatedCost> costs = businessObjectService.findMatching(UnitFormulatedCost.class, values);
         for (UnitFormulatedCost cost : costs) {
             if (!ObjectUtils.equals(newCost.getUnitFormulatedCostId(), cost.getUnitFormulatedCostId())) {
