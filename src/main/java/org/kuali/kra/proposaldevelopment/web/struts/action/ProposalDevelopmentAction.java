@@ -97,7 +97,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.*;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -1106,10 +1105,7 @@ public class ProposalDevelopmentAction extends BudgetParentActionBase {
                 budget.setBudgetPeriods(budgetPeriods);
                 Collection<BudgetRate> rates = businessObjectService.findMatching(BudgetRate.class, fieldValues);   
                 if(!CollectionUtils.isEmpty(rates)) {
-                    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
-                    Map<String, Object> pkMap = new HashMap<String, Object>();
-                    pkMap.put("active", true);
-                    List<RateClassType> rateClassTypes =   (List<RateClassType>) businessObjectService.findMatching(RateClassType.class, pkMap);
+                    List<RateClassType> rateClassTypes =   (List<RateClassType>) businessObjectService.findAll(RateClassType.class);
                     budget.setRateClassTypes(rateClassTypes);
                     pdform.setBudgetToSummarize(budget);
                 }

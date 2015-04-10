@@ -291,11 +291,7 @@ public class SubAwardFDPPrintXmlStream implements XmlStream  {
        if(subaward.getSubAwardTemplateInfo() != null && !subaward.getSubAwardTemplateInfo().isEmpty() ){
            subawardTemplate =subaward.getSubAwardTemplateInfo().get(0);
       
-           // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
-           Map<String, Object> fieldValues = new HashMap<String, Object>();
-           fieldValues.put("active", true); 
-           Collection<ContactType> contact = (Collection<ContactType>) KraServiceLocator.getService(BusinessObjectService.class).findMatching(ContactType.class, fieldValues);
-           
+       Collection<ContactType> contact = (Collection<ContactType>) KraServiceLocator.getService(BusinessObjectService.class).findAll(ContactType.class);
            for(ContactType contactType : contact){
                if(subawardTemplate.getInvoiceOrPaymentContact()!= null && contactType.getContactTypeCode().equals(subawardTemplate.getInvoiceOrPaymentContact().toString())){
                    subContractTemplateInfo.setInvoiceOrPaymentContactDescription(contactType.getDescription());
