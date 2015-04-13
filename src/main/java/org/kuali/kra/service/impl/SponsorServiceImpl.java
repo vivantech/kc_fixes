@@ -27,6 +27,7 @@ import org.kuali.kra.service.SponsorService;
 import org.kuali.kra.service.Sponsorable;
 import org.kuali.kra.web.struts.form.SponsorHierarchyForm;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 
@@ -520,7 +521,7 @@ public class SponsorServiceImpl implements SponsorService, Constants {
         
         // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
         if(!sponsor.isActive()) {
-        	GlobalVariables.getMessageMap().putWarning("document", KeyConstants.ERROR_INACTIVE_SPONSOR_CODE);
+        	KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE);
         }
         
         if (sponsor == null) {
