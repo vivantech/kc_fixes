@@ -15,26 +15,28 @@
  */
 package org.kuali.kra.common.committee.meeting;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.rice.kim.api.KimConstants;
-import org.kuali.rice.kns.web.struts.form.KualiForm;
-import org.kuali.rice.krad.document.Document;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
+import org.kuali.rice.kns.web.struts.form.KualiDocumentFormBase;
 
 /**
  * 
  * This class is a form for Meeting management,
  */
+/**
+ * ### Vivantech Fix : #96 / [#88346510] Extending MeetingFormBase to make use of KualiDocumentFormBase to use formKey 
+ *
+ */
 @SuppressWarnings("deprecation")
-public abstract class MeetingFormBase extends KualiForm {
+public abstract class MeetingFormBase extends KualiDocumentFormBase {
     private static final long serialVersionUID = -7825455832928793712L;
     private MeetingHelperBase meetingHelper;
-    // textarea needs formKey & document.  
-    private String formKey;
-    private Document document;
+
     private boolean readOnly;
 
     public MeetingFormBase() {
@@ -58,22 +60,6 @@ public abstract class MeetingFormBase extends KualiForm {
 
     public void setMeetingHelper(MeetingHelperBase meetingHelper) {
         this.meetingHelper = meetingHelper;
-    }
-
-    public String getFormKey() {
-        return formKey;
-    }
-
-    public void setFormKey(String formKey) {
-        this.formKey = formKey;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public void setDocument(Document document) {
-        this.document = document;
     }
 
     @Override
