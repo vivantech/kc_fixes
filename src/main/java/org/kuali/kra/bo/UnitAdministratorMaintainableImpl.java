@@ -127,8 +127,10 @@ public class UnitAdministratorMaintainableImpl extends KraMaintainableImpl imple
 
     private boolean isUnitAdministratorTypeCodeValid(String unitAdministratorTypeCode) {
         BusinessObjectService businessObjectService = KraServiceLocator.getService(BusinessObjectService.class);
-        Map<String, String> validParams = new HashMap<String, String>();
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+        Map<String, Object> validParams = new HashMap<String, Object>();
         validParams.put("unitAdministratorTypeCode", unitAdministratorTypeCode);
+        validParams.put("active", true);
         Collection<UnitAdministratorType> units = businessObjectService.findMatching(UnitAdministratorType.class, validParams);
         return !units.isEmpty();
         

@@ -34,7 +34,8 @@
             	<value>unitNumber</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         <property name="documentTypeName" value="UnitFormulatedCostMaintenanceDocument" />
         <property name="businessRulesClass" value="org.kuali.kra.budget.rates.UnitFormulatedCostRule"/>
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" />
@@ -46,6 +47,7 @@
     <bean id="UnitFormulatedCostMaintenanceDocument-EditUnitFormulatedCost-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Unit Formulated Cost" />
         <property name="title" value="Edit Unit Formulated Cost" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems" >
             <list>
                 <bean parent="MaintainableFieldDefinition"
@@ -57,6 +59,9 @@
                 <bean parent="MaintainableFieldDefinition"
                     p:name="unitCost"
                     p:required="true" />
+        		<bean parent="MaintainableFieldDefinition" 
+        			p:name="active" 
+        			p:defaultValue="true"/>
             </list>
         </property>
     </bean>

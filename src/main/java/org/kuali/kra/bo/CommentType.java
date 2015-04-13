@@ -37,6 +37,9 @@ public class CommentType extends KraPersistableBusinessObjectBase {
     private Boolean checklistFlag;
 
     private Boolean awardCommentScreenFlag;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public String getCommentTypeCode() {
         return commentTypeCode;
@@ -151,4 +154,13 @@ public class CommentType extends KraPersistableBusinessObjectBase {
         } else if (!templateFlag.equals(other.templateFlag)) return false;
         return true;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

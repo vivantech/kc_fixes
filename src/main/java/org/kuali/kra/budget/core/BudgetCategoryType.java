@@ -29,6 +29,9 @@ public class BudgetCategoryType extends KraPersistableBusinessObjectBase impleme
     private String description;
 
     private String sortId;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public String getSortId() {
         return sortId;
@@ -83,4 +86,14 @@ public class BudgetCategoryType extends KraPersistableBusinessObjectBase impleme
     public int compareTo(BudgetCategoryType budgetCategoryType) {
         return this.sortId.compareTo(budgetCategoryType.sortId);
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+    
 }

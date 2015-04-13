@@ -38,12 +38,14 @@
                   p:parameterName="proposalDevelopmentSpecialReviewHelpUrl" 
                   p:parameterDetailType="Document" />
         </property>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="attributes" >
             <list>
                 <ref bean="SpecialReviewType-specialReviewTypeCode" />
                 <ref bean="SpecialReviewType-description" />
                 <ref bean="SpecialReviewType-sortId" />
                 <ref bean="SpecialReviewType-versionNumber" />
+                <ref bean="SpecialReviewType-active" />
             </list>
         </property>
     </bean>
@@ -76,7 +78,19 @@
     
     <bean id="SpecialReviewType-versionNumber" parent="SpecialReviewType-versionNumber-parentBean" />
     <bean id="SpecialReviewType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" />
-
+    
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  	<bean id="SpecialReviewType-active" parent="SpecialReviewType-active-parentBean" />
+  	<bean id="SpecialReviewType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+	  	<property name="maxLength" value="1" />
+  	</bean>
+  
     <!-- Business Object Inquiry Definition -->
     
     <bean id="SpecialReviewType-inquiryDefinition" parent="SpecialReviewType-inquiryDefinition-parentBean" />
@@ -87,6 +101,7 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="Special Review Type" />
                     <property name="numberOfColumns" value="1" />
+                    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields" >
                         <list>
                             <bean parent="FieldDefinition" 
@@ -94,6 +109,8 @@
                                   p:forceInquiry="true" />
                             <bean parent="FieldDefinition" 
                                   p:attributeName="description" />
+                			<bean parent="FieldDefinition" 
+                      			  p:attributeName="active" />
                         </list>
                     </property>
                 </bean>
@@ -110,14 +127,18 @@
         <property name="defaultSort" >
             <bean parent="SortDefinition" />
         </property>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="lookupFields" >
             <list>
                 <bean parent="FieldDefinition" 
                       p:attributeName="specialReviewTypeCode" />
                 <bean parent="FieldDefinition" 
                       p:attributeName="description" />
+                <bean parent="FieldDefinition" 
+                      p:attributeName="active" />
             </list>
         </property>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="resultFields" >
             <list>
                 <bean parent="FieldDefinition" 
@@ -125,6 +146,8 @@
                       p:forceInquiry="true" />
                 <bean parent="FieldDefinition" 
                       p:attributeName="description" />
+                <bean parent="FieldDefinition" 
+                      p:attributeName="active" />
             </list>
         </property>
     </bean>

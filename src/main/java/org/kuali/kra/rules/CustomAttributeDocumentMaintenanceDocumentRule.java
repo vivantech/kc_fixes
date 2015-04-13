@@ -81,8 +81,11 @@ public class CustomAttributeDocumentMaintenanceDocumentRule  extends Maintenance
         CustomAttributeDocument newCustomAttributeDocument = (CustomAttributeDocument) maintenanceDocument.getNewMaintainableObject().getDataObject();
 
         if (newCustomAttributeDocument.getCustomAttributeId() != null) {
-            Map<String, String> queryMap = new HashMap<String, String>();
+        	
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            Map<String, Object> queryMap = new HashMap<String, Object>();
             queryMap.put("id", newCustomAttributeDocument.getCustomAttributeId().toString());
+            queryMap.put("active", true);
 
             if (getBoService().countMatching(CustomAttribute.class, queryMap) == 0) {
                 GlobalVariables.getMessageMap().putError(Constants.DOCUMENT_NEWMAINTAINABLEOBJECT_CUSTOM_ATTRIBUTE_ID, KeyConstants.ERROR_INVALID_CUSTOM_ATT_ID,

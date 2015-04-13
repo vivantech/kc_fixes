@@ -22,6 +22,7 @@
             p:parameterName="CommentTypeHelpUrl"
             p:parameterDetailType="Document" />
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="attributes" >
       <list>
         <ref bean="CommentType-commentTypeCode" />
@@ -29,6 +30,7 @@
         <ref bean="CommentType-templateFlag" />
         <ref bean="CommentType-checklistFlag" />
         <ref bean="CommentType-awardCommentScreenFlag" />
+        <ref bean="CommentType-active" />
       </list>
     </property>
   </bean>
@@ -93,7 +95,19 @@
 
   <bean id="CommentType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
-
+  
+  <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  <bean id="CommentType-active" parent="CommentType-active-parentBean" />
+  <bean id="CommentType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+  	<property name="maxLength" value="1" />
+  </bean>
+  	
 <!-- Business Object Inquiry Definition -->
 
 
@@ -106,6 +120,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Comment Type" />
           <property name="numberOfColumns" value="1" />
+          <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition"
@@ -117,6 +132,8 @@
                     p:attributeName="templateFlag" />
               <bean parent="FieldDefinition"
                     p:attributeName="awardCommentScreenFlag" />
+	    	  <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -137,6 +154,7 @@
       <bean parent="SortDefinition">
       </bean>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -147,8 +165,11 @@
               p:attributeName="templateFlag" />
         <bean parent="FieldDefinition"
               p:attributeName="awardCommentScreenFlag" />
+	    <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="resultFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -160,6 +181,8 @@
 	          p:attributeName="templateFlag" />
 	    <bean parent="FieldDefinition"
               p:attributeName="awardCommentScreenFlag" />
+	    <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>

@@ -97,6 +97,9 @@ public class Organization extends KraPersistableBusinessObjectBase {
     private List<OrganizationIndirectcost> organizationIdcs;
 
     private List<OrganizationAudit> organizationAudits;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     @SuppressWarnings("unchecked")
     public Organization() {
@@ -439,7 +442,15 @@ public class Organization extends KraPersistableBusinessObjectBase {
         this.onrResidentRepRolodex = onrResidentRepRolodex;
     }
 
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
 
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
     @SuppressWarnings("unchecked")
     @Override
     public List buildListOfDeletionAwareLists() {

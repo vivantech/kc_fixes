@@ -63,8 +63,10 @@ public class BudgetCategoryTypeExistenceRule extends KraMaintenanceDocumentRuleB
         }
         BudgetCategory budgetCategory = (BudgetCategory) maintenanceDocument.getNewMaintainableObject().getDataObject();
 
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
         Map pkMap = new HashMap();
         pkMap.put("budgetCategoryTypeCode", budgetCategory.getBudgetCategoryTypeCode());
+        pkMap.put("active", true);
         valid=checkExistenceFromTable(BudgetCategoryType.class,pkMap,"budgetCategoryTypeCode", "Budget Category Type");
 
 

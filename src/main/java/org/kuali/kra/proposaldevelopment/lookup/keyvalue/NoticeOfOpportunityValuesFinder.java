@@ -45,7 +45,10 @@ public class NoticeOfOpportunityValuesFinder extends UifKeyValuesFinderBase {
         keyValues.add(new ConcreteKeyValue("", "select"));
         for (Iterator iter = noticesOfOpportunity.iterator(); iter.hasNext();) {
             NoticeOfOpportunity noticeOfOpportunity = (NoticeOfOpportunity) iter.next();
-            keyValues.add(new ConcreteKeyValue(noticeOfOpportunity.getNoticeOfOpportunityCode(), noticeOfOpportunity.getDescription()));
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            if (noticeOfOpportunity.isActive()) {
+            	keyValues.add(new ConcreteKeyValue(noticeOfOpportunity.getNoticeOfOpportunityCode(), noticeOfOpportunity.getDescription()));
+            }
         }
         return keyValues;
     }

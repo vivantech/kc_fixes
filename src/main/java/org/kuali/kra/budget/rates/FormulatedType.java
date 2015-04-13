@@ -27,6 +27,9 @@ public class FormulatedType extends KraPersistableBusinessObjectBase {
     private String formulatedTypeCode; 
     private String description; 
     
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public FormulatedType() { 
 
     } 
@@ -46,5 +49,14 @@ public class FormulatedType extends KraPersistableBusinessObjectBase {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 }

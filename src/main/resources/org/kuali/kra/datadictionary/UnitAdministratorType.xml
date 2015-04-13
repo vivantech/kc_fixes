@@ -12,6 +12,7 @@
       <ref bean="UnitAdministratorType-lookupDefinition"/>
     </property>
     <property name="titleAttribute" value="unitAdministratorTypeCode"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="attributes">
       <list>
         <ref bean="UnitAdministratorType-unitAdministratorTypeCode"/>
@@ -19,6 +20,7 @@
         <ref bean="UnitAdministratorType-versionNumber"/>
         <ref bean="UnitAdministratorType-defaultGroupFlag"/>
         <ref bean="UnitAdministratorType-multiplesFlag"/>
+        <ref bean="UnitAdministratorType-active"/>
       </list>
     </property>
   </bean>
@@ -100,6 +102,18 @@
     <property name="summary" value="Multiples Flag"/>
     <property name="description" value="Multiples Flag"/>
   </bean>
+  
+  <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  <bean id="UnitAdministratorType-active" parent="UnitAdministratorType-active-parentBean" />
+  <bean id="UnitAdministratorType-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+  	<property name="maxLength" value="1" />
+  </bean>
 
 <!-- Business Object Inquiry Definition -->
 
@@ -113,12 +127,14 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Unit Administrator Type"/>
           <property name="numberOfColumns" value="1"/>
+          <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields">
             <list>
               <bean p:attributeName="unitAdministratorTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
               <bean p:attributeName="description" parent="FieldDefinition"/>
               <bean p:attributeName="defaultGroupFlag" parent="FieldDefinition"/>
               <bean p:attributeName="multiplesFlag" parent="FieldDefinition"/>
+        	  <bean p:attributeName="active" parent="FieldDefinition"/>
             </list>
           </property>
         </bean>
@@ -139,20 +155,24 @@
       <bean parent="SortDefinition">
       </bean>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="lookupFields">
       <list>
         <bean p:attributeName="unitAdministratorTypeCode" parent="FieldDefinition"/>
         <bean p:attributeName="description" parent="FieldDefinition"/>
         <bean p:attributeName="defaultGroupFlag" parent="FieldDefinition"/>
         <bean p:attributeName="multiplesFlag" parent="FieldDefinition"/>
+        <bean p:attributeName="active" parent="FieldDefinition"/>
       </list>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="resultFields">
       <list>
         <bean p:attributeName="unitAdministratorTypeCode" p:forceInquiry="true" parent="FieldDefinition"/>
         <bean p:attributeName="description" parent="FieldDefinition"/>
         <bean p:attributeName="defaultGroupFlag" parent="FieldDefinition"/>
         <bean p:attributeName="multiplesFlag" parent="FieldDefinition"/>
+        <bean p:attributeName="active" parent="FieldDefinition"/>
       </list>
     </property>
   </bean>

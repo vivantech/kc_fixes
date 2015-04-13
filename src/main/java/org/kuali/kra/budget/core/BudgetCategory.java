@@ -26,6 +26,9 @@ public class BudgetCategory extends KraPersistableBusinessObjectBase {
     private String description;
 
     private BudgetCategoryType budgetCategoryType;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public String getBudgetCategoryCode() {
         return budgetCategoryCode;
@@ -66,4 +69,13 @@ public class BudgetCategory extends KraPersistableBusinessObjectBase {
     public void setBudgetCategoryType(BudgetCategoryType budgetCategoryType) {
         this.budgetCategoryType = budgetCategoryType;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

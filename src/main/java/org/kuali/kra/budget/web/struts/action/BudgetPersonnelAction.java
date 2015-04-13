@@ -169,8 +169,10 @@ public class BudgetPersonnelAction extends BudgetExpensesAction {
                 budgetPeriod = budgetPeriods.get(0);
             }
             
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
             BudgetCategory newBudgetCategory = new BudgetCategory();
             newBudgetCategory.setBudgetCategoryTypeCode(getSelectedBudgetCategoryType(request));
+            newBudgetCategory.setActive(true);
             newBudgetCategory.refreshNonUpdateableReferences();
             
             boolean existingCeGroupCombo = false;

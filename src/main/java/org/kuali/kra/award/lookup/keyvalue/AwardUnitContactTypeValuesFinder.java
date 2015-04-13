@@ -34,8 +34,10 @@ public class AwardUnitContactTypeValuesFinder extends UifKeyValuesFinderBase {
 
     @Override
     public List<KeyValue> getKeyValues() {
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("defaultGroupFlag", "U");
+        values.put("active", true);
         List<KeyValue> result = new ArrayList<KeyValue>();
         Collection<UnitAdministratorType> types = getBusinessObjectService().findMatching(UnitAdministratorType.class, values);
         for (UnitAdministratorType type : types) {

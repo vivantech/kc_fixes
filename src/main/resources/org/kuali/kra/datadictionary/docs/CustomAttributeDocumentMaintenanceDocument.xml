@@ -19,7 +19,8 @@
         <value>documentTypeName</value> 
       </list>
     </property>
-    <property name="allowsRecordDeletion" value="true" />
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+    <property name="allowsRecordDeletion" value="false" />
     
     
     
@@ -37,13 +38,14 @@
   <bean id="CustomAttributeDocumentMaintenanceDocument-EditCustomAttributeDocument-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit CustomAttributeDocument"/>
     <property name="title" value="Edit CustomAttributeDocument"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="customAttributeId" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="documentTypeName" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="required"/>
         <bean parent="MaintainableFieldDefinition" p:name="typeName"/>
-        <bean parent="MaintainableFieldDefinition" p:name="active"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
       </list>
     </property>

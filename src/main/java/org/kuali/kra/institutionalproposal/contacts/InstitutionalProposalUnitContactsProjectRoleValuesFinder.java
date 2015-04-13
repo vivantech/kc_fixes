@@ -36,7 +36,8 @@ public class InstitutionalProposalUnitContactsProjectRoleValuesFinder extends Ui
         Collection<UnitAdministratorType> types = (Collection<UnitAdministratorType>) boService.findAll(UnitAdministratorType.class);
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         for (UnitAdministratorType aType: types) {
-            if ( aType.getDefaultGroupFlag().equals(Constants.UNIT_CONTACTS_DEFAULT_GROUP_FLAG)) {    // only get Unit Contacts
+        	// Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            if (aType.isActive() && aType.getDefaultGroupFlag().equals(Constants.UNIT_CONTACTS_DEFAULT_GROUP_FLAG)) {    // only get Unit Contacts
                 keyValues.add(new ConcreteKeyValue(aType.getUnitAdministratorTypeCode(), aType.getDescription()));
             }
         }

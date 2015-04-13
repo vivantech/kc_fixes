@@ -14,7 +14,8 @@
       <list>
         <value>budgetCategoryCode</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     
     
     
@@ -35,12 +36,14 @@
   <bean id="BudgetCategoryMaintenanceDocument-EditBudgetCategory-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Budget Category"/>
     <property name="title" value="Edit Budget Category"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="budgetCategoryCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="budgetCategoryTypeCode"/>
         <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
       </list>
     </property>
   </bean>
