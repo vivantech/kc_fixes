@@ -37,13 +37,18 @@ import org.kuali.kra.printing.print.AbstractPrint;
 import org.kuali.kra.printing.util.PrintingUtils;
 import org.kuali.kra.proposaldevelopment.bo.AttachmentDataSource;
 import org.kuali.kra.protocol.correspondence.ProtocolCorrespondence;
+import org.kuali.kra.service.ResearchDocumentService;
 import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.ken.util.NotificationConstants;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.service.DocumentService;
 import org.kuali.rice.krad.util.GlobalVariables;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Date;
@@ -52,6 +57,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * ### Vivantech Fix : #96 / [#88346510] Extending MeetingActionsActionBase so MeetingActionsAction and IacucMeetingActionsActione can redirect user to CommitteeDocument
+ *
+ */
 public abstract class MeetingActionsActionBase extends MeetingActionBase {
 
     
@@ -469,4 +479,46 @@ public abstract class MeetingActionsActionBase extends MeetingActionBase {
    
     }
 
+    // ### Vivantech Fix : #96 / [#88346510] Extending MeetingActionsActionBase so MeetingActionBase and IacucMeetingActionBase can redirect user to CommitteeDocument
+    public ActionForward returnToCommittee(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        this.save(mapping, form, request, response);        
+        return this.getReturnToCommitteeForward((MeetingFormBase)form);
+        
+    }
+
+    private ActionForward getReturnToCommitteeForward(MeetingFormBase form) throws WorkflowException {
+        assert form != null : "the form is null";
+        final DocumentService docService = KraServiceLocator.getService(DocumentService.class);
+        final String docNumber = form.getMeetingHelper().getCommitteeSchedule().getParentCommittee().getCommitteeDocument().getDocumentNumber();
+        
+        final CommitteeDocumentBase pdDoc = (CommitteeDocumentBase) docService.getByDocumentHeaderId(docNumber);
+        String forwardUrl = buildForwardUrl(pdDoc.getDocumentHeader().getWorkflowDocument().getDocumentId());
+
+        forwardUrl = forwardUrl.replaceFirst( getCommitteeCommitteeActionIdHook() + ".do", getCommitteeScheduleActionIdHook() + ".do");
+        forwardUrl += "&methodToCallAttribute=methodToCall.reload";
+        return new ActionForward(forwardUrl, true);
+    }
+    
+    protected abstract String getCommitteeScheduleActionIdHook();
+
+    protected abstract String getCommitteeCommitteeActionIdHook();
+    
+    protected String buildForwardUrl(String routeHeaderId) {
+        ResearchDocumentService researchDocumentService = KraServiceLocator.getService(ResearchDocumentService.class);
+        String forward = researchDocumentService.getDocHandlerUrl(routeHeaderId);
+//        forward = forward.replaceFirst(DEFAULT_TAB, ALTERNATE_OPEN_TAB);
+        if (forward.indexOf("?") == -1) {
+            forward += "?";
+        }
+        else {
+            forward += "&";
+        }
+        forward += KewApiConstants.DOCUMENT_ID_PARAMETER + "=" + routeHeaderId;
+        forward += "&" + KewApiConstants.COMMAND_PARAMETER + "=" + NotificationConstants.NOTIFICATION_DETAIL_VIEWS.DOC_SEARCH_VIEW;
+        if (GlobalVariables.getUserSession().isBackdoorInUse()) {
+            forward += "&" + KewApiConstants.BACKDOOR_ID_PARAMETER + "=" + GlobalVariables.getUserSession().getPrincipalName();
+        }
+        return forward;
+    }
 }

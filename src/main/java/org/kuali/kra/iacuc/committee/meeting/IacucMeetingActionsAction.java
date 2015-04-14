@@ -40,8 +40,14 @@ import org.kuali.rice.krad.util.GlobalVariables;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.ArrayList;
 
+/**
+ * 
+ * ### Vivantech Fix : #96 / [#88346510] Extending MeetingActionsActionBase so MeetingActionsAction and IacucMeetingActionsActione can redirect user to CommitteeDocument
+ *
+ */
 public class IacucMeetingActionsAction extends MeetingActionsActionBase {
 
     @Override
@@ -126,6 +132,17 @@ public class IacucMeetingActionsAction extends MeetingActionsActionBase {
     @Override
     protected CorrespondencePrintingService getCorrespondencePrintingService() {
         return KraServiceLocator.getService(IacucScheduleCorrespondencePrint.class);
+    }
+    
+    // ### Vivantech Fix : #96 / [#88346510] Extending MeetingActionsActionBase so MeetingActionsAction and IacucMeetingActionsActione can redirect user to CommitteeDocument
+    @Override
+    protected String getCommitteeScheduleActionIdHook() {
+        return "iacucCommitteeSchedule";
+    }
+
+    @Override
+    protected String getCommitteeCommitteeActionIdHook() {
+        return "iacucCommitteeCommittee";
     }
     
 }
