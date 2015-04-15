@@ -15,6 +15,12 @@
  */
 package org.kuali.kra.dao.ojb;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.broker.query.QueryFactory;
@@ -27,12 +33,12 @@ import org.kuali.rice.krad.bo.BusinessObject;
 import org.kuali.rice.krad.bo.DocumentHeader;
 import org.kuali.rice.krad.dao.impl.LookupDaoOjb;
 import org.kuali.rice.krad.lookup.CollectionIncomplete;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * 
+ *  Issue #104 / [#91196844] The cancelled child document VersionStatus record is being overidden by the finalized
+ *  child document because they both share identical awardNumber's.  See the db table coumn: version_history.seq_owner_version_name_field 
+ *
+ */
 @SuppressWarnings("unchecked")
 public class AwardLookupDaoOjb extends LookupDaoOjb  implements AwardLookupDao{
     private VersionHistoryLookupDao versionHistoryLookupDao;
@@ -46,7 +52,11 @@ public class AwardLookupDaoOjb extends LookupDaoOjb  implements AwardLookupDao{
         List<Long> awardIds = new ArrayList<Long>();
         for (Object object : searchResults) {
             Award awardSearchBo = (Award)object;
-            if(awardSearchBo.getVersionHistory().isActiveVersion()){
+            // Issue #104 / [#91196844] The cancelled child document VersionStatus record is being overidden by the finalized
+            // child document because they both share identical awardNumber's.  See the db table coumn: version_history.seq_owner_version_name_field 
+            String versionStatus = awardSearchBo.getVersionHistory().getStatus().name();
+            String sequenceStatus = awardSearchBo.getAwardSequenceStatus();
+            if(awardSearchBo.getVersionHistory().isActiveVersion() && StringUtils.equals(versionStatus, sequenceStatus)){
                 activeAwards.add(awardSearchBo.getAwardNumber());
                 awardIds.add(awardSearchBo.getAwardId());
             }else if(!activeAwards.contains(awardSearchBo.getAwardNumber()) && checkAwardHasActiveTnMDocument(awardSearchBo)){
