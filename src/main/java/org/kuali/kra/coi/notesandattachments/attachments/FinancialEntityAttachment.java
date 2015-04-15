@@ -16,6 +16,10 @@
 package org.kuali.kra.coi.notesandattachments.attachments;
 
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.upload.FormFile;
 import org.kuali.kra.SkipVersioning;
@@ -25,13 +29,10 @@ import org.kuali.kra.coi.personfinancialentity.PersonFinIntDisclosure;
 import org.kuali.kra.infrastructure.KraServiceLocator;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.kim.api.identity.PersonService;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.ObjectUtils;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class FinancialEntityAttachment extends PersonFinIntDisclosureAssociate implements Comparable<FinancialEntityAttachment>{
@@ -273,6 +274,7 @@ public class FinancialEntityAttachment extends PersonFinIntDisclosureAssociate i
 
     public void updateParms() {
         setUpdateUser(GlobalVariables.getUserSession().getPrincipalName());
+        setUpdateUserFullName(GlobalVariables.getUserSession().getPerson().getName());
         setUpdateTimestamp(((DateTimeService)CoreApiServiceLocator.getDateTimeService()).getCurrentTimestamp());
     }
     
