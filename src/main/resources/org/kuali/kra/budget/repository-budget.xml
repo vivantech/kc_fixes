@@ -42,6 +42,7 @@
         	<foreignkey field-ref="documentNumber" />
     	</reference-descriptor>
 	</class-descriptor>
+	
     <class-descriptor class="org.kuali.kra.budget.versions.BudgetDocumentVersion" table="BUDGET_DOCUMENT">			
 		<field-descriptor name="documentNumber" column="DOCUMENT_NUMBER" jdbc-type="VARCHAR" primarykey="true" />		
 		<field-descriptor name="parentDocumentKey" column="PARENT_DOCUMENT_KEY" jdbc-type="VARCHAR"/>
@@ -59,6 +60,7 @@
         	<inverse-foreignkey field-ref="documentNumber" />
     	</collection-descriptor>
 	</class-descriptor>
+	
 <!-- Factory definitions start -->
 	<class-descriptor class="org.kuali.kra.budget.document.BudgetParentDocument">
 	    <extent-class class-ref="org.kuali.kra.proposaldevelopment.document.ProposalDevelopmentDocument"/>
@@ -192,8 +194,9 @@
 		<reference-descriptor name="urRateClass" class-ref="org.kuali.kra.budget.rates.RateClass" auto-retrieve="true" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="urRateClassCode"/> 
 		</reference-descriptor> 
-		
     </class-descriptor>
+    
+    <!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.budget.core.BudgetCategory" table="BUDGET_CATEGORY">
 		<field-descriptor name="budgetCategoryCode" column="BUDGET_CATEGORY_CODE" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="budgetCategoryTypeCode" column="CATEGORY_TYPE" jdbc-type="VARCHAR" />
@@ -202,10 +205,14 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
+		
 		<reference-descriptor name="budgetCategoryType" class-ref="org.kuali.kra.budget.core.BudgetCategoryType" auto-retrieve="true" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="budgetCategoryTypeCode"/> 
 		</reference-descriptor>
 	</class-descriptor>
+	
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.budget.core.BudgetCategoryType" table="BUDGET_CATEGORY_TYPE">
 		<field-descriptor name="budgetCategoryTypeCode" column="BUDGET_CATEGORY_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR"/>
@@ -214,7 +221,9 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.core.BudgetCategoryMap" table="BUDGET_CATEGORY_MAPS">
 		<field-descriptor name="mappingName" column="MAPPING_NAME" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="targetCategoryCode" column="TARGET_CATEGORY_CODE" jdbc-type="VARCHAR" primarykey="true"/>
@@ -229,6 +238,8 @@
 			<inverse-foreignkey field-ref="targetCategoryCode"/>
 		</collection-descriptor>
 	</class-descriptor>
+	
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.budget.core.BudgetCategoryMapping" table="BUDGET_CATEGORY_MAPPING">
 		<field-descriptor name="budgetCategoryCode" column="COEUS_CATEGORY_CODE" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="mappingName" column="MAPPING_NAME" jdbc-type="VARCHAR" primarykey="true"/>
@@ -237,27 +248,23 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
+		
 		<reference-descriptor name="budgetCategory" class-ref="org.kuali.kra.budget.core.BudgetCategory" auto-retrieve="true" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="budgetCategoryCode"/>
 		</reference-descriptor>
 	</class-descriptor>
 	
 	<class-descriptor class="org.kuali.kra.budget.nonpersonnel.BudgetLineItemCalculatedAmount" table="BUDGET_DETAILS_CAL_AMTS">
-
 		<field-descriptor name="budgetLineItemCalculatedAmountId" column="BUDGET_DETAILS_CAL_AMTS_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_BUDGET_DETAILS_CAL_AMTS_ID"/> 	
-
 		<!--<field-descriptor name="budgetPeriodId" column="BUDGET_PERIOD_NUMBER" jdbc-type="BIGINT"/>-->
 		<field-descriptor name="budgetLineItemId" column="BUDGET_DETAILS_ID" jdbc-type="BIGINT"/>
-		
 		<field-descriptor name="lineItemNumber" column="LINE_ITEM_NUMBER" jdbc-type="INTEGER"/>
 		<field-descriptor name="rateClassCode" column="RATE_CLASS_CODE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="rateTypeCode" column="RATE_TYPE_CODE" jdbc-type="VARCHAR"/>
 		<field-descriptor name="rateTypeDescription" column="RATE_TYPE_DESCRIPTION" jdbc-type="VARCHAR"/>
-		
 		<field-descriptor name="budgetId" column="BUDGET_ID" jdbc-type="BIGINT" />
-
 		<field-descriptor name="budgetPeriod" column="BUDGET_PERIOD" jdbc-type="INTEGER" />
-				
 		<field-descriptor name="applyRateFlag" column="APPLY_RATE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion"/>
 		<field-descriptor name="calculatedCost" column="CALCULATED_COST" jdbc-type="DECIMAL" conversion="org.kuali.kra.infrastructure.OjbBudgetDecimalFieldConversion"/>
 		<field-descriptor name="calculatedCostSharing" column="CALCULATED_COST_SHARING" jdbc-type="DECIMAL" conversion="org.kuali.kra.infrastructure.OjbBudgetDecimalFieldConversion"/>
@@ -415,7 +422,6 @@
 		<field-descriptor name="hierarchyProposalNumber" column="HIERARCHY_PROPOSAL_NUMBER" jdbc-type="VARCHAR" />
 		<field-descriptor name="hiddenInHierarchy" column="HIDE_IN_HIERARCHY" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>
-
 	
 	<class-descriptor class="org.kuali.kra.budget.distributionincome.BudgetUnrecoveredFandA" table="EPS_PROP_IDC_RATE">
 		<field-descriptor name="budgetId" column="BUDGET_ID" jdbc-type="BIGINT" primarykey="true" /> 	
@@ -559,6 +565,7 @@
 		</reference-descriptor>
 
 	--></class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.personnel.BudgetPersonnelRateAndBase" table="BUDGET_PER_DET_RATE_AND_BASE">
 		<field-descriptor name="budgetPersonnelRateAndBaseId" column="BGT_PER_DET_RATE_AND_BASE_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_BGT_PER_DET_RATE_BASE_ID"/> 	
 		<field-descriptor name="budgetId" column="BUDGET_ID" jdbc-type="BIGINT" /> 	
@@ -598,6 +605,7 @@
 		</reference-descriptor>
 
 	--></class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.core.CostElement" table="COST_ELEMENT">
 		<field-descriptor name="costElement" column="COST_ELEMENT" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="budgetCategoryCode" column="BUDGET_CATEGORY_CODE" jdbc-type="VARCHAR"/>
@@ -655,6 +663,7 @@
 		</reference-descriptor>
 
 	--></class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.bo.InstituteLaRate" table="INSTITUTE_LA_RATES">
 		<field-descriptor name="fiscalYear" column="FISCAL_YEAR" jdbc-type="CHAR" primarykey="true"/>
 		<field-descriptor name="onOffCampusFlag" column="ON_OFF_CAMPUS_FLAG" jdbc-type="CHAR" primarykey="true" conversion="org.kuali.kra.infrastructure.OjbOnOffCampusFlagFieldConversion"/>
@@ -680,6 +689,7 @@
 		</reference-descriptor>
 		
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.bo.InstituteRate" table="INSTITUTE_RATES">
 		<field-descriptor name="activityTypeCode" column="ACTIVITY_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="fiscalYear" column="FISCAL_YEAR" jdbc-type="CHAR" primarykey="true"/>
@@ -708,6 +718,7 @@
 			<foreignkey field-ref="activityTypeCode"/> 
 		</reference-descriptor>
 	</class-descriptor>
+	
 	<!-- Mapping table for the  -->
 	<class-descriptor class="org.kuali.kra.external.budget.FinancialObjectCodeMapping" table="FIN_OBJECT_CODE_MAPPING">
 		<field-descriptor name="mappingId" column="MAPPING_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_FIN_OBJECT_CODE_MAPPING_ID"/>
@@ -733,6 +744,7 @@
 			<foreignkey field-ref="activityTypeCode"/> 
 		</reference-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.personnel.JobCode" table="JOB_CODE">
 		<field-descriptor name="jobCode" column="JOB_CODE" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="jobTitle" column="JOB_TITLE" jdbc-type="VARCHAR"/>
@@ -742,6 +754,7 @@
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
 		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion"/>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.rates.RateClass" table="RATE_CLASS">
 		<field-descriptor id="1" name="rateClassCode" column="RATE_CLASS_CODE" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR"/>
@@ -756,6 +769,8 @@
 			<foreignkey field-ref="rateClassType"/> 
 		</reference-descriptor>
 	</class-descriptor>
+	
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.budget.rates.RateClassType" table="RATE_CLASS_TYPE">
 		<field-descriptor name="rateClassType" column="RATE_CLASS_TYPE" jdbc-type="CHAR" primarykey="true"/>
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR"/>
@@ -765,7 +780,9 @@
 		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP"/>
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR"/>
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.rates.RateType" table="RATE_TYPE">
 		<field-descriptor name="rateClassCode" column="RATE_CLASS_CODE" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="rateTypeCode" column="RATE_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true"/>
@@ -783,6 +800,7 @@
 			<foreignkey field-ref="rateClassCode"/> 
 		</reference-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.rates.TrainingStipendRate" table="TRAINING_STIPEND_RATES">
 		<field-descriptor name="rateId" column="TRAINING_STIPEND_RATES_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_TRAINING_STIPEND_RATES_ID" />
 		<field-descriptor name="careerLevel" column="CAREER_LEVEL" jdbc-type="VARCHAR" primarykey="false"/>
@@ -796,6 +814,7 @@
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
 		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion"/>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.calculator.ValidCalcType" table="VALID_CALC_TYPES">
 		<field-descriptor name="calcTypeId" column="CALC_TYPE_ID" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="dependentSeqNumber" column="DEPENDENT_SEQ_NUMBER" jdbc-type="INTEGER" primarykey="true"/>
@@ -821,6 +840,7 @@
 			<foreignkey field-ref="rateTypeCode"/>
 		</reference-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.personnel.ValidCeJobCode" table="VALID_CE_JOB_CODES">
 		<field-descriptor name="costElement" column="COST_ELEMENT" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="jobCode" column="JOB_CODE" jdbc-type="VARCHAR" primarykey="true"/>
@@ -837,6 +857,7 @@
 		</reference-descriptor>
 
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.rates.ValidCeRateType" table="VALID_CE_RATE_TYPES">
 		<field-descriptor name="costElement" column="COST_ELEMENT" jdbc-type="VARCHAR" primarykey="true"/>
 		<field-descriptor name="rateClassCode" column="RATE_CLASS_CODE" jdbc-type="VARCHAR" primarykey="true"/>
@@ -859,6 +880,7 @@
 			<foreignkey field-ref="rateTypeCode"/> 
 		</reference-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.budget.rates.BudgetLaRate" table="EPS_PROP_LA_RATES">
 		<field-descriptor name="fiscalYear" column="FISCAL_YEAR" jdbc-type="CHAR" primarykey="true"/>
 		<field-descriptor name="onOffCampusFlag" column="ON_OFF_CAMPUS_FLAG" jdbc-type="CHAR" primarykey="true" conversion="org.kuali.kra.infrastructure.OjbOnOffCampusFlagFieldConversion"/>
@@ -998,6 +1020,7 @@
 
 	--></class-descriptor>
 	
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.budget.personnel.AppointmentType" table="APPOINTMENT_TYPE">
 		<field-descriptor name="appointmentTypeCode" column="APPOINTMENT_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1006,6 +1029,7 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     	<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
+    	<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>
 
 	<class-descriptor class="org.kuali.kra.budget.parameters.BudgetPeriodType" table="BUDGET_PERIOD_TYPE">
@@ -1016,6 +1040,7 @@
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
     	<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="false" />
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.proposaldevelopment.budget.bo.BudgetSubAwards" table="BUDGET_SUB_AWARDS">
 		<field-descriptor name="budgetId" column="BUDGET_ID" jdbc-type="BIGINT" primarykey="true" /> 	
 		<field-descriptor name="subAwardNumber" column="SUB_AWARD_NUMBER" jdbc-type="INTEGER" primarykey="true"/>
@@ -1055,8 +1080,8 @@
         </reference-descriptor>	
 		<field-descriptor name="hierarchyProposalNumber" column="HIERARCHY_PROPOSAL_NUMBER" jdbc-type="VARCHAR" />
 		<field-descriptor name="hiddenInHierarchy" column="HIDE_IN_HIERARCHY" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
-
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.proposaldevelopment.budget.bo.BudgetSubAwardFiles" table="BUDGET_SUB_AWARD_FILES">
 		<field-descriptor name="budgetId" column="BUDGET_ID" jdbc-type="BIGINT" primarykey="true" /> 	
 		<field-descriptor name="subAwardNumber" column="SUB_AWARD_NUMBER" jdbc-type="INTEGER" primarykey="true"/>
@@ -1127,6 +1152,7 @@
         	<foreignkey field-ref="documentNumber" />
     	</reference-descriptor>
 	</class-descriptor>
+	
     <class-descriptor class="org.kuali.kra.award.budget.document.AwardBudgetDocumentVersion" table="BUDGET_DOCUMENT">			
 		<field-descriptor name="documentNumber" column="DOCUMENT_NUMBER" jdbc-type="VARCHAR" primarykey="true" />		
 		<field-descriptor name="parentDocumentKey" column="PARENT_DOCUMENT_KEY" jdbc-type="VARCHAR"/>
@@ -1181,6 +1207,7 @@
             <inverse-foreignkey field-ref="budgetId"/>
         </collection-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.award.budget.AwardBudgetVersionOverviewExt" table="AWARD_BUDGET_EXT">
 		<field-descriptor name="budgetId" column="BUDGET_ID" jdbc-type="BIGINT" primarykey="true" />
 		<field-descriptor name="awardBudgetStatusCode" column="AWARD_BUDGET_STATUS_CODE" jdbc-type="VARCHAR" />
@@ -1202,6 +1229,7 @@
 			<foreignkey field-ref="awardBudgetTypeCode"/>
 		</reference-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.award.budget.AwardBudgetType" table="AWARD_BUDGET_TYPE">
 		<field-descriptor name="awardBudgetTypeCode" column="AWARD_BUDGET_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1210,6 +1238,7 @@
 		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP" />
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.award.budget.AwardBudgetStatus" table="AWARD_BUDGET_STATUS">
 		<field-descriptor name="awardBudgetStatusCode" column="AWARD_BUDGET_STATUS_CODE" jdbc-type="VARCHAR" primarykey="true" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1218,6 +1247,7 @@
 		<field-descriptor name="updateTimestamp" column="UPDATE_TIMESTAMP" jdbc-type="TIMESTAMP" />
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.award.budget.AwardBudgetPeriodExt" table="AWARD_BUDGET_PERIOD_EXT">
 		<field-descriptor name="budgetPeriodId" column="BUDGET_PERIOD_NUMBER" jdbc-type="BIGINT" primarykey="true" />
 		<field-descriptor name="obligatedAmount" column="OBLIGATED_AMOUNT" jdbc-type="DECIMAL" conversion="org.kuali.kra.infrastructure.OjbBudgetDecimalFieldConversion" />
@@ -1252,6 +1282,7 @@
 	          </query-customizer>
 		</collection-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.award.budget.AwardBudgetLineItemExt" table="AWARD_BUDGET_DETAILS_EXT">
 		<field-descriptor name="budgetLineItemId" column="BUDGET_DETAILS_ID" jdbc-type="BIGINT" primarykey="true" />
 		<field-descriptor name="obligatedAmount" column="OBLIGATED_AMOUNT" jdbc-type="DECIMAL" conversion="org.kuali.kra.infrastructure.OjbBudgetDecimalFieldConversion" />
@@ -1269,6 +1300,7 @@
 			<inverse-foreignkey field-ref="budgetLineItemId"/>
 		</collection-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.award.budget.AwardBudgetLineItemCalculatedAmountExt" table="AWD_BGT_DET_CAL_AMTS_EXT">
 		<field-descriptor name="budgetLineItemCalculatedAmountId" column="BUDGET_DETAILS_CAL_AMTS_ID" jdbc-type="BIGINT" primarykey="true" />
 		<field-descriptor name="obligatedAmount" column="OBLIGATED_AMOUNT" jdbc-type="DECIMAL" conversion="org.kuali.kra.infrastructure.OjbBudgetDecimalFieldConversion" />
@@ -1280,6 +1312,7 @@
 			<foreignkey field-ref="budgetLineItemCalculatedAmountId"/>
 		</reference-descriptor>
 	</class-descriptor>
+	
 	<class-descriptor class="org.kuali.kra.award.budget.AwardBudgetPersonnelDetailsExt" table="AWD_BUDGET_PER_DET_EXT">
 		<field-descriptor name="budgetPersonnelLineItemId" column="BUDGET_PERSONNEL_DETAILS_ID" jdbc-type="BIGINT" primarykey="true" />
 		<field-descriptor name="obligatedAmount" column="OBLIGATED_AMOUNT" jdbc-type="DECIMAL" conversion="org.kuali.kra.infrastructure.OjbBudgetDecimalFieldConversion" />
@@ -1339,6 +1372,7 @@
 			<foreignkey field-ref="costElement"/>
 		</reference-descriptor> 
 	</class-descriptor>	
+	
 	<class-descriptor class="org.kuali.kra.budget.rates.RateClassBaseExclusion" table="RATE_CLASS_BASE_EXCLUSION">
 		<field-descriptor name="rateClassBaseExclusionId" column="RATE_CLASS_BASE_EXCL_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_RATE_CLASS_BASE_EXCL_ID"/>
 		<field-descriptor name="rateClassCode" column="RATE_CLASS_CODE" jdbc-type="VARCHAR" />
@@ -1358,6 +1392,7 @@
 			<foreignkey field-ref="rateTypeCodeExcl"/>
 		</reference-descriptor>
 	</class-descriptor>	
+	
 	<class-descriptor class="org.kuali.kra.budget.rates.RateClassBaseInclusion" table="RATE_CLASS_BASE_INCLUSION">
 		<field-descriptor name="rateClassBaseInclusionId" column="RATE_CLASS_BASE_INCL_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_RATE_CLASS_BASE_INCL_ID"/>
 		<field-descriptor name="rateClassCode" column="RATE_CLASS_CODE" jdbc-type="VARCHAR" />
@@ -1377,6 +1412,8 @@
 			<foreignkey field-ref="rateTypeCodeIncl"/>
 		</reference-descriptor>
 	</class-descriptor>
+	
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.budget.rates.FormulatedType" table="FORMULATED_TYPE">
 		<field-descriptor name="formulatedTypeCode" column="FORMULATED_TYPE_CODE" jdbc-type="VARCHAR" primarykey="true" />
 		<field-descriptor name="description" column="DESCRIPTION" jdbc-type="VARCHAR" />
@@ -1384,7 +1421,10 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 	</class-descriptor>	
+	
+	<!-- ### Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 	<class-descriptor class="org.kuali.kra.budget.rates.UnitFormulatedCost" table="UNIT_FORMULATED_COST">
 		<field-descriptor name="unitFormulatedCostId" column="UNIT_FORMULATED_COST_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_UNIT_FORMULATED_COST_ID"/>
 		<field-descriptor name="formulatedTypeCode" column="FORMULATED_TYPE_CODE" jdbc-type="VARCHAR" />
@@ -1394,6 +1434,7 @@
 		<field-descriptor name="updateUser" column="UPDATE_USER" jdbc-type="VARCHAR" />
 		<field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
 		<field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="active" column="ACTIVE_FLAG" jdbc-type="CHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 		<reference-descriptor name="unit" class-ref="org.kuali.kra.bo.Unit" auto-retrieve="false" auto-update="none" auto-delete="none"> 
 			<foreignkey field-ref="unitNumber"/>
 		</reference-descriptor>
@@ -1401,6 +1442,7 @@
 			<foreignkey field-ref="formulatedTypeCode"/>
 		</reference-descriptor>
 	</class-descriptor>	
+	
 	<class-descriptor class="org.kuali.kra.budget.nonpersonnel.BudgetFormulatedCostDetail" table="BUD_FORMULATED_COST_DETAIL">
 		<field-descriptor name="budgetFormulatedCostDetailId" column="BUD_FORMULATED_COST_DETAIL_ID" jdbc-type="BIGINT" primarykey="true" autoincrement="true" sequence-name="SEQ_BUD_FRMLTD_COST_DETAIL_ID"/>
 		<field-descriptor name="budgetLineItemId" column="BUDGET_DETAILS_ID" jdbc-type="BIGINT" />

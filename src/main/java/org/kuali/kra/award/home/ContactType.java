@@ -32,6 +32,9 @@ public class ContactType extends KraPersistableBusinessObjectBase implements Con
     private String contactTypeCode;
 
     private String description;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     /**
      * Constructs a ContactType.java
@@ -125,4 +128,13 @@ public class ContactType extends KraPersistableBusinessObjectBase implements Con
     public String getRoleCode() {
         return getContactTypeCode();
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

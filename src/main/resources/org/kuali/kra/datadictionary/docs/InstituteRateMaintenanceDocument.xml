@@ -22,7 +22,8 @@
       </list>
     </property>
     <property name="preserveLockingKeysOnCopy" value="true" />
-    <property name="allowsRecordDeletion" value="true" />
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+    <property name="allowsRecordDeletion" value="false" />
     
     
     
@@ -41,6 +42,7 @@
   <bean id="InstituteRateMaintenanceDocument-EditInstituteRates-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Institute Rates"/>
     <property name="title" value="Edit Institute Rates"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="activityTypeCode" p:required="true"/>
@@ -51,7 +53,7 @@
         <bean parent="MaintainableFieldDefinition" p:name="startDate" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="unitNumber" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="instituteRate" p:required="true"/>
-        <bean parent="MaintainableFieldDefinition" p:name="active" p:required="true"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:required="true" p:defaultValue="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
       </list>
     </property>

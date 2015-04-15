@@ -33,7 +33,8 @@
                 <value>personSignatureId</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         <property name="documentTypeName" value="PersonSignatureMaintenanceDocument" />
 		<property name="documentAuthorizerClass" value="org.kuali.kra.authorizer.PersonSignatureMaintenanceDocumentAuthorizer"/>
         <property name="businessRulesClass" value="org.kuali.kra.bo.ValidPersonSignatureMaintenanceDocumentRule"/>
@@ -46,6 +47,7 @@
     <bean id="PersonSignatureMaintenanceDocument-EditPersonSignature-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit PersonSignature" />
         <property name="title" value="Edit PersonSignature" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems" >
             <list>
                 <bean parent="MaintainableFieldDefinition" 
@@ -61,7 +63,7 @@
                     p:name="templateFile" />
                <bean parent="MaintainableFieldDefinition"
                     p:name="signatureActive" 
-                    p:required="false"  />               
+                    p:required="false" p:defaultValue="true"/>
             </list>
         </property>
     </bean>

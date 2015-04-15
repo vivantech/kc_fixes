@@ -47,7 +47,11 @@ public class CostElementValuesFinder extends UifKeyValuesFinderBase {
         KeyValuesService keyValuesService = KraServiceLocator.getService("keyValuesService");
         List<KeyValue> keyValues = new ArrayList<KeyValue>();        
         Collection<CostElement> costElements= keyValuesService.findAll(CostElement.class);
-        Collection<BudgetCategory> budgetCategoryCodes = keyValuesService.findAll(BudgetCategory.class);
+        
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+        Map<String, Object> fieldValues = new HashMap<String, Object>();
+        fieldValues.put("active", true);
+		Collection<BudgetCategory> budgetCategoryCodes = keyValuesService.findMatching(BudgetCategory.class, fieldValues);
 
         for (CostElement costElement : costElements) {
             for(BudgetCategory budgetCategory : budgetCategoryCodes){

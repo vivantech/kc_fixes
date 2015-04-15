@@ -43,10 +43,13 @@ public class CoiDisclosureProjectsProjectTypeValuesFinder extends UifKeyValuesFi
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         keyValues.add(new ConcreteKeyValue("", "select"));
 
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
         List<ProposalType> proposalTypes = (List<ProposalType>) getBusinessObjectService().findAll(ProposalType.class);
         if (CollectionUtils.isNotEmpty(proposalTypes)) {
-            for (ProposalType proposalType : proposalTypes) {
-                keyValues.add(new ConcreteKeyValue(proposalType.getProposalTypeCode(), proposalType.getDescription()));
+        	for (ProposalType proposalType : proposalTypes) {
+        		if (proposalType.isActive()) {
+        			keyValues.add(new ConcreteKeyValue(proposalType.getProposalTypeCode(), proposalType.getDescription()));
+        		}
             }
         }
         

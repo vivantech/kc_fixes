@@ -42,6 +42,9 @@ public class CustomAttribute extends KraPersistableBusinessObjectBase {
     private String value;
 
     private CustomAttributeDataType customAttributeDataType;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public CustomAttribute() {
         super();
@@ -151,4 +154,13 @@ public class CustomAttribute extends KraPersistableBusinessObjectBase {
     public String getValue() {
         return value;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

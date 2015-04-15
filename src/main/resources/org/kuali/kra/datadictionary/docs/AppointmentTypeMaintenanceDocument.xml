@@ -19,7 +19,8 @@
       <list>
         <value>appointmentTypeCode</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     <property name="documentTypeName" value="AppointmentTypeMaintenanceDocument"/>
     <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
   </bean>
@@ -31,12 +32,14 @@
   <bean id="AppointmentTypeMaintenanceDocument-EditAppointmentType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Appointment Type"/>
     <property name="title" value="Edit Appointment Type"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="appointmentTypeCode" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="duration" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
       </list>
     </property>
   </bean>

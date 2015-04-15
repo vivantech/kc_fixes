@@ -33,7 +33,8 @@
                 <value>watermarkId</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         <property name="documentTypeName" value="WatermarkMaintenanceDocument" />
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
         <property name="businessRulesClass" value="org.kuali.kra.irb.actions.submit.ValidWatermarkStatusMaintenanceDocumentRule"/>
@@ -46,6 +47,7 @@
     <bean id="WatermarkMaintenanceDocument-EditWatermark-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Watermark Lookup" />
         <property name="title" value="Edit Watermark Lookup" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems" >
             <list>
 
@@ -78,6 +80,8 @@
                     p:name="templateFile" />
                <bean parent="MaintainableFieldDefinition"
                     p:name="versionNumber" />
+        		<bean parent="MaintainableFieldDefinition" 
+        			p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>

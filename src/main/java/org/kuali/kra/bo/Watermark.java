@@ -44,6 +44,9 @@ public class Watermark extends KraPersistableBusinessObjectBase implements Persi
     private String watermarkPosition;
     private String watermarkAlignment;
     private String groupName;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public Long getWatermarkId() {
         return watermarkId;
@@ -167,5 +170,14 @@ public class Watermark extends KraPersistableBusinessObjectBase implements Persi
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 }

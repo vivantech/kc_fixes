@@ -59,6 +59,9 @@ public class SpecialReviewRuleBase<T extends SpecialReview<? extends SpecialRevi
     private static final String EXEMPTION_TYPE_CODE_FIELD = "exemptionTypeCodes";
     private static final String EXEMPTION_TYPE_CODE_TITLE = "Exemption #";
     
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private static final String ACTIVE = "active";
+    
     private static final String HUMAN_SUBJECTS_LINK_TO_IRB_ERROR_STRING = "Human Subjects/Link to IRB";
     private static final String ANIMAL_USAGE_LINK_TO_IACUC_ERROR_STRING = "Animal Usage/Link to IACUC";
     
@@ -235,9 +238,11 @@ public class SpecialReviewRuleBase<T extends SpecialReview<? extends SpecialRevi
         boolean isValid = true;
         
         if (StringUtils.isNotBlank(specialReview.getSpecialReviewTypeCode()) && StringUtils.isNotBlank(specialReview.getApprovalTypeCode())) {
-            Map<String, String> fieldValues = new HashMap<String, String>();
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            Map<String, Object> fieldValues = new HashMap<String, Object>();
             fieldValues.put(TYPE_CODE_FIELD, specialReview.getSpecialReviewTypeCode());
             fieldValues.put(APPROVAL_TYPE_CODE_FIELD, specialReview.getApprovalTypeCode());
+            fieldValues.put(ACTIVE, true);
             Collection<ValidSpecialReviewApproval> validApprovals = getBusinessObjectService().findMatching(ValidSpecialReviewApproval.class, fieldValues);
 
             for (ValidSpecialReviewApproval validApproval : validApprovals) {

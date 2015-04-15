@@ -36,6 +36,9 @@ public class ValidSpecialReviewApproval extends KraPersistableBusinessObjectBase
     private boolean approvalDateFlag;
 
     private boolean exemptNumberFlag;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     private SpecialReviewType specialReviewType;
 
@@ -112,4 +115,13 @@ public class ValidSpecialReviewApproval extends KraPersistableBusinessObjectBase
     public void setSpecialReviewApprovalType(SpecialReviewApprovalType specialReviewApprovalType) {
         this.specialReviewApprovalType = specialReviewApprovalType;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

@@ -63,7 +63,10 @@ public abstract class SpecialReviewTypeValuesFinder extends UifKeyValuesFinderBa
         
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         for (SpecialReviewType specialReviewType : specialReviewTypes) {
-            keyValues.add(new ConcreteKeyValue(specialReviewType.getSpecialReviewTypeCode(), specialReviewType.getDescription()));                            
+        	// Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+        	if (specialReviewType.isActive()) {
+        		keyValues.add(new ConcreteKeyValue(specialReviewType.getSpecialReviewTypeCode(), specialReviewType.getDescription()));
+        	}
         }       
         return keyValues;
     }
