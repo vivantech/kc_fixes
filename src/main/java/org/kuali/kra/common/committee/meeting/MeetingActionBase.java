@@ -29,6 +29,7 @@ import org.kuali.kra.protocol.actions.submit.ProtocolSubmissionBase;
 import org.kuali.rice.kns.question.ConfirmationQuestion;
 import org.kuali.rice.kns.service.DictionaryValidationService;
 import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.kns.util.WebUtils;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
 import org.kuali.rice.krad.exception.AuthorizationException;
 import org.kuali.rice.krad.rules.rule.event.KualiDocumentEvent;
@@ -40,12 +41,18 @@ import org.kuali.rice.krad.util.KRADConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.*;
 
 /**
  * 
  * This class is for all meeting actions. A couple of methods, which are for text area update, are copied from
  * KraTransactionalDocumentActionBase.
+ */
+
+/**
+ * ### Vivantech Fix : #96 / [#88346510] Extending execute() for MeetingFormBase to make use of KualiDocumentFormBase to use formKey 
+ *
  */
 public abstract class MeetingActionBase extends KualiAction {
     private static final String CLOSE_QUESTION = "Would you like to save meeting data before close it ?";
@@ -325,19 +332,32 @@ public abstract class MeetingActionBase extends KualiAction {
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ActionForward forward = super.execute(mapping, form, request, response);
-        ((MeetingFormBase) form).getMeetingHelper().sortAttendances();
+        
+        // ### Vivantech Fix : #96 / [#88346510] Extending MeetingFormBase to make use of KualiDocumentFormBase to use formKey
+        MeetingFormBase formBase = ((MeetingFormBase) form);
+        MeetingHelperBase meetingHelper = formBase.getMeetingHelper();
+        
+        meetingHelper.sortAttendances();
         // if view protocol is using popup, then need following code
         String command = request.getParameter("command");
         if (StringUtils.isNotBlank(command) && "viewProtocolSubmission".equals(command)) {
             forward = viewProtocolSubmission(mapping, form, request, response);
         }
         
-        ((MeetingFormBase) form).getMeetingHelper().setHideReviewerName(
+        meetingHelper.setHideReviewerName(
                 getReviewerCommentsService().setHideReviewerName(
-                        ((MeetingFormBase) form).getMeetingHelper().getCommitteeSchedule().getCommitteeScheduleMinutes()));
+                		meetingHelper.getCommitteeSchedule().getCommitteeScheduleMinutes()));
         
         // use the entry type comparator to sort the minutes 
-        Collections.sort(((MeetingFormBase) form).getMeetingHelper().getCommitteeSchedule().getCommitteeScheduleMinutes(), CommitteeScheduleMinuteBase.entryTypeComparator);
+        Collections.sort(meetingHelper.getCommitteeSchedule().getCommitteeScheduleMinutes(), CommitteeScheduleMinuteBase.entryTypeComparator);
+               
+        //
+        String formKey = formBase.getFormKey();
+        if (StringUtils.isBlank(formKey)) {
+            // generate doc form key here if it does not exist
+            formKey = GlobalVariables.getUserSession().addObjectWithGeneratedKey(form);
+            formBase.setFormKey(formKey);
+        }        
 
         return forward;
     }
