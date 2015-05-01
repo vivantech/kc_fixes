@@ -40,6 +40,7 @@ import org.kuali.rice.kns.util.AuditError;
 import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.rules.rule.DocumentAuditRule;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +147,8 @@ public class ProposalDevelopmentProposalAttachmentsAuditRule extends ResearchDoc
     public boolean checkNsfRelatedAttachments(ProposalDevelopmentDocument proposalDevelopmentDocument) {
         boolean valid = true;
         DevelopmentProposal developmentProposal = proposalDevelopmentDocument.getDevelopmentProposal();
-            if (  developmentProposal.getSponsorCode().equals(
+        // ### Vivantech Fix Issue #116 Proposal Development Document data validation causes stack trace when sponsor code is empty ###
+            if (  ObjectUtils.isNotNull(developmentProposal.getSponsorCode()) && developmentProposal.getSponsorCode().equals(
                         getParameterService().getParameterValueAsString(Constants.KC_GENERIC_PARAMETER_NAMESPACE, 
                                         ParameterConstants.ALL_COMPONENT, KeyConstants.NSF_SPONSOR_CODE))
                                         && developmentProposal.getS2sOpportunity() != null) {
