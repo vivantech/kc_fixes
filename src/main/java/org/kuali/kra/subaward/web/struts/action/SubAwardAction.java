@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts.action.ActionForm;
@@ -625,4 +626,23 @@ public ActionForward blanketApprove(ActionMapping mapping,
       
       return  mapping.findForward(Constants.MAPPING_BASIC);
   }
+ 
+ 	// ### Vivantech Fix #119 / [93572340] move section into a method that is needed for SubAwardAction
+ 	@Override
+	public ActionForward reload(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ActionForward forward = super.reload(mapping, form, request, response);
+		prepareSubAwardList((SubAwardForm)form);
+		return forward;
+	}
+
+	protected void prepareSubAwardList(SubAwardForm subAwardForm){
+		List<SubAwardForms> subAwardList = new ArrayList<SubAwardForms>();
+	    Collection<SubAwardForms> subAwardForms = (Collection<SubAwardForms>) KraServiceLocator.getService(BusinessObjectService.class).findAll(SubAwardForms.class);
+	    for(SubAwardForms subAwardFormValues : subAwardForms){
+		    if(subAwardFormValues.getTemplateTypeCode().equals(2)){
+		        subAwardList.add(subAwardFormValues);
+		    }
+	    }
+	    subAwardForm.getSubAward().setSubAwardForms(subAwardList);
+	}
 }
