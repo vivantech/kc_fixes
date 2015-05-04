@@ -14,7 +14,8 @@
       <list>
         <value>researchAreaCode</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+	<property name="allowsRecordDeletion" value="true" />	
     
     
     

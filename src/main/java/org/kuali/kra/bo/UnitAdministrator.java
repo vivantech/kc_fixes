@@ -32,6 +32,9 @@ public class UnitAdministrator extends KraPersistableBusinessObjectBase implemen
     private UnitAdministratorType unitAdministratorType;
 
     private transient KcPersonService kcPersonService;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public UnitAdministrator() {
         super();
@@ -110,5 +113,14 @@ public class UnitAdministrator extends KraPersistableBusinessObjectBase implemen
         }
         return result;
     } 
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
     
 }

@@ -24,6 +24,9 @@ public class IacucLocationType extends KraPersistableBusinessObjectBase {
     private Integer locationTypeCode; 
     private String location; 
     
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public IacucLocationType() { 
 
     } 
@@ -83,5 +86,14 @@ public class IacucLocationType extends KraPersistableBusinessObjectBase {
         }
         return true;
     }
+
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
     
 }

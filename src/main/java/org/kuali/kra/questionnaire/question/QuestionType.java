@@ -24,6 +24,9 @@ public class QuestionType extends KraPersistableBusinessObjectBase {
     private Integer questionTypeId;
 
     private String questionTypeName;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public QuestionType() {
     }
@@ -43,4 +46,13 @@ public class QuestionType extends KraPersistableBusinessObjectBase {
     public void setQuestionTypeName(String questionTypeName) {
         this.questionTypeName = questionTypeName;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

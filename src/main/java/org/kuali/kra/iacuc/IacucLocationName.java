@@ -25,6 +25,9 @@ public class IacucLocationName extends KraPersistableBusinessObjectBase {
     private String locationName; 
     private Integer locationTypeCode; 
     
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     private IacucLocationType iacucLocationType;
     
     public IacucLocationName() { 
@@ -111,5 +114,14 @@ public class IacucLocationName extends KraPersistableBusinessObjectBase {
     public void setIacucLocationType(IacucLocationType iacucLocationType) {
         this.iacucLocationType = iacucLocationType;
     }
+
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 }

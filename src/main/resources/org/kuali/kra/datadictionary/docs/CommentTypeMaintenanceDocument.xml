@@ -29,7 +29,8 @@
 			<list>
 				<value>commentTypeCode</value>
 			</list>
-		</property>		<property name="allowsRecordDeletion" value="true" />	
+		</property>
+		<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />	
 		
 		<property name="documentTypeName" value="CommentTypeMaintenanceDocument"/>
 		<property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
@@ -41,6 +42,7 @@
 	<bean id="CommentTypeMaintenanceDocument-EditCommentType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
 		<property name="id" value="Edit Comment Type"/>
 		<property name="title" value="Edit Comment Type"/>
+		<!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
 		<property name="maintainableItems">
 			<list>
 				<bean parent="MaintainableFieldDefinition" p:name="commentTypeCode" p:required="true"/>
@@ -48,6 +50,7 @@
 				<bean parent="MaintainableFieldDefinition" p:name="templateFlag"/>
 				<bean parent="MaintainableFieldDefinition" p:name="checklistFlag"/>
 				<bean parent="MaintainableFieldDefinition" p:name="awardCommentScreenFlag"/>
+				<bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
 			</list>
 		</property>
 	</bean>

@@ -31,7 +31,8 @@
 				<value>projectTypeCode</value>
 			</list>
 		</property>
-		<property name="allowsRecordDeletion" value="true" />
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
+		<property name="allowsRecordDeletion" value="false" />
 		<property name="documentTypeName" value="IacucProtocolProjectTypeMaintenanceDocument"/>
 		<property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>
 	</bean>
@@ -42,10 +43,12 @@
 	<bean id="IacucProtocolProjectTypeMaintenanceDocument-EditIacucProtocolProjectType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
 		<property name="id" value="Edit IACUC Project Type"/>
 		<property name="title" value="Edit IACUC Project Type"/>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="maintainableItems">
 			<list>
 				<bean parent="MaintainableFieldDefinition" p:name="projectTypeCode" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="description" p:required="true"/>
+				<bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
 			</list>
 		</property>
 	</bean>

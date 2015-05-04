@@ -134,6 +134,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Person Signature" />
           <property name="numberOfColumns" value="1" />
+          <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition"
@@ -141,6 +142,8 @@
               <bean parent="FieldDefinition"
                     p:attributeName="person.fullName"
               		p:forceInquiry="true" />
+			  <bean parent="FieldDefinition"
+    	      		p:attributeName="signatureActive" />
             </list>
           </property>
         </bean>

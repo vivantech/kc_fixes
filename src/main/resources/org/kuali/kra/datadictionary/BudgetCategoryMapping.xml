@@ -16,12 +16,14 @@
       <ref bean="BudgetCategoryMapping-lookupDefinition" />
     </property>
     <property name="titleAttribute" value="targetCategoryCode" />
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="attributes" >
       <list>
         <ref bean="BudgetCategoryMapping-budgetCategoryCode" />
         <ref bean="BudgetCategoryMapping-mappingName" />
         <ref bean="BudgetCategoryMapping-targetCategoryCode" />
         <ref bean="BudgetCategoryMapping-versionNumber" />
+        <ref bean="BudgetCategoryMapping-active" />
       </list>
     </property>
   </bean>
@@ -88,7 +90,19 @@
 
   <bean id="BudgetCategoryMapping-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
-
+  
+  <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  <bean id="BudgetCategoryMapping-active" parent="BudgetCategoryMapping-active-parentBean" />
+  <bean id="BudgetCategoryMapping-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+  	<property name="maxLength" value="1" />
+  </bean>
+  	
 <!-- Business Object Inquiry Definition -->
 
 
@@ -101,6 +115,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Budget Category Mapping" />
           <property name="numberOfColumns" value="1" />
+          <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition"
@@ -112,6 +127,8 @@
               <bean parent="FieldDefinition"
                     p:attributeName="targetCategoryCode"
                     p:forceInquiry="true" />
+        	  <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -133,6 +150,7 @@
       <bean parent="SortDefinition">
       </bean>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -141,8 +159,11 @@
               p:attributeName="mappingName" />
         <bean parent="FieldDefinition"
               p:attributeName="targetCategoryCode" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="resultFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -154,6 +175,8 @@
         <bean parent="FieldDefinition"
               p:attributeName="targetCategoryCode"
               p:forceInquiry="true" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>

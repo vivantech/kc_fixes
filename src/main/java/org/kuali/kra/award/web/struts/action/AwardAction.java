@@ -1511,9 +1511,13 @@ public class AwardAction extends BudgetParentActionBase {
         AwardTemplateSyncService awardTemplateSyncService = KraServiceLocator.getService(AwardTemplateSyncService.class);
         AwardForm awardForm = (AwardForm)form;
         AwardDocument awardDocument = awardForm.getAwardDocument();
+        
+        // ### Vivantech Fix : #15 / [#80417598] Adding validation for invalid Award Template.
         String awardTemplateDescription = "";
         if (org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument) && org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument.getAward()) && org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument.getAward().getAwardTemplate()) && org.kuali.rice.krad.util.ObjectUtils.isNotNull(awardDocument.getAward().getAwardTemplate().getDescription()))
         	awardTemplateDescription = awardDocument.getAward().getAwardTemplate().getDescription();
+        // ### Vivantech Fix : #15 / [#80417598] finish.
+        
         String question = request.getParameter(KRADConstants.QUESTION_INST_ATTRIBUTE_NAME);
         Object buttonClicked = request.getParameter(KRADConstants.QUESTION_CLICKED_BUTTON);
         AwardTemplateSyncScope[] scopes = awardForm.getCurrentSyncScopes();
@@ -1532,11 +1536,13 @@ public class AwardAction extends BudgetParentActionBase {
                 if( StringUtils.isNotEmpty(currentScope.getDisplayPropertyName())) {
                     scopeSyncLabel = kualiConfiguration.getPropertyValueAsString(currentScope.getDisplayPropertyName());
                 }
+                // ### Vivantech Fix : #15 / [#80417598] Adding validation for invalid Award Template.
                 if( StringUtils.equals(scopeSyncLabel, REPORTS_PROPERTY_NAME) || StringUtils.equals(scopeSyncLabel, PAYMENT_INVOICES_PROPERTY_NAME)) {
                     confirmationQuestion = buildAwardSyncParameterizedConfirmationQuestion(mapping, form, request, response, (QUESTION_VERIFY_SYNC+":"+currentScope), 
                                 currentScope.equals(AwardTemplateSyncScope.FULL)?KeyConstants.QUESTION_SYNC_FULL:KeyConstants.QUESTION_SYNC_PANEL,
                             scopeSyncLabel, awardTemplateDescription, getScopeMessageToAddQuestion(currentScope));
                 } else {
+                	// ### Vivantech Fix : #15 / [#80417598] Adding validation for invalid Award Template.
                     confirmationQuestion = buildParameterizedConfirmationQuestion(mapping, form, request, response, (QUESTION_VERIFY_SYNC+":"+currentScope), 
                             currentScope.equals(AwardTemplateSyncScope.FULL)?KeyConstants.QUESTION_SYNC_FULL:KeyConstants.QUESTION_SYNC_PANEL,
                             scopeSyncLabel, awardTemplateDescription, getScopeMessageToAddQuestion(currentScope)); 
@@ -1562,9 +1568,10 @@ public class AwardAction extends BudgetParentActionBase {
                         if( StringUtils.isNotEmpty(currentScope.getDisplayPropertyName()))
                             scopeSyncLabel = kualiConfiguration.getPropertyValueAsString(currentScope.getDisplayPropertyName());
                         
+                        // ### Vivantech Fix : #15 / [#80417598] Adding validation for invalid Award Template.
                         StrutsConfirmation confirmationQuestion = buildParameterizedConfirmationQuestion(mapping, form, request, response, (
                                     QUESTION_VERIFY_EMPTY_SYNC+":"+currentScope), KeyConstants.QUESTION_SYNC_PANEL_TO_EMPTY,
-                                    scopeSyncLabel, awardDocument.getAward().getAwardTemplate().getDescription()); 
+                                    scopeSyncLabel, awardTemplateDescription); 
                         awardForm.setCurrentSyncQuestionId((QUESTION_VERIFY_EMPTY_SYNC+":"+currentScope));
                         confirmationQuestion.setCaller("processSyncAward");
                         return performQuestionWithoutInput(confirmationQuestion, "");

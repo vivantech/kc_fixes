@@ -48,8 +48,12 @@ public class BudgetCategoryTypeValuesFinder extends UifKeyValuesFinderBase {
         List<KeyValue> keyValues = new ArrayList<KeyValue>();
         
         for (Iterator iter = budgetCategoryTypes.iterator(); iter.hasNext();) {
-            BudgetCategoryType budgetCategoryType = (BudgetCategoryType) iter.next();
-            keyValues.add(new ConcreteKeyValue(budgetCategoryType.getBudgetCategoryTypeCode().toString(), budgetCategoryType.getDescription()));                            
+        	BudgetCategoryType budgetCategoryType = (BudgetCategoryType) iter.next();
+        	
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+        	if (budgetCategoryType.isActive()) {
+        		keyValues.add(new ConcreteKeyValue(budgetCategoryType.getBudgetCategoryTypeCode().toString(), budgetCategoryType.getDescription()));
+        	}
         }
                 
         return keyValues;

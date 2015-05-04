@@ -15,6 +15,7 @@
     <property name="helpDefinition">
       <bean p:parameterDetailType="Document" p:parameterName="proposalDevelopmentOrganizationHelpUrl" p:parameterNamespace="KC-PD" parent="HelpDefinition"/>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="attributes">
       <list>
         <ref bean="Organization-organizationId"/>
@@ -57,6 +58,7 @@
         <ref bean="Organization-scienceMisconductComplDate"/>
         <ref bean="Organization-telexNumber"/>
         <ref bean="Organization-vendorCode"/>
+        <ref bean="Organization-active"/>
       </list>
     </property>
     <property name="collections">
@@ -678,7 +680,19 @@
     <property name="summary" value="Vendor Code"/>
     <property name="description" value="Vendor Code"/>
   </bean>
-
+	
+  <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  <bean id="Organization-active" parent="Organization-active-parentBean" />
+  <bean id="Organization-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+  	<property name="maxLength" value="1" />
+  </bean>
+  	
 <!-- Business Object Inquiry Definition -->
 
 
@@ -691,6 +705,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Organization"/>
           <property name="numberOfColumns" value="1"/>
+          <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields">
             <list>
               <bean p:attributeName="organizationId" p:forceInquiry="true" parent="FieldDefinition"/>
@@ -724,6 +739,7 @@
               <bean p:attributeName="scienceMisconductComplDate" parent="FieldDefinition"/>
               <bean p:attributeName="telexNumber" parent="FieldDefinition"/>
               <bean p:attributeName="vendorCode" parent="FieldDefinition"/>
+              <bean p:attributeName="active" parent="FieldDefinition"/>
             </list>
           </property>
         </bean>
@@ -827,6 +843,7 @@
       <bean parent="SortDefinition">
       </bean>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="lookupFields">
       <list>
         <bean p:attributeName="organizationId" parent="FieldDefinition"/>
@@ -840,8 +857,10 @@
         <bean p:attributeName="cageNumber" parent="FieldDefinition"/>
         <bean p:attributeName="dodacNumber" parent="FieldDefinition"/>
         <bean p:attributeName="numberOfEmployees" parent="FieldDefinition"/>
+        <bean p:attributeName="active" parent="FieldDefinition"/>
       </list>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="resultFields">
       <list>
         <bean p:attributeName="organizationId" p:forceInquiry="true" parent="FieldDefinition"/>
@@ -853,6 +872,7 @@
         <bean p:attributeName="dunsNumber" parent="FieldDefinition"/>
         <bean p:attributeName="dunsPlusFourNumber" parent="FieldDefinition"/>
         <bean p:attributeName="humanSubAssurance" parent="FieldDefinition"/>
+        <bean p:attributeName="active" parent="FieldDefinition"/>
       </list>
     </property>
   </bean>

@@ -33,7 +33,8 @@
                 <value>categoryTypeCode</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         <property name="documentTypeName" value="QuestionCategoryMaintenanceDocument" />
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" />
     </bean>
@@ -44,6 +45,7 @@
     <bean id="QuestionCategoryMaintenanceDocument-EditQuestionCategory-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Question Category" />
         <property name="title" value="Edit Question Category" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems" >
             <list>
                 <bean parent="MaintainableFieldDefinition"
@@ -54,6 +56,8 @@
                     p:required="true" />
                 <bean parent="MaintainableFieldDefinition"
                     p:name="versionNumber" />
+                <bean parent="MaintainableFieldDefinition"
+                    p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>

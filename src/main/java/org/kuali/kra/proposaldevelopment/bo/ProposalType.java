@@ -33,6 +33,9 @@ public class ProposalType extends KraPersistableBusinessObjectBase {
     private String proposalTypeCode;
 
     private String description;
+    
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
 
     public String getDescription() {
         return description;
@@ -49,4 +52,13 @@ public class ProposalType extends KraPersistableBusinessObjectBase {
     public void setProposalTypeCode(String proposalTypeCode) {
         this.proposalTypeCode = proposalTypeCode;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 }

@@ -14,7 +14,8 @@
       <list>
         <value>invCreditTypeCode</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     
     
     
@@ -35,10 +36,11 @@
   <bean id="InvestigatorCreditTypeMaintenanceDocument-SpecifytheCreditType-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Specify the Credit Type"/>
     <property name="title" value="Specify the Credit Type"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="invCreditTypeCode" p:required="true"/>
-        <bean parent="MaintainableFieldDefinition" p:name="active"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
         <bean parent="MaintainableFieldDefinition" p:name="description"/>
         <bean parent="MaintainableFieldDefinition" p:name="addsToHundred"/>
         <bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>

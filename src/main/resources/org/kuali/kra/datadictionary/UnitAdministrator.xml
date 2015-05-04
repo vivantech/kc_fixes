@@ -15,6 +15,7 @@
     <property name="lookupDefinition" >
       <ref bean="UnitAdministrator-lookupDefinition" />
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="attributes" >
       <list>
         <ref bean="UnitAdministrator-personId" />
@@ -23,7 +24,8 @@
         <ref bean="UnitAdministrator-person.fullName" />
         <ref bean="UnitAdministrator-unitAdministratorType.description" />
         <ref bean="UnitAdministrator-versionNumber" />
-        <ref bean="UnitAdministrator-person.userName" />      
+        <ref bean="UnitAdministrator-person.userName" />
+        <ref bean="UnitAdministrator-active" />      
       </list>
     </property>
   </bean>
@@ -114,6 +116,18 @@
 
   <bean id="UnitAdministrator-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
+  
+  <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  <bean id="UnitAdministrator-active" parent="UnitAdministrator-active-parentBean" />
+  <bean id="UnitAdministrator-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+  	<property name="maxLength" value="1" />
+  </bean>
 
 <!-- Business Object Inquiry Definition -->
 
@@ -127,6 +141,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Unit Administrator" />
           <property name="numberOfColumns" value="1" />
+          <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition"
@@ -138,6 +153,8 @@
               <bean parent="FieldDefinition"
                     p:attributeName="unitNumber"
                     p:forceInquiry="true" />
+        	  <bean parent="FieldDefinition"
+		            p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -165,6 +182,7 @@
         <property name="sortAscending" value="true"/>
       </bean>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
      
@@ -174,8 +192,11 @@
               p:attributeName="unitAdministratorTypeCode" />
         <bean parent="FieldDefinition"
               p:attributeName="unitNumber" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="resultFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -187,6 +208,8 @@
         <bean parent="FieldDefinition"
               p:attributeName="unitNumber"
               p:forceInquiry="true" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>

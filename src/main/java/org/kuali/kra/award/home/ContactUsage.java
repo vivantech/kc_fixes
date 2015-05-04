@@ -36,6 +36,8 @@ public class ContactUsage  extends KraPersistableBusinessObjectBase {
     private ContactType contactType;
     private CoeusModule coeusModule;
     
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+    private boolean active;
     
     public ContactUsage() {
     }
@@ -84,5 +86,14 @@ public class ContactUsage  extends KraPersistableBusinessObjectBase {
     public void setCoeusModule(CoeusModule coeusModule) {
         this.coeusModule = coeusModule;
     }
+
+    // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
     
 }

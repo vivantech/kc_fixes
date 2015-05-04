@@ -24,6 +24,9 @@ public class IacucSpecies extends KraPersistableBusinessObjectBase {
     private Integer speciesCode; 
     private String speciesName; 
     
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+    private boolean active;
+    
     public IacucSpecies() { 
 
     } 
@@ -83,6 +86,15 @@ public class IacucSpecies extends KraPersistableBusinessObjectBase {
         }
         return true;
     }
+
+    //  ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete.
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
     
 }

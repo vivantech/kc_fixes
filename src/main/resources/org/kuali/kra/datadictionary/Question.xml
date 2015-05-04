@@ -33,6 +33,7 @@
             <bean parent="HelpDefinition" p:parameterNamespace="KC-QUESTIONNAIRE" p:parameterName="questionnaireQuestionHelpUrl" p:parameterDetailType="Document" />
         </property>
         <property name="titleAttribute" value="questionRefId" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="attributes" >
             <list>
                 <ref bean="Question-questionRefId" />
@@ -56,6 +57,7 @@
                 <ref bean="Question-regulation" /> 
                 <ref bean="Question-affirmativeStatementConversion" />
                 <ref bean="Question-negativeStatementConversion" />
+                <ref bean="Question-active" />
             </list>
         </property>
     </bean>
@@ -446,6 +448,18 @@
         <property name="description" value="Negative Statement" />
     </bean>
     
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+    <bean id="Question-active" parent="Question-active-parentBean" />
+  	<bean id="Question-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+		<property name="name" value="active" />
+		<property name="forceUppercase" value="false" />
+		<property name="label" value="Active" />
+		<property name="shortLabel" value="active" />
+		<property name="summary" value="Active"/>
+		<property name="description" value="Active"/>
+	  	<property name="maxLength" value="1" />
+  	</bean>
+    
     <!-- Business Object Inquiry Definition -->
     <bean id="Question-inquiryDefinition" parent="Question-inquiryDefinition-parentBean" />
     <bean id="Question-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition">
@@ -455,6 +469,7 @@
                 <bean parent="InquirySectionDefinition">
                     <property name="title" value="Question Id" />
                     <property name="numberOfColumns" value="1" />
+                    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
                     <property name="inquiryFields" >
                         <list>
                             <bean parent="FieldDefinition"
@@ -482,6 +497,8 @@
                                 p:attributeName="maxAnswers" />
                             <bean parent="FieldDefinition"
                                 p:attributeName="answerMaxLength" />
+                			<bean parent="FieldDefinition"
+                    			p:attributeName="active" />
                         </list>
                     </property>
                 </bean>
@@ -500,6 +517,7 @@
             <bean parent="SortDefinition" >
         </bean>
         </property>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="lookupFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -525,8 +543,11 @@
                     p:attributeName="maxAnswers" />
                 <bean parent="FieldDefinition"
                     p:attributeName="answerMaxLength" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="resultFields" >
             <list>
                 <bean parent="FieldDefinition"
@@ -552,6 +573,8 @@
                     p:attributeName="maxAnswers" />
                 <bean parent="FieldDefinition"
                     p:attributeName="answerMaxLength" />
+                <bean parent="FieldDefinition"
+                    p:attributeName="active" />
             </list>
         </property>
     </bean>

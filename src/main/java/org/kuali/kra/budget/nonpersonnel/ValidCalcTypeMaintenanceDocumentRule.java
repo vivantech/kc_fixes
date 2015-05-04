@@ -97,9 +97,10 @@ public class ValidCalcTypeMaintenanceDocumentRule extends KraMaintenanceDocument
      * @return true if valid false if not
      */
     private boolean validateRateClassType(final String rateClassType) {
-        
-        final Map<String, String> pkMap = new HashMap<String, String>();
+        // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+        final Map<String, Object> pkMap = new HashMap<String, Object>();
         pkMap.put("rateClassType", rateClassType);
+        pkMap.put("active", true);
         return checkExistenceFromTable(RateClassType.class, pkMap, "rateClassType", "Rate Class Type");
     }
     
@@ -111,8 +112,10 @@ public class ValidCalcTypeMaintenanceDocumentRule extends KraMaintenanceDocument
     private boolean validateDependantRateClassType(final String dependantRateClassType) {
 
         if (StringUtils.isNotBlank(dependantRateClassType)) {
-            final Map<String, String> pkMap = new HashMap<String, String>();
+            // Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete.
+            final Map<String, Object> pkMap = new HashMap<String, Object>();
             pkMap.put("rateClassType", dependantRateClassType);
+            pkMap.put("active", true);
             return checkExistenceFromTable(RateClassType.class,pkMap, "dependentRateClassType", "Dependent Rate Class Type");
         }
         return true;

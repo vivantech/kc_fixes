@@ -9,7 +9,8 @@
                 <value>questionnaireId</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         <property name="documentTypeName" value="QuestionnaireMaintenanceDocument" />
         <property name="businessRulesClass" value="org.kuali.kra.questionnaire.QuestionnaireMaintenanceDocumentRule" />
         <property name="documentAuthorizerClass" value="org.kuali.kra.questionnaire.QuestionnaireMaintenanceDocumentAuthorizer" />

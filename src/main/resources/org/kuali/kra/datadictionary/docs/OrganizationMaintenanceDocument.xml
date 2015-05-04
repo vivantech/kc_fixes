@@ -18,7 +18,8 @@
       <list>
         <value>organizationId</value>
       </list>
-    </property>	<property name="allowsRecordDeletion" value="true" />	
+    </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->	<property name="allowsRecordDeletion" value="false" />	
     <property name="documentTypeName" value="OrganizationMaintenanceDocument"/>
     <property name="documentAuthorizerClass" value="org.kuali.kra.authorizer.OrganizationMaintenanceDocumentAuthorizer"/>
     <property name="businessRulesClass" value="org.kuali.kra.rules.OrganizationMaintenanceDocumentRule"/>
@@ -32,6 +33,7 @@
   <bean id="OrganizationMaintenanceDocument-EditOrganization-parentBean" abstract="true" parent="MaintainableSectionDefinition">
     <property name="id" value="Edit Organization"/>
     <property name="title" value="Edit Organization"/>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="maintainableItems">
       <list>
         <bean parent="MaintainableFieldDefinition" p:name="organizationId" p:required="true"/>
@@ -64,6 +66,7 @@
         <bean parent="MaintainableFieldDefinition" p:name="scienceMisconductComplDate"/>
         <bean parent="MaintainableFieldDefinition" p:name="telexNumber"/>
         <bean parent="MaintainableFieldDefinition" p:name="vendorCode"/>
+        <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
       </list>
     </property>
   </bean>

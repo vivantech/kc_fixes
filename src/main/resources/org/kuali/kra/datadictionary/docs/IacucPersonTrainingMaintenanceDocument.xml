@@ -29,7 +29,8 @@
 			<list>
 				<value>iacucPersonTrainingId</value>
 			</list>
-		</property>		<property name="allowsRecordDeletion" value="true" />	
+		</property>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->		<property name="allowsRecordDeletion" value="false" />	
 		
 		<property name="documentTypeName" value="IacucPersonTrainingMaintenanceDocument"/>
 		<property name="documentAuthorizerClass" value="org.kuali.kra.iacuc.auth.IacucPersonTrainingMaintenanceDocumentAuthorizer"/>
@@ -44,12 +45,14 @@
 	<bean id="IacucPersonTrainingMaintenanceDocument-EditIacucPersonTraining-parentBean" abstract="true" parent="MaintainableSectionDefinition">
 		<property name="id" value="Edit IACUC Person Training"/>
 		<property name="title" value="Edit IACUC Person Training"/>
+		<!-- ### Vivantech Fix : #65 / [#90560752] adding active indicator field and disabling the delete. -->
 		<property name="maintainableItems">
 			<list>
 				<bean parent="MaintainableFieldDefinition" p:name="personTrainingId" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="speciesCode" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="procedureCode" p:required="true"/>
 				<bean parent="MaintainableFieldDefinition" p:name="versionNumber"/>
+				<bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
 			</list>
 		</property>
 	</bean>

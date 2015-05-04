@@ -16,6 +16,7 @@
       <ref bean="BudgetCategory-lookupDefinition" />
     </property>
     <property name="titleAttribute" value="budgetCategoryCode" />
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="attributes" >
       <list>
         <ref bean="BudgetCategory-budgetCategoryCode" />
@@ -23,6 +24,7 @@
         <ref bean="BudgetCategory-budgetCategoryType.description" />
         <ref bean="BudgetCategory-description" />
         <ref bean="BudgetCategory-versionNumber" />
+        <ref bean="BudgetCategory-active" />
       </list>
     </property>
     <property name="relationships" >
@@ -103,6 +105,18 @@
 
   <bean id="BudgetCategory-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber">
   </bean>
+  
+  <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+  <bean id="BudgetCategory-active" parent="BudgetCategory-active-parentBean" />
+  <bean id="BudgetCategory-active-parentBean" abstract="true" parent="AttributeReferenceDummy-genericBoolean">
+	<property name="name" value="active" />
+	<property name="forceUppercase" value="false" />
+	<property name="label" value="Active" />
+	<property name="shortLabel" value="active" />
+	<property name="summary" value="Active"/>
+	<property name="description" value="Active"/>
+  	<property name="maxLength" value="1" />
+  </bean>
 
 <!-- Business Object Inquiry Definition -->
 
@@ -116,6 +130,7 @@
         <bean parent="InquirySectionDefinition">
           <property name="title" value="Budget Category" />
           <property name="numberOfColumns" value="1" />
+          <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
           <property name="inquiryFields" >
             <list>
               <bean parent="FieldDefinition"
@@ -125,6 +140,8 @@
                     p:attributeName="budgetCategoryType.description" />
               <bean parent="FieldDefinition"
                     p:attributeName="description" />
+        	  <bean parent="FieldDefinition"
+              		p:attributeName="active" />
             </list>
           </property>
         </bean>
@@ -151,6 +168,7 @@
             p:parameterName="budgetCategoryMaintenanceHelp"
             p:parameterDetailType="Document" />
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -159,8 +177,11 @@
               p:attributeName="budgetCategoryTypeCode" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
+    <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
     <property name="resultFields" >
       <list>
         <bean parent="FieldDefinition"
@@ -170,6 +191,8 @@
               p:attributeName="budgetCategoryType.description" />
         <bean parent="FieldDefinition"
               p:attributeName="description" />
+        <bean parent="FieldDefinition"
+              p:attributeName="active" />
       </list>
     </property>
   </bean>

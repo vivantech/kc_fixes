@@ -30,7 +30,8 @@
                 <value>contactUsageId</value>
             </list>
         </property>
-        <property name="allowsRecordDeletion" value="true" />
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
+        <property name="allowsRecordDeletion" value="false" />
         <property name="documentTypeName" value="ContactUsageMaintenanceDocument"/>
         <property name="businessRulesClass" value="org.kuali.kra.rules.ContactUsageMaintenanceDocumentRule"/>
         <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"/>        
@@ -43,10 +44,12 @@
     <bean id="ContactUsageMaintenanceDocument-EditContactUsage-parentBean" abstract="true" parent="MaintainableSectionDefinition">
         <property name="id" value="Edit Contact Usage"/>
         <property name="title" value="Edit Contact Usage"/>
+        <!-- Vivantech Fix : #70 / [#90560868] adding active indicator field and disabling the delete. -->
         <property name="maintainableItems">
             <list>
                 <bean parent="MaintainableFieldDefinition" p:name="contactTypeCode" p:required="true"/>
                 <bean parent="MaintainableFieldDefinition" p:name="moduleCode" p:required="true"/>
+                <bean parent="MaintainableFieldDefinition" p:name="active" p:defaultValue="true"/>
             </list>
         </property>
     </bean>
