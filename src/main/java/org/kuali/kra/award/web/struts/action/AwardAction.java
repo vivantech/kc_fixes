@@ -89,6 +89,7 @@ import org.kuali.rice.krad.util.KRADConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.*;
 
 import static org.apache.commons.lang.StringUtils.replace;
@@ -105,6 +106,7 @@ public class AwardAction extends BudgetParentActionBase {
     private static final String PAYMENT_INVOICES_PROPERTY_NAME = "Payments and Invoices";
     private static final String COMFIRMATION_PARAM_STRING = "After Award {0} information is synchronized, make sure that the Award Sponsor Contacts information is also synchronized with the same sponsor template. Failing to do so will result in data inconsistency. Are you sure you want to replace current {0} information with selected {1} template information?";
     private static final String SUPER_USER_ACTION_REQUESTS = "superUserActionRequests";
+    private static final String DOCUMENT_RELOAD_QUESTION="DocReload";
     
     private enum SuperUserAction {
         SUPER_USER_APPROVE, TAKE_SUPER_USER_ACTIONS
@@ -427,7 +429,15 @@ public class AwardAction extends BudgetParentActionBase {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         AwardForm awardForm = (AwardForm) form;
         ActionForward actionForward = super.reload(mapping, form, request, response);
-        getReportTrackingService().refreshReportTracking(awardForm.getAwardDocument().getAward());
+        // ### Vivantech Fix Issue #113 / [92971838] Reload button causes stack trace when project end date is blanked out
+        // Only perform refreshReportTracking after confirmation reload has been answered with Yes. 
+        Object question = getQuestion(request);
+        if(question!=null){
+        	 Object buttonClicked = request.getParameter(KRADConstants.QUESTION_CLICKED_BUTTON);
+        	 if(DOCUMENT_RELOAD_QUESTION.equals(question) && ConfirmationQuestion.YES.equals(buttonClicked)){
+        		 getReportTrackingService().refreshReportTracking(awardForm.getAwardDocument().getAward());        		 
+        	 }
+        }
         return actionForward;        
     }
 
