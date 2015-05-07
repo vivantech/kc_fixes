@@ -57,9 +57,12 @@
 	                	                          attributeEntry="${proposalUserAttributes.username}" 
 	                	                          onblur="loadPersonName('newProposalUser.username', 
 	                	                          						'fullnameCell', 'unitNumberCell', 'unitNameCell');"/>
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                      <c:if test="${not readOnly}">
 	                	<kul:lookup boClassName="org.kuali.kra.bo.KcPerson" 
 	                	            fieldConversions="userName:newProposalUser.username,fullName:newProposalUser.fullname,unit.unitName:newProposalUser.unitName,unit.unitNumber:newProposalUser.unitNumber"
-	                	            anchor="${tabKey}" />                        
+	                	            anchor="${tabKey}" /> 
+	                 </c:if>                       
 					</td>
 					
 					<td id="fullnameCell" align="left" valign="middle">&nbsp; ${KualiForm.newProposalUser.fullname}</td>

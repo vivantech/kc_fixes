@@ -96,10 +96,13 @@
                     <%-- The lookup control --%>
                     <kra:section permission="modifyProposal">
                         <c:if test="${addressSelectable}">
+                         <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                         <c:if test="${not readOnly}">
                             <kul:lookup
                                 boClassName="org.kuali.kra.bo.Rolodex" 
                                 fieldConversions="rolodexId:${proposalSiteBoName}.rolodexId,organization:${proposalSiteBoName}.locationName,postalCode:${proposalSiteBoName}.rolodex.postalCode,addressLine1:${proposalSiteBoName}.rolodex.addressLine1,addressLine2:${proposalSiteBoName}.rolodex.addressLine2,addressLine3:${proposalSiteBoName}.rolodex.addressLine3,city:${proposalSiteBoName}.rolodex.city,state:${proposalSiteBoName}.rolodex.state"
                                 anchor="${currentTabIndex}" /> 
+                          </c:if>      
                         </c:if>
                         <input
                             type="hidden" name="${proposalSiteBoName}_rolodexId"
@@ -143,9 +146,12 @@
                     <%-- The lookup control --%>
                     <kra:section permission="modifyProposal">
                         <c:if test="${addressSelectable}">
+                     <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                          <c:if test="${not readOnly}">                       
                             <kul:lookup boClassName="org.kuali.kra.bo.Organization" 
                                 fieldConversions="organizationId:${proposalSiteBoName}.organizationId,organizationName:${proposalSiteBoName}.locationName,address:${proposalSiteBoName}.organization.address,congressionalDistrict:${proposalSiteBoName}.defaultCongressionalDistrictIdentifier"
                                 anchor="${currentTabIndex}" />
+                          </c:if>
                         </c:if>
                         <input
                             type="hidden" name="${proposalSiteBoName}_organizationId"

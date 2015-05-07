@@ -37,6 +37,8 @@
           	<%-- Header --%>
           	
              <%-- New data --%>
+             <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+             <c:if test="${not readOnly}" >
              <tr>
 				<th class="infoline">
 					<c:out value="Add:" />
@@ -66,6 +68,7 @@
 					</div>
                 </td>
             </tr>
+            </c:if>
             <%-- New data --%>
             
             <%-- Existing data --%>

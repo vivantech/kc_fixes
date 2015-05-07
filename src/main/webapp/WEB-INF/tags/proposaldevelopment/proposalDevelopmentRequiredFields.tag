@@ -39,7 +39,10 @@
                 <th><div align="right"><kul:htmlAttributeLabel attributeEntry="${proposalDevelopmentAttributes.sponsorCode}" /></div></th>
                 <td align="left" valign="middle">
                 	<kul:htmlControlAttribute property="document.developmentProposalList[0].sponsorCode" attributeEntry="${proposalDevelopmentAttributes.sponsorCode}" onblur="loadSponsorName('document.developmentProposalList[0].sponsorCode', 'sponsorName'); checkGrantsGovStatusOnSponsorChange('${KualiForm.document.developmentProposal.proposalNumber}', 'document.developmentProposalList[0].sponsorCode');" />
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                    <c:if test="${not readOnly}">
                 	<kul:lookup boClassName="org.kuali.kra.bo.Sponsor" fieldConversions="sponsorCode:document.developmentProposalList[0].sponsorCode,sponsorName:document.developmentProposalList[0].sponsor.sponsorName" anchor="${tabKey}" />
+                    </c:if>
                     <kul:directInquiry boClassName="org.kuali.kra.bo.Sponsor" inquiryParameters="document.developmentProposalList[0].sponsorCode:sponsorCode" anchor="${tabKey}" />
                     <%-- register the grants gov header tab in case it has been disabled on load, as it may be enabled via javascript --%>
                     ${kfunc:registerEditableProperty(KualiForm, 'methodToCall.headerTab.headerDispatch.save.navigateTo.grantsGov')}  
@@ -108,13 +111,19 @@
               <tbody><tr>
                 <th><div align="right"><kul:htmlAttributeLabel attributeEntry="${proposalDevelopmentAttributes.currentAwardNumber}" /></div></th>
                 <td align="left" valign="middle"><kul:htmlControlAttribute property="document.developmentProposalList[0].currentAwardNumber" attributeEntry="${proposalDevelopmentAttributes.currentAwardNumber}" />
+  <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                                <c:if test="${not readOnly}">
                                 	<kul:lookup boClassName="org.kuali.kra.award.home.Award" fieldConversions="awardNumber:document.developmentProposalList[0].currentAwardNumber" anchor="${tabKey}" />
+                                </c:if>
                 </td>
               </tr>
               <tr>
                 <th><div align="right"><kul:htmlAttributeLabel attributeEntry="${proposalDevelopmentAttributes.continuedFrom}" /></div></th>
                 <td align="left" valign="middle"><kul:htmlControlAttribute property="document.developmentProposalList[0].continuedFrom" attributeEntry="${proposalDevelopmentAttributes.continuedFrom}" />
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                <c:if test="${not readOnly}">
                 <kul:lookup boClassName="org.kuali.kra.institutionalproposal.home.InstitutionalProposal" fieldConversions="proposalNumber:document.developmentProposalList[0].continuedFrom" anchor="${tabKey}" />
+                </c:if>
 				</td>
               </tr>
             </tbody></table>
