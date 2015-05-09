@@ -61,15 +61,8 @@ private static final String SUBAWARD_VERSION_EDITPENDING_PROMPT_KEY = "message.s
             throws Exception {
         ActionForward actionForward =
         super.execute(mapping, form, request, response);
-        SubAwardForm subAwardForm = (SubAwardForm) form;
-        List<SubAwardForms> subAwardList = new ArrayList<SubAwardForms>();
-        Collection<SubAwardForms> subAwardForms = (Collection<SubAwardForms>) KraServiceLocator.getService(BusinessObjectService.class).findAll(SubAwardForms.class);
-        for(SubAwardForms subAwardFormValues : subAwardForms){
-        if(subAwardFormValues.getTemplateTypeCode().equals(2)){
-            subAwardList.add(subAwardFormValues);
-        }
-        }
-        subAwardForm.getSubAward().setSubAwardForms(subAwardList);
+        // ### Vivantech Fix #119 / [93572340] move section into a method that is needed for SubAwardAction
+        prepareSubAwardList((SubAwardForm)form);
         return actionForward;
     }
 
