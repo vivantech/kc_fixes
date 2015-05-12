@@ -40,6 +40,8 @@ public class AwardReportTermRuleImpl extends ResearchDocumentRuleBase
     
     private static final String REPORT_CODE_ERROR_PARM = "Type (Type)";
     private static final String FREQUENCY_BASE_CODE_ERROR_PARM = "Frequency Base (Frequency Base)";
+    // ### Vivantech Fix : #134 / [#89309222] make frequency code required
+    private static final String FREQUENCY_CODE_ERROR_PARM = "Frequency Code (Frequency Code)";
 
     /**
      * This function is called on Save.
@@ -123,6 +125,16 @@ public class AwardReportTermRuleImpl extends ResearchDocumentRuleBase
             retVal = false;
             reportError(fieldPrePend + AWARD_REPORT_TERM_REPORT_CODE_PROPERTY, KeyConstants.ERROR_REQUIRED, REPORT_CODE_ERROR_PARM);
         }
+        // ### Vivantech Fix : #134 / [#89309222] make frequency code/base  required - begin
+        if (StringUtils.isBlank(awardReportTermItem.getFrequencyCode())) {
+            retVal = false;
+            reportError(fieldPrePend + AWARD_REPORT_TERM_FREQUENCY_CODE_PROPERTY, KeyConstants.ERROR_REQUIRED, FREQUENCY_CODE_ERROR_PARM);
+        }
+        if (StringUtils.isBlank(awardReportTermItem.getFrequencyBaseCode())) {
+            retVal = false;
+            reportError(fieldPrePend + AWARD_REPORT_TERM_FREQUENCY_BASE_CODE_PROPERTY, KeyConstants.ERROR_REQUIRED, FREQUENCY_BASE_CODE_ERROR_PARM);
+        }
+        // ### Vivantech Fix : #134 / [#89309222] make frequency code/base  required - end
         if (StringUtils.isBlank(awardReportTermItem.getFrequencyCode()) && 
                 !StringUtils.isBlank(awardReportTermItem.getOspDistributionCode())) {
             retVal = false;
