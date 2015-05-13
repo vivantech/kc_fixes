@@ -465,8 +465,12 @@ public class ProposalDevelopmentAbstractsAttachmentsAction extends ProposalDevel
                 new ProposalDevelopmentNotificationContext(pd.getDevelopmentProposal(), "102", "Proposal Data Override");
             ((ProposalDevelopmentNotificationRenderer) context.getRenderer()).setModifiedNarrative(modifiedNarrative);
             if (proposalDevelopmentForm.getNotificationHelper().getPromptUserForNotificationEditor(context)) {
-                proposalDevelopmentForm.getNotificationHelper().initializeDefaultValues(context);
-                forward = mapping.findForward("notificationEditor");
+                // ### Vivantech Fix : #137 / [#90736860] only have notification dialog for attachment change when enroute
+                if (pd.getDocumentHeader().getWorkflowDocument().isEnroute()) {
+                    proposalDevelopmentForm.getNotificationHelper().initializeDefaultValues(context);
+                    forward = mapping.findForward("notificationEditor");
+                }
+
             } else {
                 getNotificationService().sendNotification(context);                
             }
