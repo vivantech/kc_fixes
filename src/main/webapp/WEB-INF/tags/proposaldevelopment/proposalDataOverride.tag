@@ -75,7 +75,10 @@
 			                   		<c:if test="${not empty KualiForm.newProposalChangedData.editableColumn.lookupClass and KualiForm.newProposalChangedData.editableColumn.lookupClass != 'null'}">
 				                   		<c:if test="${not empty KualiForm.newProposalChangedData.editableColumn.lookupPkReturn and KualiForm.newProposalChangedData.editableColumn.lookupPkReturn != 'null'}">
 				                   		<c:if test="${not empty KualiForm.newProposalChangedData.editableColumn.lookupReturn and KualiForm.newProposalChangedData.editableColumn.lookupReturn != 'null'}">
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                                        <c:if test="${not readOnly}">
 											<kul:lookup boClassName="${KualiForm.newProposalChangedData.editableColumn.lookupClass}" fieldConversions="${KualiForm.newProposalChangedData.editableColumn.lookupPkReturn}:newProposalChangedData.changedValue,${KualiForm.newProposalChangedData.editableColumn.lookupReturn}:newProposalChangedData.displayValue" anchor="${tabKey}"/>
+										</c:if>
 										</c:if>
 										</c:if>
 									</c:if>

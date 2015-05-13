@@ -68,7 +68,10 @@
      		    <th><div align="right"><kul:htmlAttributeLabel attributeEntry="${proposalDevelopmentAttributes.primeSponsorCode}" /></div></th>
                 <td align="left" valign="middle">
                 	<kul:htmlControlAttribute property="document.developmentProposalList[0].primeSponsorCode" attributeEntry="${proposalDevelopmentAttributes.primeSponsorCode}"  onblur="loadSponsorName('document.developmentProposalList[0].primeSponsorCode', 'primeSponsorName');" />
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                    <c:if test="${not readOnly}">
                 	<kul:lookup boClassName="org.kuali.kra.bo.Sponsor" fieldConversions="sponsorCode:document.developmentProposalList[0].primeSponsorCode,sponsorName:primeSponsorName" anchor="${tabKey}"/>
+                    </c:if>
                 	<kul:directInquiry boClassName="org.kuali.kra.bo.Sponsor" inquiryParameters="document.developmentProposalList[0].primeSponsorCode:sponsorCode" anchor="${tabKey}"/>
                 	<br />
                 	<div id="primeSponsorName.div" class="fineprint">
