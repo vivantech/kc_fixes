@@ -425,19 +425,12 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
         newAward.getSyncChanges().clear();
         newAward.getSyncStatuses().clear();
         newAward.getAwardBudgetLimits().clear();
-        
-        /**
-         * per KRACOEUS-5448 portions of the payment and invoices sub panel items should not be copied.
+
+        /* ### Vivantech Fix : #142 / [#90465610] Rolled back KRACOEUS-5448.  This fix will NOT
+         * remove portions of the payment and invoices. KRACOEUS-5448 change is deleted.
+         * This change is to meet the Coeus FE requirement
          */
-        List<AwardReportTerm> newTerms = new ArrayList<AwardReportTerm>();
-        String paymentReportClassCode = getPaymentAndInvoicesReportClass().getReportClassCode();
-        for (AwardReportTerm term : newAward.getAwardReportTermItems()) {
-            if (!StringUtils.equals(paymentReportClassCode, term.getReportClassCode())) {
-                newTerms.add(term);
-            }
-        }
-        newAward.setAwardReportTermItems(newTerms);
-        newAward.getPaymentScheduleItems().clear();
+
     } 
     
     protected ReportClass getPaymentAndInvoicesReportClass() {
