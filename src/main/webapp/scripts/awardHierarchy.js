@@ -147,7 +147,8 @@ function openSelectedAward(requestTracker) {
 	    if (!info['hasChildren']) {
 	    	disabled = "disabled=''";
 	    }
-	    if(jQuery("#awardHierarchyTempObject\\[" + indexForHiddenField + "\\]\\.copyDescendants").attr("value")){
+	    // ### Vivantech Fix : #141 / [#90733478] do not display check mark when copying award with no Descendent
+	    if(jQuery("#awardHierarchyTempObject\\[" + indexForHiddenField + "\\]\\.copyDescendants").attr("value") == 'true'){
 	    	var checkbox = jQuery('<input class="nobord" type="checkbox" ' + disabled + '></input>').attr("name","awardHierarchyTempObject["+indexForHiddenField+"].copyDescendants").attr("id","awardHierarchyTempObject["+indexForHiddenField+"].copyDescendants").attr("value",jQuery("#awardHierarchyTempObject\\[" + indexForHiddenField + "\\]\\.copyDescendants").attr("value")).attr("checked",jQuery("#awardHierarchyTempObject\\[" + indexForHiddenField + "\\]\\.copyDescendants").attr("value"));
 	    }else{
 	    	var checkbox = jQuery('<input class="nobord" type="checkbox" ' + disabled + '></input>').attr("name","awardHierarchyTempObject["+indexForHiddenField+"].copyDescendants").attr("id","awardHierarchyTempObject["+indexForHiddenField+"].copyDescendants");
