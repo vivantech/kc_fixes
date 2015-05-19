@@ -787,7 +787,7 @@ public interface Constants {
     public static final String SUBAWARD_AUDIT_RULE_ERROR_KEY = "newSubAwardContact.rolodex.fullName";
     public static final String SUBAWARD_CONTACTS_PANEL_NAME = "Contacts";
     public static final String SUBAWARD_CONTACTS_PANEL_ANCHOR = "Contacts";
-    public static final String SUBAWARD_FINANCIAL_PANEL ="Financial";
+    public static final String SUBAWARD_FINANCIAL_PANEL ="HistoryofChanges";
     public static final String SUBAWARD_FINANCIAL_PANEL_NAME ="Financial";
     public static final String SUBAWARD_FINANCIAL_ANTICIPATED_AMOUNT = "document.subAwardList[0].totalAnticipatedAmount";
     public static final String SUBAWARD_FINANCIAL_OBLIGATED_AMOUNT = "document.subAwardList[0].totalObligatedAmount";
