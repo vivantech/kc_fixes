@@ -17,6 +17,7 @@ package org.kuali.kra.institutionalproposal.rules;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.kra.award.home.Award;
+import org.kuali.kra.bo.Sponsor;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.KraServiceLocator;
@@ -33,11 +34,16 @@ import org.kuali.kra.rule.BusinessRuleInterface;
 import org.kuali.kra.rule.event.KraDocumentEventBaseExtension;
 import org.kuali.kra.rules.ResearchDocumentRuleBase;
 import org.kuali.kra.service.SponsorService;
+import org.kuali.rice.kns.util.AuditCluster;
+import org.kuali.rice.kns.util.AuditError;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ErrorMessage;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.MessageMap;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -94,8 +100,16 @@ public class InstitutionalProposalDocumentRule extends ResearchDocumentRuleBase 
         }
         if (!StringUtils.isEmpty(institutionalProposalDocument.getInstitutionalProposal().getPrimeSponsorCode()) &&
                 !ss.validateSponsor(institutionalProposalDocument.getInstitutionalProposal().getPrimeSponsor())) {
-            errorMap.putError("document.institutionalProposalList[0].primeSponsorCode", KeyConstants.ERROR_INVALID_SPONSOR_CODE);
+            errorMap.putError("document.institutionalProposalList[0].primeSponsorCode", KeyConstants.ERROR_INVALID_PRIME_SPONSOR_CODE);
             valid = false;
+            // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+        } else if (!StringUtils.isEmpty(institutionalProposalDocument.getInstitutionalProposal().getPrimeSponsorCode()) &&
+               !institutionalProposalDocument.getInstitutionalProposal().getPrimeSponsor().isActive()) {
+            KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE);
+            if (!StringUtils.isEmpty(institutionalProposalDocument.getInstitutionalProposal().getSponsorCode()) &&
+               institutionalProposalDocument.getInstitutionalProposal().getSponsor().isActive()) {
+                KNSGlobalVariables.getMessageList().remove(new ErrorMessage(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE));
+            }
         }
         return valid;
     }
@@ -141,9 +155,45 @@ public class InstitutionalProposalDocumentRule extends ResearchDocumentRuleBase 
         retval &= new InstitutionalProposalPersonAuditRule().processRunAuditBusinessRules(document);
         retval &= processInstitutionalProposalPersonCreditSplitBusinessRules(document);
         retval &= processInstitutionalProposalPersonUnitCreditSplitBusinessRules(document);
+        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+        retval &= processInactiveSponsorAuditRule(document);
         return retval;
         
         
+    }
+    
+    // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+    private boolean processInactiveSponsorAuditRule(Document document) {
+        boolean valid = true;
+        InstitutionalProposal institutionalProposal = ((InstitutionalProposalDocument) document).getInstitutionalProposal();
+        List<AuditError> auditErrors = new ArrayList<AuditError>();
+        if (!StringUtils.isEmpty(institutionalProposal.getSponsorCode())) {
+            Map<String, String> primaryKeys = new HashMap<String, String>();
+            primaryKeys.put("sponsorCode", institutionalProposal.getSponsorCode());
+            Sponsor sp = (Sponsor) KraServiceLocator.getService(BusinessObjectService.class).findByPrimaryKey(Sponsor.class, primaryKeys);
+            if (sp != null && !sp.isActive()) {
+                auditErrors.add(new AuditError(Constants.IP_SPONSOR_KEY, KeyConstants.ERROR_INACTIVE_SPONSOR_CODE, 
+                        Constants.MAPPING_INSTITUTIONAL_PROPOSAL_HOME_PAGE + "." + Constants.SPONSOR_PROGRAM_INFORMATION_PANEL_ANCHOR));
+                valid &= false;
+            }
+        }
+        if (!StringUtils.isEmpty(institutionalProposal.getPrimeSponsorCode())) {
+            Map<String, String> primaryKeys = new HashMap<String, String>();
+            primaryKeys.put("sponsorCode", institutionalProposal.getPrimeSponsorCode());
+            Sponsor sp = (Sponsor) KraServiceLocator.getService(BusinessObjectService.class).findByPrimaryKey(Sponsor.class, primaryKeys);
+            if (sp != null && !sp.isActive()) {
+                auditErrors.add(new AuditError(Constants.IP_PRIME_SPONSOR_KEY, KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE, 
+                        Constants.MAPPING_INSTITUTIONAL_PROPOSAL_HOME_PAGE + "." + Constants.SPONSOR_PROGRAM_INFORMATION_PANEL_ANCHOR));
+                valid &= false;
+            }
+        }
+        
+        if (auditErrors.size() > 0) {
+            KNSGlobalVariables.getAuditErrorMap().put("sponsorProgramInformationAuditWarnings", new AuditCluster(Constants.SPONSOR_PROGRAM_INFORMATION_PANEL_NAME, auditErrors, Constants.AUDIT_WARNINGS));
+           valid &= false;
+        }
+        return valid;
+
     }
     
     private boolean processInstitutionalProposalPersonBusinessRules(MessageMap errorMap, Document document) {

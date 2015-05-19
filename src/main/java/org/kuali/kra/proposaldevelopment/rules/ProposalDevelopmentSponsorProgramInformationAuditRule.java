@@ -73,12 +73,24 @@ public class ProposalDevelopmentSponsorProgramInformationAuditRule implements Do
         } else if (proposal.getDeadlineDate().before(new Date(System.currentTimeMillis()))) {
             auditErrors.add(new AuditError(Constants.DEADLINE_DATE_KEY, KeyConstants.WARNING_PAST_DEADLINE_DATE, Constants.PROPOSAL_PAGE + "." + Constants.SPONSOR_PROGRAM_INFORMATION_PANEL_ANCHOR));
         }
-        
+        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable - begin
+        if (!StringUtils.isEmpty(proposal.getPrimeSponsorCode())) {
+            Map<String, String> primaryKeys = new HashMap<String, String>();
+            primaryKeys.put("sponsorCode", proposal.getPrimeSponsorCode());
+            Sponsor sp = (Sponsor) KraServiceLocator.getService(BusinessObjectService.class).findByPrimaryKey(Sponsor.class, primaryKeys);
+            if (sp != null && !sp.isActive()) {
+                auditErrors.add(new AuditError(Constants.PRIME_SPONSOR_KEY, KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE, 
+                        Constants.PROPOSAL_PAGE + "." + Constants.SPONSOR_PROGRAM_INFORMATION_PANEL_ANCHOR));
+                valid &= false;
+            }
+        }
+        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable - end      
         if (auditErrors.size() > 0) {
             KNSGlobalVariables.getAuditErrorMap().put("sponsorProgramInformationAuditWarnings", new AuditCluster(Constants.SPONSOR_PROGRAM_INFORMATION_PANEL_NAME, auditErrors, Constants.AUDIT_WARNINGS));
             valid &= false;
         }
-        
+ 
+
         auditErrors = new ArrayList<AuditError>();
         
         if (proposal.getS2sOpportunity() != null) {
