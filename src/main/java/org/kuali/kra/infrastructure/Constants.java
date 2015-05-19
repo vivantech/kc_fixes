@@ -787,6 +787,7 @@ public interface Constants {
     public static final String SUBAWARD_AUDIT_RULE_ERROR_KEY = "newSubAwardContact.rolodex.fullName";
     public static final String SUBAWARD_CONTACTS_PANEL_NAME = "Contacts";
     public static final String SUBAWARD_CONTACTS_PANEL_ANCHOR = "Contacts";
+    // ### Vivantech Fix : #147 / [#90315372] Change financial panel anchor name to HistoryofChanges to correctly map 'Fix' button 
     public static final String SUBAWARD_FINANCIAL_PANEL ="HistoryofChanges";
     public static final String SUBAWARD_FINANCIAL_PANEL_NAME ="Financial";
     public static final String SUBAWARD_FINANCIAL_ANTICIPATED_AMOUNT = "document.subAwardList[0].totalAnticipatedAmount";
