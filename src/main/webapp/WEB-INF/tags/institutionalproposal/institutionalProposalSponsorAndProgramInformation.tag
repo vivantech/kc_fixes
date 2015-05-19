@@ -19,11 +19,11 @@
 <c:set var="action" value="institutionalProposalHome" />
 <c:set var="readOnly" value="${not KualiForm.editingMode['fullEntry']}" scope="request" />
 <c:set var="canViewCfdaLookup" value="${KualiForm.cfdaLookupRequired}" scope="request" />
-
+<%-- ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable --%>
 <kul:tab tabTitle="Sponsor & Program Information" defaultOpen="false" 
 	tabErrorKey="document.institutionalProposal.noticeOfOpportunityCode,document.institutionalProposal.programAnnouncementNumber,document.institutionalProposal.sponsorProposalNumber,document.institutionalProposal.nsfCode,document.institutionalProposal.cfdaNumber,document.institutionalProposal.sponsorCode,,document.institutionalProposalList[0].sponsorCode,document.institutionalProposal.deadlineTime, document.institutionalProposalList[0].deadlineTime,document.institutionalProposal.primeSponsorCode,document.institutionalProposalList[0].opportunity,document.institutionalProposalList[0].primeSponsorCode" 
 	auditCluster="sponsorProgramInformationAuditErrors,sponsorProgramInformationAuditWarnings" 
-	tabAuditKey="document.institutionalProposal.cfdaNumber,document.institutionalProposal.sponsorProposalNumber" useRiceAuditMode="true">
+	tabAuditKey="document.institutionalProposal.cfdaNumber,document.institutionalProposal.sponsorProposalNumber,document.institutionalProposalList[0].sponsorCode,document.institutionalProposalList[0].primeSponsorCode" useRiceAuditMode="true">
 	<div class="tab-container" align="center">
     	<h3>
     		<span class="subhead-left">Sponsor &amp; Program Information</span>
