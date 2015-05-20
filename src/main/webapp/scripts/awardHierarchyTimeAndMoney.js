@@ -160,8 +160,10 @@ function openPreviousAwards(requestTracker) {
         var awardNumber2 = parseInt(awardNumber.substring(index+1), 10);
 
         var disabledText='';
+        
+		// Issue #86 / [90739704] committing code to fix the issue with time and money document adding unnecessary transactions.
         if (document.getElementById("disableCurrentValues").value=='true') {
-            disabledText=' disabled ';
+            disabledText=' readonly ';
         }
         
         if(jQuery("#cancelOrFinalStatus").attr("value") == 1){
