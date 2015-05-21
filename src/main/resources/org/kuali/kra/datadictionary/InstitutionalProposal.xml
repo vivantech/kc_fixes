@@ -832,10 +832,13 @@
         <property name="validationPattern" >
             <bean parent="AnyCharacterValidationPattern" />
         </property>
+    <!--Based on IU Customization: UITSRA-1239 
+       ### Vivantech Fix : #151 / [#90223952] revise award numbering -->
         <property name="control" >
             <bean parent="TextControlDefinition"
-                p:size="12" />
+                p:size="13" />
         </property>
+        <!-- End IU Customization -->
         <property name="summary" value="Current Award Number" />
         <property name="description" value="Current Award Number" />
     </bean>

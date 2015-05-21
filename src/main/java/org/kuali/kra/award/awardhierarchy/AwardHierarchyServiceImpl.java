@@ -166,6 +166,10 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
         AwardHierarchy newNode = new AwardHierarchy(targetNode.getRoot(), targetNode, nextAwardNumber, targetNode.getAward().getAwardNumber());
         newNode.setAward(newAward);
         targetNode.getChildren().add(newNode);
+        /** 
+         * Based on IU Customization: UITSRA-1239 
+         * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+        updateHierarchyAwardNumbersWithCharLabels(newNode.getRoot());
         return newNode;
     }
     
@@ -198,6 +202,10 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
         copyAwardAmountDateInfoToNewChild(copyDateAward, newAward);
         newNode.setAward(newAward);
         targetNode.getChildren().add(newNode);
+        /** 
+         * Based on IU Customization: UITSRA-1239 
+         * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+        updateHierarchyAwardNumbersWithCharLabels(newNode.getRoot());
         return newNode;
     }
 
@@ -453,7 +461,12 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
         Award newLeafAward = copyAward(sourceNode.getAward(), newAwardNumber);
         newLeafNode.setAward(newLeafAward);
         targetParentNode.getChildren().add(newLeafNode);
-        return newLeafNode;
+        /** 
+         * Based on IU Customization: UITSRA-1239 
+         * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+        updateHierarchyAwardNumbersWithCharLabels(newLeafNode.getRoot());
+        newLeafNode.setOriginatingAwardNumber(sourceNode.getAwardNumber());
+       return newLeafNode;
     }
 
     protected AwardHierarchy getCopyOfSourceNode(AwardHierarchy sourceNode) {
@@ -466,13 +479,21 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
         AwardHierarchy newSource = getCopyOfSourceNode(sourceNode);
         List<AwardHierarchy> sourceChildren = (List<AwardHierarchy>) Collections.unmodifiableList(newSource.getChildren());  
         AwardHierarchy newBranchNode = new AwardHierarchy(targetParentNode.getRoot(), targetParentNode, newAwardNumber, sourceNode.getOriginatingAwardNumber());
-        Award newBranchAward = copyAward(sourceNode.getAward(), newAwardNumber);
+        /** 
+         * Based on IU Customization: UITSRA-1239 
+         * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+        String newNewAwardNumber = newAwardNumber + newBranchNode.getHierarchyLevelCharacter();
+        Award newBranchAward = copyAward(sourceNode.getAward(), newNewAwardNumber);
+        // End IU Customization
         finalizeAward(newBranchAward);
         targetParentNode.getChildren().add(newBranchNode);
         newBranchNode.setAward(newBranchAward);
         for(AwardHierarchy childNode: sourceChildren) {
             copyNodeRecursively(childNode, newBranchNode, targetParentNode.getRoot());
         }  
+        // Begin IU Customization
+        updateHierarchyAwardNumbersWithCharLabels(newBranchNode.getRoot());
+        // End IU Customization
         return newBranchNode;  
     }
 
@@ -486,13 +507,23 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
         List<AwardHierarchy> sourceChildren = (List<AwardHierarchy>) Collections.unmodifiableList(sourceNode.getChildren());  
         AwardHierarchy newNode = new AwardHierarchy(newRootNode, newParentNode, nextAwardNumberInHierarchy,
                                                     sourceNode.getOriginatingAwardNumber());
-        Award newAward = copyAward(sourceNode.getAward(), nextAwardNumberInHierarchy);
+        /** 
+         * Based on IU Customization: UITSRA-1239 
+         * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+        String newNextAwardNumberInHierarchy = nextAwardNumberInHierarchy + newNode.getHierarchyLevelCharacter();
+        Award newAward = copyAward(sourceNode.getAward(), newNextAwardNumberInHierarchy);
+        // End IU Customization
         newNode.setAward(newAward);
         newParentNode.getChildren().add(newNode);
         finalizeAward(newAward);
         for(AwardHierarchy childNode: sourceChildren) {
             copyNodeRecursively(childNode, newNode, newRootNode);
         }
+        /** 
+         * Based on IU Customization: UITSRA-1239 
+         * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+        updateHierarchyAwardNumbersWithCharLabels(newRootNode);
+        // End IU Customization
     }
 
     AwardDocument createPlaceholderDocument() throws WorkflowException {
@@ -809,5 +840,27 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
     public void setParameterService(ParameterService parameterService) {
         this.parameterService = parameterService;
     }
-    
+
+    /** 
+     * Based on IU Customization: UITSRA-1239 
+     * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+    protected void updateHierarchyAwardNumbersWithCharLabels(AwardHierarchy rootNode) {
+        String newAwardNumber = rootNode.getAwardNumber().substring(0,12) + rootNode.getHierarchyLevelCharacter();
+        rootNode.getAward().setAwardNumber(newAwardNumber);
+        rootNode.setAwardNumber(newAwardNumber);
+        if(rootNode.getParent() != null && !rootNode.getParentAwardNumber().equals(AwardHierarchy.ROOTS_PARENT_AWARD_NUMBER)) {
+            rootNode.setParentAwardNumber(rootNode.getParent().getAwardNumber());
+        }
+        if(rootNode.getAwardNumber().contains(rootNode.getOriginatingAwardNumber())) {
+            rootNode.setOriginatingAwardNumber(rootNode.getAwardNumber());
+        }
+        
+        if(rootNode.hasChildren()) {
+            for(AwardHierarchy child : rootNode.getChildren()) {
+                updateHierarchyAwardNumbersWithCharLabels(child);
+            }
+        }
+    }
+
+    // end fix
 }
