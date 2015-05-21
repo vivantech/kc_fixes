@@ -249,7 +249,8 @@ public class SubAwardServiceImpl implements SubAwardService {
     public String getFollowupDateDefaultLength() {
         String namespaceCode = "KC-SUBAWARD";
         String componentCode = "Document";
-        String parameterName = "Subaward Follow Up";
+        // ### Vivantech Fix : #140 / [#93354174] validation error when modifying "Subaward Follow Up" parameter 
+        String parameterName = Constants.SUBAWARD_FOLLOW_UP_PARAM;
         String followupDateRange = this.getParameterService().
         getParameterValueAsString(namespaceCode, componentCode, parameterName);
         return followupDateRange;
@@ -307,8 +308,9 @@ public class SubAwardServiceImpl implements SubAwardService {
             returnAmount = rangeAmount * 7;
         } else {
             throw new IllegalArgumentException(
-            "An invalid range unit was set in the "
-            + "'Subaward Follow Up' parameter: " + rangeUnit);
+            "An invalid range unit was set in the '"
+         // ### Vivantech Fix : #140 / [#93354174] validation error when modifying "Subaward Follow Up" parameter 
+            + Constants.SUBAWARD_FOLLOW_UP_PARAM + "' parameter: " + rangeUnit);
         }
         return returnAmount;
     }
