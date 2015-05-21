@@ -57,10 +57,13 @@
 					<tr><th>Link Child Proposal</th><th>Link Budget Type</th><th>Actions</th></tr>
 					<tr><td><div align="center">
 							<kul:htmlControlAttribute property="newHierarchyChildProposalNumber" attributeEntry="${DataDictionary.DevelopmentProposal.attributes.proposalNumber}" />
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                         <c:if test="${not readOnly}">
 			                <kul:lookup boClassName="org.kuali.kra.proposaldevelopment.bo.DevelopmentProposal" 
 			                            fieldConversions="proposalNumber:newHierarchyChildProposalNumber" 
 			                            lookupParameters="hierarchyNoneStatus:hierarchyStatus"
 			                            anchor="${tabKey}" />
+			              </c:if>
 			            </div></td>
 			            <td><div align="center">
 			            	<kul:htmlControlAttribute property="newHierarchyBudgetTypeCode" attributeEntry="${DataDictionary.DevelopmentProposal.attributes.hierarchyBudgetType}" />
@@ -98,10 +101,13 @@
 							    <kul:htmlControlAttribute property="newHierarchyProposalNumber" 
 							    		attributeEntry="${DataDictionary.DevelopmentProposal.attributes.proposalNumber}" 
 							    		onblur="" />
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                            <c:if test="${not readOnly}">
 			                	<kul:lookup boClassName="org.kuali.kra.proposaldevelopment.bo.DevelopmentProposal" 
 			                	            fieldConversions="proposalNumber:newHierarchyProposalNumber" 
 			                	            lookupParameters="hierarchyParentStatus:hierarchyStatus"
 			                	            anchor="${tabKey}" />
+			                	</c:if>
 			            </div></td>
 			            <td><div align="center">
 			            	<kul:htmlControlAttribute property="newHierarchyBudgetTypeCode" attributeEntry="${DataDictionary.DevelopmentProposal.attributes.hierarchyBudgetType}" />

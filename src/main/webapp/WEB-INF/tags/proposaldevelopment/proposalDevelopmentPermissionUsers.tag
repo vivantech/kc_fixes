@@ -17,6 +17,8 @@
 
 <c:set var="proposalUserAttributes" value="${DataDictionary.ProposalUser.attributes}" />
 <c:set var="action" value="proposalDevelopmentPermissions" />
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+<c:set var="readOnly" value="${not KualiForm.editingMode['modifyProposal']}" scope="request" /> 
 
 <kul:tab tabTitle="Users" defaultOpen="true"  
          tabErrorKey="document.developmentProposalList[0].proposalPermissionUser*,newProposalUser*">
@@ -57,9 +59,12 @@
 	                	                          attributeEntry="${proposalUserAttributes.username}" 
 	                	                          onblur="loadPersonName('newProposalUser.username', 
 	                	                          						'fullnameCell', 'unitNumberCell', 'unitNameCell');"/>
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                      <c:if test="${not readOnly}">
 	                	<kul:lookup boClassName="org.kuali.kra.bo.KcPerson" 
 	                	            fieldConversions="userName:newProposalUser.username,fullName:newProposalUser.fullname,unit.unitName:newProposalUser.unitName,unit.unitNumber:newProposalUser.unitNumber"
-	                	            anchor="${tabKey}" />                        
+	                	            anchor="${tabKey}" /> 
+	                 </c:if>                       
 					</td>
 					
 					<td id="fullnameCell" align="left" valign="middle">&nbsp; ${KualiForm.newProposalUser.fullname}</td>

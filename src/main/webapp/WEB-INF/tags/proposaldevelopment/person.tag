@@ -94,20 +94,23 @@
                   <tr>
                   <th align="left" nowrap="nowrap"> <div align="right"><kul:htmlAttributeLabel attributeEntry="${proposalPersonAttributes.firstName}"  /></div></th>
                   <td>                 
-                      <kul:htmlControlAttribute property="${proposalPerson}.firstName" attributeEntry="${proposalPersonAttributes.firstName}" 
-                                                readOnly="${personEditableFields['firstName'] }"/>
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                     <kul:htmlControlAttribute property="${proposalPerson}.firstName" attributeEntry="${proposalPersonAttributes.firstName}" 
+                                                readOnly="${personEditableFields['firstName'] or readOnly}"/>
                   </td>
                   <th align="left" width="15%"><div align="right"><kul:htmlAttributeLabel attributeEntry="${proposalPersonAttributes.lastName}"  /></div></th>
                    <td>
-                      <kul:htmlControlAttribute property="${proposalPerson}.lastName" attributeEntry="${proposalPersonAttributes.lastName}" 
-                                                readOnly="${personEditableFields['lastName'] }"/>
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                     <kul:htmlControlAttribute property="${proposalPerson}.lastName" attributeEntry="${proposalPersonAttributes.lastName}" 
+                                                readOnly="${personEditableFields['lastName'] or readOnly}"/>
                   </td>
                   </tr>
                   <tr>
                    <th align="left" width="15%"><div align="right"><kul:htmlAttributeLabel attributeEntry="${proposalPersonAttributes.middleName}"  /></div></th>
                    <td>                   
-                      <kul:htmlControlAttribute property="${proposalPerson}.middleName" attributeEntry="${proposalPersonAttributes.middleName}" 
-                                                readOnly="${personEditableFields['middleName'] }"/>
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                     <kul:htmlControlAttribute property="${proposalPerson}.middleName" attributeEntry="${proposalPersonAttributes.middleName}" 
+                                                readOnly="${personEditableFields['middleName'] or readOnly}"/>
                    
                   </td>
                   <tr>

@@ -59,7 +59,8 @@
                       </th>
                       <jsp:useBean id="paramMap" class="java.util.HashMap"/>
                       <td>
-						<html:select property="document.developmentProposalList[0].s2sOpportunity.s2sSubmissionTypeCode" tabindex="0" >			
+<!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+						<html:select property="document.developmentProposalList[0].s2sOpportunity.s2sSubmissionTypeCode" tabindex="0" disabled="${readOnly}">			
 						<c:choose>
 						<c:when test="${not empty KualiForm.document.developmentProposalList[0].continuedFrom}">
 		       				<c:forEach items="${krafn:getOptionList('org.kuali.kra.lookup.keyvalue.S2sSubmissionTypeValuesFinderForResubmission', paramMap)}" var="option">
@@ -109,7 +110,8 @@
 						    <c:set var="textStyle" value="background-color:#FFD5D5"/>
 					 	</c:if>
 					 
-						 <html:select property="document.developmentProposalList[0].s2sOpportunity.revisionCode" tabindex="0" style="${textStyle}" styleId="document.developmentProposalList[0].s2sOpportunity.revisionCode" >                                                   
+<!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+						 <html:select property="document.developmentProposalList[0].s2sOpportunity.revisionCode" tabindex="0" style="${textStyle}" styleId="document.developmentProposalList[0].s2sOpportunity.revisionCode"  disabled="${readOnly}">                                                   
                          <c:forEach items="${krafn:getOptionList('org.kuali.kra.lookup.keyvalue.ExtendedPersistableBusinessObjectValuesFinder', revisionTypeParamMap)}" var="option">
 		        		 	 <c:choose>                    	
 	        					<c:when test="${KualiForm.document.developmentProposalList[0].s2sOpportunity.revisionCode == option.key}">
