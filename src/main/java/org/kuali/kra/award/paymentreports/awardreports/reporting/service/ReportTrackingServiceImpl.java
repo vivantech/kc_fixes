@@ -97,10 +97,9 @@ public class ReportTrackingServiceImpl implements ReportTrackingService {
                      * if needed.
                      */
                     awardTerm.setReportTrackings(purgePendingReports(awardTerm, awardTerm.getReportTrackings(), reportsToDelete));
-                    reportsToSave.addAll(awardTerm.getReportTrackings());
                 }
-                
                 runDateCalcuations(dates, award, awardTerm, reportsToSave);
+                reportsToSave.addAll(awardTerm.getReportTrackings());
 
                 deleteExtraReports(dates, award, awardTerm, reportsToDelete);
 
