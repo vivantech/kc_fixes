@@ -349,7 +349,8 @@ public class ReportTrackingServiceImpl implements ReportTrackingService {
     
     @Override
     public boolean autoRegenerateReports(Award award) {
-        String rootAwardNumberEnder = "-00001";
+        // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+        String rootAwardNumberEnder = "-00001A";
         boolean retVal = StringUtils.endsWith(award.getAwardNumber(), rootAwardNumberEnder);
         if (!retVal) {
             for (AwardReportTerm term : award.getAwardReportTermItems()) {

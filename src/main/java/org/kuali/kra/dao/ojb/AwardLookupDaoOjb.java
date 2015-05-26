@@ -83,7 +83,8 @@ public class AwardLookupDaoOjb extends LookupDaoOjb  implements AwardLookupDao{
         String[] splitAwardNumber = awardSearckBo.getAwardNumber().split("-");
         StringBuilder rootAwardNumberBuilder = new StringBuilder(12);
         rootAwardNumberBuilder.append(splitAwardNumber[0]);
-        rootAwardNumberBuilder.append("-00001");
+        // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+        rootAwardNumberBuilder.append("-00001A");
         String rootAwardNumber = rootAwardNumberBuilder.toString();
         fieldValues.put("rootAwardNumber", rootAwardNumber);
         Criteria tnmCriteria = new Criteria();

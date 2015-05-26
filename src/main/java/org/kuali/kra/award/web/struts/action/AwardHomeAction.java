@@ -228,7 +228,8 @@ public class AwardHomeAction extends AwardAction {
         //initial T&M doc.
         if(awardDocument.getAward().getAwardNumber().endsWith("-00000")) {
             awardDocument.getAward().getLastAwardAmountInfo().resetChangeValues();
-        } else if(awardDocument.getAward().getAwardNumber().endsWith("-00001")) {
+            // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+        } else if(awardDocument.getAward().getAwardNumber().endsWith("-00001A")) {
             if (isDirectIndirectViewEnabled()) {
                 setTotalsOnAward(awardDocument.getAward());
             }
