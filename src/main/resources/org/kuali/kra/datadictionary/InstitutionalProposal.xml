@@ -828,7 +828,9 @@
         <property name="forceUppercase" value="false" />
         <property name="label" value="Award ID" />
         <property name="shortLabel" value="Award ID" />
-        <property name="maxLength" value="12" />
+    <!--Based on IU Customization: UITSRA-1239 
+       ### Vivantech Fix : [#90223952] revise award numbering -->
+        <property name="maxLength" value="13" />
         <property name="validationPattern" >
             <bean parent="AnyCharacterValidationPattern" />
         </property>
