@@ -8,5 +8,6 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 	
 	<include relativeToChangelogFile="true" file="kr_vt_changeset_00.xml"/>
+    <include relativeToChangelogFile="true" file="kc_vt_93354174_change_Subaward_Follow_Up_parameter_name.sql"/>
 
 </databaseChangeLog>

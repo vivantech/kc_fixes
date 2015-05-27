@@ -257,7 +257,9 @@ public interface Constants {
     public static final String SUBCONTRACTOR_F_AND_A_LT_25K_PARAM = "SUBCONTRACTOR_F_AND_A_LT_25K";
     public static final String SUBCONTRACTOR_DIRECT_GT_25K_PARAM = "SUBCONTRACTOR_DIRECT_GT_25K";
     public static final String SUBCONTRACTOR_DIRECT_LT_25K_PARAM = "SUBCONTRACTOR_DIRECT_LT_25K";
-    
+    // ### Vivantech Fix : #140 / [#93354174] validation error when modifying "Subaward Follow Up" parameter 
+    public static final String SUBAWARD_FOLLOW_UP_PARAM = "Subaward_Follow_Up";
+
     // research.gov 
     public static final String RESEARCH_GOV_SERVICE_HOST = "research.gov.s2s.host";
     //Grants.gov
