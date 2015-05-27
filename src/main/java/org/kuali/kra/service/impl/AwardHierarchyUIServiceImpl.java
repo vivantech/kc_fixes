@@ -43,7 +43,8 @@ public class AwardHierarchyUIServiceImpl implements AwardHierarchyUIService {
     private static final String FIELD_NAME_PARENT_AWARD_NUMBER = "parentAwardNumber";
     private static final String FIELD_NAME_AWARD_NUMBER = "awardNumber";
     private static final String DATE_FORMAT_MM_DD_YYYY = "MM/dd/yyyy";
-    private static final String LAST_5_CHARS_OF_ROOT = "00001";
+    // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+    private static final String LAST_5_CHARS_OF_ROOT = "00001A";
     private static final String COLUMN_CODE = "%3A";
     private static final String DOC_FINAL_STATUS_CODE = "F";
     private static final String DOC_NON_FINAL_STATUS_CODE = "N"; 
