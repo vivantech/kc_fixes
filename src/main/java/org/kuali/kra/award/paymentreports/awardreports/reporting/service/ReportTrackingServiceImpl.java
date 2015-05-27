@@ -47,6 +47,12 @@ public class ReportTrackingServiceImpl implements ReportTrackingService {
     public void refreshReportTracking(Award award) throws ParseException {
         List<AwardReportTerm> awardReportTermItems = award.getAwardReportTermItems();      
         for (AwardReportTerm awardTerm : awardReportTermItems) {
+         // ### Vivantech Fix #162 :  [#93390108] no report tracking if report class's generaterequirements is 'false'
+            awardTerm.refreshReferenceObject("reportClass");
+            if (!awardTerm.getReportClass().getGenerateReportRequirements()) {
+                continue;
+            }
+            // end Vivantech fix
             List<java.util.Date> dates = new ArrayList<java.util.Date>();
             List<AwardReportTerm> awardReportTerms = new ArrayList<AwardReportTerm>();
             awardReportTerms.add(awardTerm);
