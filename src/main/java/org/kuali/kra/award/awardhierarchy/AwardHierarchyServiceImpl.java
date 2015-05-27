@@ -798,7 +798,8 @@ public class AwardHierarchyServiceImpl implements AwardHierarchyService {
     private AwardHierarchyNode getRootNode(Map<String, AwardHierarchyNode> awardHierarchyNodes) {
         AwardHierarchyNode returnValue = null;
         for(String awardNumber : awardHierarchyNodes.keySet()) {
-            if(awardNumber.endsWith("-00001")) {
+            // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+            if(awardNumber.endsWith("-00001A")) {
                 returnValue = awardHierarchyNodes.get(awardNumber);
             }
         }
