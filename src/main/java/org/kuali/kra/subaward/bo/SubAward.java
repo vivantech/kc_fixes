@@ -16,6 +16,7 @@
 package org.kuali.kra.subaward.bo;
 
 import org.kuali.kra.SequenceOwner;
+import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.AwardType;
 import org.kuali.kra.bo.*;
 import org.kuali.kra.bo.versioning.VersionStatus;
@@ -32,6 +33,7 @@ import org.kuali.kra.subaward.customdata.SubAwardCustomData;
 import org.kuali.kra.subaward.document.SubAwardDocument;
 import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.util.AutoPopulatingList;
 
 import java.sql.Date;
@@ -1378,8 +1380,12 @@ implements Permissionable, SequenceOwner<SubAward>, Negotiable {
 
     @Override
     public List<NegotiationPersonDTO> getProjectPeople() {
-        List<NegotiationPersonDTO> people = new
-        ArrayList<NegotiationPersonDTO>();
+    	List<NegotiationPersonDTO> people = new ArrayList<NegotiationPersonDTO>();
+    	Award fundedAward = getFirstFundedAward();
+    	if (ObjectUtils.isNotNull(fundedAward)){
+    		people.addAll(fundedAward.getProjectPeople());
+    	}
+        
         if (this.getKcPerson() != null) {
             people.add(new NegotiationPersonDTO(this.getKcPerson(), "admin"));
         }
@@ -1595,5 +1601,17 @@ implements Permissionable, SequenceOwner<SubAward>, Negotiable {
      */
     public void setPerformanceEnddate(Date performanceEnddate) {
         this.performanceEnddate = performanceEnddate;
+    }
+    
+    // ### Vivantech Fix ISSUE #110 / [92539878] PI in Award is unable to open Negotiation when the association type is Subaward ###
+    private Award getFirstFundedAward(){
+    	Award fundedAward = null;
+    	// in case subAwardFundingSourceList is null or 0
+    	if (ObjectUtils.isNotNull(subAwardFundingSourceList) && subAwardFundingSourceList.size() > 0){
+    		// get the first award.
+    		fundedAward = subAwardFundingSourceList.get(0).getAward();
+    	}
+    	return fundedAward;
+    	
     }
 }

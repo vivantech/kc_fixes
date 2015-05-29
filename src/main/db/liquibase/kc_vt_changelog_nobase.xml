@@ -12,5 +12,6 @@
 		<include relativeToChangelogFile="true" file="kc_vt_changeset_03.sql"/>
 		<include relativeToChangelogFile="true" file="kc_vt_changeset_04.sql"/>
 		<include relativeToChangelogFile="true" file="kc_vt_90560752_add_active_ind_iacuc_documents.sql"/>
+		<include relativeToChangelogFile="true" file="kc_vt_93134154_increase_comments_to_match_datadictionary.sql"/>
 		
 </databaseChangeLog>

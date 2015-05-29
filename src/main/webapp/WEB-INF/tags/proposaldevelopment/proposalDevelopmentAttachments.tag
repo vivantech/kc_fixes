@@ -290,11 +290,14 @@ internal attachements.  We are just going to loop through the narratives and see
 												            src='${ConfigProperties.kra.externalizable.images.url}tinybutton-delete1.gif' styleClass="tinybutton"/>
 										</div>
 									</c:if>
+<!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+									<c:if test="${not readOnly}">
 									<div style="display: inline;">
 									    <html:image styleId="getProposalAttachmentRights.line${status.index}" property="methodToCall.getProposalAttachmentRights.line${status.index}.anchor${currentTabIndex}"
 											        src='${ConfigProperties.kra.externalizable.images.url}tinybutton-vieweditrights.gif' styleClass="tinybutton"
 											        onclick="javascript: proposalAttachmentRightsPop('${status.index}',${KualiForm.formKey},'${KualiForm.document.sessionDocument}');return false"/>
 									</div>
+									</c:if>
 									<c:if test="${replaceAttachment}">
 									    <div id="cancelAttachmentEdit${status.index}" style="display: inline;">
 										    <html:image styleId="getProposalAttachmentRights.line${status.index}"

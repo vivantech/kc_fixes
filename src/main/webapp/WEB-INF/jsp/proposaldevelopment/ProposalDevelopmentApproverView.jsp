@@ -71,6 +71,10 @@
 				bean="${KualiForm.s2sQuestionnaireHelper}"
 				property="s2sQuestionnaireHelper"
 				forceNonTransparent="${forceTabNonTransparent}" parentTab="Questions"/>
+
+        <%-- KRACOEUS-7154 contribution YNQ missing from Proposal Development Summary Tab 
+            ### Vivantech Fix : #131 / [#89555618] --%>
+            <kra-summary:proposalSummaryYnq topTabTransparent="false"/>
 	
 			<script>var $j = jQuery.noConflict();</script>
 			<script type="text/javascript" src="scripts/questionnaireAnswer.js"></script>

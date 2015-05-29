@@ -257,7 +257,9 @@ public interface Constants {
     public static final String SUBCONTRACTOR_F_AND_A_LT_25K_PARAM = "SUBCONTRACTOR_F_AND_A_LT_25K";
     public static final String SUBCONTRACTOR_DIRECT_GT_25K_PARAM = "SUBCONTRACTOR_DIRECT_GT_25K";
     public static final String SUBCONTRACTOR_DIRECT_LT_25K_PARAM = "SUBCONTRACTOR_DIRECT_LT_25K";
-    
+    // ### Vivantech Fix : #140 / [#93354174] validation error when modifying "Subaward Follow Up" parameter 
+    public static final String SUBAWARD_FOLLOW_UP_PARAM = "Subaward_Follow_Up";
+
     // research.gov 
     public static final String RESEARCH_GOV_SERVICE_HOST = "research.gov.s2s.host";
     //Grants.gov
@@ -787,7 +789,8 @@ public interface Constants {
     public static final String SUBAWARD_AUDIT_RULE_ERROR_KEY = "newSubAwardContact.rolodex.fullName";
     public static final String SUBAWARD_CONTACTS_PANEL_NAME = "Contacts";
     public static final String SUBAWARD_CONTACTS_PANEL_ANCHOR = "Contacts";
-    public static final String SUBAWARD_FINANCIAL_PANEL ="Financial";
+    // ### Vivantech Fix : #147 / [#90315372] Change financial panel anchor name to HistoryofChanges to correctly map 'Fix' button 
+    public static final String SUBAWARD_FINANCIAL_PANEL ="HistoryofChanges";
     public static final String SUBAWARD_FINANCIAL_PANEL_NAME ="Financial";
     public static final String SUBAWARD_FINANCIAL_ANTICIPATED_AMOUNT = "document.subAwardList[0].totalAnticipatedAmount";
     public static final String SUBAWARD_FINANCIAL_OBLIGATED_AMOUNT = "document.subAwardList[0].totalObligatedAmount";

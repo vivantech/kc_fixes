@@ -57,9 +57,12 @@
                 </div></td>
                 <td>
                 	 ${KualiForm.document.developmentProposalList[0].propScienceKeywords[ctr].scienceKeyword.description}
+ <!-- ### Vivantech Fix : #127 / [#92654430] do not display if readOnly -->
+                    <c:if test="${not readOnly}">
 					<kul:lookup boClassName="org.kuali.kra.bo.ScienceKeyword" 
 					fieldConversions="scienceKeywordCode:document.developmentProposalList[0].propScienceKeyword[${ctr}].scienceKeywordCode,description:document.developmentProposalList[0].propScienceKeyword[${ctr}].scienceKeyword.description"
 					lookupParameters="" hideReturnLink="false" />
+					</c:if>
                 </td>
                 <td><div align="center">
                   <kul:htmlControlAttribute property="document.developmentProposalList[0].propScienceKeyword[${ctr}].selectKeyword" attributeEntry="${DataDictionary.PropScienceKeyword.attributes.selectKeyword}" readOnly="${readOnly}" />

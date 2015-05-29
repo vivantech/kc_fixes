@@ -156,6 +156,8 @@
 		</property>
 		<property name="summary" value="Frequency" />
 		<property name="description" value="Frequency" />
+		<!-- ### Vivantech Fix : #134 / [#89309222] make this a required field -->
+        <property name="required" value="true" />
 	</bean>
 
 	<bean id="AwardReportTerm-frequencyBaseCode" parent="AwardReportTerm-frequencyBaseCode-parentBean" />
@@ -179,6 +181,8 @@
 		</property>
 		<property name="summary" value="Frequency Base" />
 		<property name="description" value="Frequency Base" />
+        <!-- ### Vivantech Fix : #134 / [#89309222] make this a required field -->
+        <property name="required" value="true" />
 	</bean>
 
 	<bean id="AwardReportTerm-ospDistributionCode" parent="AwardReportTerm-ospDistributionCode-parentBean" />
