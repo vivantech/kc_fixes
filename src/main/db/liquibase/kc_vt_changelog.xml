@@ -15,6 +15,7 @@
 		<include relativeToChangelogFile="true" file="kc_vt_90560752_add_active_ind_iacuc_documents.sql"/>
 		<include relativeToChangelogFile="true" file="kc_vt_90560868_add_active_indicator_shared_maint_docs.sql"/>
 		<include relativeToChangelogFile="true" file="kc_vt_88346510_add_table_comm_schedule_attachment_id.sql"/>
-		<include relativeToChangelogFile="true" file="kc_vt_90560868_add_active_indicator_shared_maint_docs.sql"/>
+        <include relativeToChangelogFile="true" file="kc_vt_90560868_add_active_indicator_shared_maint_docs.sql"/>
+        <include relativeToChangelogFile="true" file="kc_vt_90223952_expand_award_number_column_and_update.sql"/>
 		
 </databaseChangeLog>

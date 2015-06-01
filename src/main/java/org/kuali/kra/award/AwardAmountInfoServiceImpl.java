@@ -55,7 +55,8 @@ public class AwardAmountInfoServiceImpl implements AwardAmountInfoService {
         for(AwardAmountInfo aai : award.getAwardAmountInfos()) {
             //the aai needs to be added if it is created on initialization, or in the case of a root node we add a new one for initial money transaction.
             //if an award has been versioned, the initial transaction will be the first index in list.
-            if(aai.getTimeAndMoneyDocumentNumber() == null || (aai.getAwardNumber().endsWith("-00001") && 
+            // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+            if(aai.getTimeAndMoneyDocumentNumber() == null || (aai.getAwardNumber().endsWith("-00001A") && 
                     award.getAwardAmountInfos().indexOf(aai) == 1)) {
                 validAwardAmountInfos.add(aai);
             }else {
@@ -87,7 +88,8 @@ public class AwardAmountInfoServiceImpl implements AwardAmountInfoService {
         int docNumIntValue = Integer.parseInt(docNum.trim());
         
         for(AwardAmountInfo aai : award.getAwardAmountInfos()) {
-            if(aai.getTimeAndMoneyDocumentNumber() == null || (aai.getAwardNumber().endsWith("-00001") &&                   
+            // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+            if(aai.getTimeAndMoneyDocumentNumber() == null || (aai.getAwardNumber().endsWith("-00001A") &&                   
                     award.getAwardAmountInfos().indexOf(aai) == 1)) {
                 validAwardAmountInfos.add(aai);
             }else {

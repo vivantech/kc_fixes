@@ -485,7 +485,8 @@ public class TimeAndMoneyHistoryServiceImpl implements TimeAndMoneyHistoryServic
         StringBuilder returnString = new StringBuilder(12);
         returnString.append(splitAwardNumber[0]);
         returnString.append(DASH);
-        returnString.append("00001");  
+        // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+        returnString.append("00001A");  
         return returnString.toString();
     }
     
