@@ -612,7 +612,8 @@ public class TimeAndMoneyForm extends KraTransactionalDocumentFormBase {
         getDocInfo().add(new HeaderField("DataDictionary.Award.attributes.awardIdAccount", getAwardIdAccount(awardDocument)));
 
         setupSponsor(awardDocument);
-        setupLastUpdate(awardDocument);
+        // ### Vivantech Fix :  #166 / [#93235410] set up T&M last update infor properly
+        setupLastUpdate(timeAndMoneyDocument);
 
     }
     
@@ -630,6 +631,22 @@ public class TimeAndMoneyForm extends KraTransactionalDocumentFormBase {
             createDateStr = CoreApiServiceLocator.getDateTimeService().toString(awardDocument.getUpdateTimestamp(), "MM/dd/yy");
             updateUser = awardDocument.getUpdateUser().length() > NUMBER_30 ? awardDocument.getUpdateUser().substring(0, NUMBER_30)
                     : awardDocument.getUpdateUser();
+            getDocInfo().add(
+                    new HeaderField(UPDATE_TIMESTAMP_DD_NAME, createDateStr + " by " + updateUser));
+        } else {
+            getDocInfo().add(new HeaderField(UPDATE_TIMESTAMP_DD_NAME, Constants.EMPTY_STRING));
+        }
+
+    }
+
+ // ### Vivantech Fix :  #166 / [#93235410] set up T&M last update infor properly
+    private void setupLastUpdate(TimeAndMoneyDocument timeAndMoneyDocument) {
+        String createDateStr = null;
+        String updateUser = null;
+        if (timeAndMoneyDocument.getUpdateTimestamp() != null) {
+            createDateStr = CoreApiServiceLocator.getDateTimeService().toString(timeAndMoneyDocument.getUpdateTimestamp(), "MM/dd/yy");
+            updateUser = timeAndMoneyDocument.getUpdateUser().length() > NUMBER_30 ? timeAndMoneyDocument.getUpdateUser().substring(0, NUMBER_30)
+                    : timeAndMoneyDocument.getUpdateUser();
             getDocInfo().add(
                     new HeaderField(UPDATE_TIMESTAMP_DD_NAME, createDateStr + " by " + updateUser));
         } else {
