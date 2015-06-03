@@ -509,7 +509,10 @@
                             <value>report.description</value>
                             <value>frequency.description</value>
                             <value>frequencyBase.description</value>
+                            <!-- ### Vivantech Fix [93226128] baseDate should not be in groupByAttributes-->
+                            <!-- 
                             <value>baseDate</value>
+                             -->
                             <value>distribution.description</value>
                         </list>
                     </property>
@@ -582,7 +585,10 @@
                             <value>report.description</value>
                             <value>frequency.description</value>
                             <value>frequencyBase.description</value>
+                            <!-- ### Vivantech Fix [93226128] baseDate should not be in groupByAttributes-->
+         					<!-- 
                             <value>baseDate</value>
+                             -->
                             <value>distribution.description</value>
                         </list>
                     </property>
