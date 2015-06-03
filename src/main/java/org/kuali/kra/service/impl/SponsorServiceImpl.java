@@ -520,14 +520,14 @@ public class SponsorServiceImpl implements SponsorService, Constants {
     public boolean validateSponsor(Sponsor sponsor) {
         boolean valid = true;
         
-        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
-        if(!sponsor.isActive() && !KNSGlobalVariables.getMessageList().contains(new ErrorMessage(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE))) {
-        	KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE);
-        }
-        
         if (sponsor == null) {
             valid = false;
         }
+        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+        if(sponsor != null && !sponsor.isActive() && !KNSGlobalVariables.getMessageList().contains(new ErrorMessage(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE))) {
+        	KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE);
+        }
+        
         return valid;
     }
 }
