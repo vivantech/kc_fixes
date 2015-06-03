@@ -402,6 +402,7 @@
               <bean parent="FieldDefinition" p:attributeName="sponsorName" />
               <bean parent="FieldDefinition" p:attributeName="sponsorType.description" />
               <bean parent="FieldDefinition" p:attributeName="state" />
+              <bean parent="FieldDefinition" p:attributeName="active" p:defaultValue="Y" />
             </list>
           </property>
         </bean>
@@ -430,7 +431,7 @@
         <property name="sortAscending" value="false"/>
       </bean>
     </property>
-    
+    <!-- ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable -->
     <property name="lookupFields" >
       <list>
         <bean parent="FieldDefinition" p:attributeName="sponsorCode" />
@@ -447,8 +448,10 @@
         <bean parent="FieldDefinition" p:attributeName="auditReportSentForFy" />
         <bean parent="FieldDefinition" p:attributeName="ownedByUnit" />
         <bean parent="FieldDefinition" p:attributeName="rolodexId" />
+        <bean parent="FieldDefinition" p:attributeName="active" p:defaultValue="Y" />
       </list>
     </property>
+    <!-- ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable -->
     <property name="resultFields" >
       <list>
         <bean parent="FieldDefinition" p:attributeName="sponsorCode" p:forceInquiry="true" />
@@ -460,6 +463,7 @@
         <bean parent="FieldDefinition" p:attributeName="cageNumber" />
         <bean parent="FieldDefinition" p:attributeName="state" />
         <bean parent="FieldDefinition" p:attributeName="countryCode" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
       </list>
     </property>
     

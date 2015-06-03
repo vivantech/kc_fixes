@@ -125,6 +125,10 @@ public interface Constants {
     public static final String DEADLINE_DATE_KEY = "document.developmentProposalList[0].deadlineDate";
     public static final String PRIME_SPONSOR_KEY = "document.developmentProposalList[0].primeSponsorCode";
     public static final String PROJECT_TITLE_KEY = "document.developmentProposalList[0].title";
+    // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+    public static final String PD_SPONSOR_KEY = "document.developmentProposalList[0].sponsorCode";
+    public static final String IP_SPONSOR_KEY = "document.institutionalProposalList[0].sponsorCode";
+    public static final String IP_PRIME_SPONSOR_KEY = "document.institutionalProposalList[0].primeSponsorCode";
 
     public static final String AUDIT_ERRORS = "Validation Errors";
     public static final String AUDIT_WARNINGS = "Warnings";

@@ -738,6 +738,10 @@ public final class KeyConstants {
     public static final String ERROR_INVALID_PRIME_SPONSOR_CODE = "error.invalid.primeSponsorCode";
     public static final String ERROR_INVALID_AWARD_ID = "error.invalid.awardId";
     public static final String ERROR_INVALID_ROLODEX_ID = "error.invalid.rolodexId";
+    // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable 
+    public static final String ERROR_INACTIVE_SPONSOR_CODE = "error.inactive.sponsorCode";
+    // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+    public static final String ERROR_INACTIVE_PRIME_SPONSOR_CODE = "error.inactive.primary.sponsorCode";
     
     //Institutional Proposal Financial Validation
     public static final String ERROR_FINANCIAL_DATES = "error.financial.dates";
