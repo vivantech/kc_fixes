@@ -74,6 +74,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// ### Vivantech Fix : #159 / [#95207940] Fixing edit mode check for private/final flags
 public class IacucProtocolOnlineReviewAction extends IacucProtocolAction {
     private static final String PROTOCOL_DOCUMENT_NUMBER="protocolDocumentNumber";
     private static final Log LOG = LogFactory.getLog(IacucProtocolOnlineReviewAction.class);
@@ -152,7 +153,9 @@ public class IacucProtocolOnlineReviewAction extends IacucProtocolAction {
             CommitteeScheduleMinuteBase newReviewComment = reviewCommentsBean.getNewReviewComment();
             List<CommitteeScheduleMinuteBase> reviewComments = reviewCommentsBean.getReviewComments();
             List<CommitteeScheduleMinuteBase> deletedReviewComments = reviewCommentsBean.getDeletedReviewComments();
-            if (protocolForm.getEditingMode().get(TaskName.MAINTAIN_PROTOCOL_ONLINEREVIEWS) == null) {
+            
+            // ### Vivantech Fix : #159 / [#95207940] Fixing edit mode check for private/final flags
+            if (protocolForm.getEditingMode().get(TaskName.MAINTAIN_IACUC_PROTOCOL_ONLINEREVIEWS) == null) {
                 newReviewComment.setPrivateCommentFlag(true);
                 newReviewComment.setFinalFlag(false);
             }
@@ -252,7 +255,9 @@ public class IacucProtocolOnlineReviewAction extends IacucProtocolAction {
             ProtocolReviewAttachmentBase newReviewAttachment = reviewAttachmentsBean.getNewReviewAttachment();
             List<ProtocolReviewAttachmentBase> reviewAttachments = reviewAttachmentsBean.getReviewAttachments();
             List<ProtocolReviewAttachmentBase> deletedReviewAttachments = reviewAttachmentsBean.getDeletedReviewAttachments();
-            if (protocolForm.getEditingMode().get(TaskName.MAINTAIN_PROTOCOL_ONLINEREVIEWS) == null) {
+            
+            // ### Vivantech Fix : #159 / [#95207940] Fixing edit mode check for private/final flags
+            if (protocolForm.getEditingMode().get(TaskName.MAINTAIN_IACUC_PROTOCOL_ONLINEREVIEWS) == null) {
                 newReviewAttachment.setProtocolPersonCanView(false);
             }
             getReviewCommentsService().addReviewAttachment(newReviewAttachment, reviewAttachments, document.getProtocolOnlineReview().getProtocol());
