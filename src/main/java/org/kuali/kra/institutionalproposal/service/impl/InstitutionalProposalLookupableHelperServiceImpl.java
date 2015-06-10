@@ -45,6 +45,7 @@ import java.util.*;
  * on where the lookup is coming from, we may need to add custom action links and/or
  * filter the lookup results.
  */
+//### Vivantech Fix : #181 / [#95893798] Adding public get methods for class services for extending classes
 public class InstitutionalProposalLookupableHelperServiceImpl extends KraLookupableHelperServiceImpl {
 
     private static final long serialVersionUID = 1L;
@@ -61,6 +62,12 @@ public class InstitutionalProposalLookupableHelperServiceImpl extends KraLookupa
     public void setDocumentService(DocumentService documentService) {
         this.documentService = documentService;
     }
+
+    //### Vivantech Fix : #181 / [#95893798] Adding public get methods for class services for extending classes
+    public DocumentService getDocumentService() {
+        return documentService;
+    }
+
     /* 
      * Overriding this to only return the currently Active version of a proposal 
      */
@@ -314,7 +321,8 @@ public class InstitutionalProposalLookupableHelperServiceImpl extends KraLookupa
         return institutionalProposal.getShowReturnLink();
     }
     
-    protected InstitutionalProposalService getInstitutionalProposalService() {
+    //### Vivantech Fix : #181 / [#95893798] Adding public get methods for class services for extending classes
+    public InstitutionalProposalService getInstitutionalProposalService() {
         return institutionalProposalService;
     }
     public void setInstitutionalProposalService(InstitutionalProposalService institutionalProposalService) {
