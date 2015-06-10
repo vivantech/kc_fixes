@@ -15,6 +15,14 @@
  */
 package org.kuali.kra.award.document;
 
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +43,7 @@ import org.kuali.kra.award.home.ContactRole;
 import org.kuali.kra.award.home.fundingproposal.AwardFundingProposal;
 import org.kuali.kra.award.paymentreports.awardreports.AwardReportTerm;
 import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRecipient;
+import org.kuali.kra.award.paymentreports.awardreports.reporting.service.ReportTrackingService;
 import org.kuali.kra.award.specialreview.AwardSpecialReview;
 import org.kuali.kra.award.specialreview.AwardSpecialReviewExemption;
 import org.kuali.kra.bo.DocumentCustomData;
@@ -66,7 +75,6 @@ import org.kuali.rice.kew.api.KewApiConstants;
 import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kew.framework.postprocessor.DocumentRouteLevelChange;
 import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
-import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.permission.PermissionService;
 import org.kuali.rice.kns.datadictionary.HeaderNavigation;
 import org.kuali.rice.kns.web.ui.ExtraButton;
@@ -78,9 +86,6 @@ import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.ObjectUtils;
 import org.kuali.rice.krms.api.engine.Facts;
-
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 /**
  * 
@@ -121,6 +126,7 @@ public class AwardDocument extends BudgetParentDocument<Award> implements  Copya
 
     private transient boolean documentSaveAfterVersioning;
     private transient AwardService awardService;
+    private transient ReportTrackingService reportTrackingService;
     
     /**
      * Constructs a AwardDocument object
@@ -253,6 +259,17 @@ public class AwardDocument extends BudgetParentDocument<Award> implements  Copya
             //getVersionHistoryService().createVersionHistory(getAward(), VersionStatus.ACTIVE, GlobalVariables.getUserSession().getPrincipalName());
             getAwardService().updateAwardSequenceStatus(getAward(), VersionStatus.ACTIVE);
             getVersionHistoryService().updateVersionHistory(getAward(), VersionStatus.ACTIVE, GlobalVariables.getUserSession().getPrincipalName());
+            
+            // 96021432-Award reports should be generated when it goes to Final
+            if (KewApiConstants.ROUTE_HEADER_FINAL_CD.equalsIgnoreCase(newStatus)){
+            	try {
+					getReportTrackingService().generateReportTrackingAndSave(getAward(), false);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					LOG.debug("********************* getReportTrackingService().generateReportTrackingAndSave() returns an exception!");
+					throw new RuntimeException("getReportTrackingService().generateReportTrackingAndSave() returns an exception!", e);
+				}
+            }
         }
         if (newStatus.equalsIgnoreCase(KewApiConstants.ROUTE_HEADER_CANCEL_CD) || newStatus.equalsIgnoreCase(KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD)) {
             revertFundedProposals();
@@ -654,6 +671,13 @@ public class AwardDocument extends BudgetParentDocument<Award> implements  Copya
             awardService = KraServiceLocator.getService(AwardService.class);
         }
         return awardService;
+    }
+    
+    public ReportTrackingService getReportTrackingService() {
+        if (reportTrackingService == null) {
+            reportTrackingService = KraServiceLocator.getService(ReportTrackingService.class);
+        }
+        return reportTrackingService;
     }
 
     public void setAwardService(AwardService awardService) {
