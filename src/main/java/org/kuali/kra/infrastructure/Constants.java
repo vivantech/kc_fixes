@@ -928,5 +928,11 @@ public interface Constants {
 
     public static final String PD_INITIATED_ROUTE_NODE_NAME = "Initiated";
     
+    // ### Vivantech Fix : #185 / [#95914042]  fix for the issue with Award with inactive sponsor not being editable
+    public static final String AWARD_SPONSOR_KEY = "document.awardList[0].sponsorCode";
+    public static final String AWARD_PRIME_SPONSOR_KEY = "document.awardList[0].primeSponsorCode";
+    public static final String SPONSOR_PANEL_NAME = "Sponsor";
+    // end ### Vivantech Fix : #185 / [#95914042]
+
 }
 

@@ -20,10 +20,11 @@
 <c:set var="awardAttributes" value="${DataDictionary.Award.attributes}" />
 <c:set var="awardAmountInfoAttributes" value="${DataDictionary.AwardAmountInfo.attributes}" />
 <c:set var="awardCurrentActionCommentAttributes" value="${DataDictionary.AwardComment.attributes}" />
+<!-- ### Vivantech Fix : #185 / [#95914042] added sponsor/primesponsor audit warning -->
 <kul:tab tabTitle="Details & Dates" defaultOpen="true" 
 	tabErrorKey="document.awardList[0].awardTransactionTypeCode,document.award.version, document.awardList[0].statusCode,document.awardList[0].activityTypeCode,document.awardList[0].awardTypeCode,document.awardList[0].financialChartOfAccountsCode,document.awardList[0].title,document.awardList[0].beginDate,document.awardList[0].awardExecutionDate,document.awardList[0].sponsorCode,document.awardList[0].unitNumber, detailsAndDatesFormHelper*,document.awardList[0].awardAmountInfos[${KualiForm.document.award.indexOfLastAwardAmountInfo}].*, document.awardList[0].modificationNumber,document.awardList[0].cfdaNumber,document.awardList[0].primeSponsorCode"
-	tabAuditKey="document.awardList[0].awardEffectiveDate"
-	auditCluster="homePageAuditWarnings,homePageAuditErrors" useRiceAuditMode="true">
+    tabAuditKey="document.awardList[0].awardEffectiveDate,document.awardList[0].sponsorCode,document.awardList[0].primeSponsorCode"
+    auditCluster="homePageAuditWarnings,homePageAuditErrors,sponsorAuditWarnings" useRiceAuditMode="true">
 
 <!-- Institution -->
 <div class="tab-container" align="center">
