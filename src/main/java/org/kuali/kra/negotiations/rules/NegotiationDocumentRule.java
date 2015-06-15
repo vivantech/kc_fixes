@@ -15,10 +15,15 @@
  */
 package org.kuali.kra.negotiations.rules;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.KraServiceLocator;
-import org.kuali.kra.negotiations.bo.*;
+import org.kuali.kra.negotiations.bo.Negotiation;
+import org.kuali.kra.negotiations.bo.NegotiationActivity;
+import org.kuali.kra.negotiations.bo.NegotiationActivityAttachment;
+import org.kuali.kra.negotiations.bo.NegotiationAssociationType;
+import org.kuali.kra.negotiations.bo.NegotiationUnassociatedDetail;
 import org.kuali.kra.negotiations.document.NegotiationDocument;
 import org.kuali.kra.negotiations.service.NegotiationService;
 import org.kuali.kra.rule.event.KraDocumentEventBaseExtension;
@@ -26,7 +31,10 @@ import org.kuali.kra.rule.event.SaveCustomDataEvent;
 import org.kuali.kra.rules.ResearchDocumentRuleBase;
 import org.kuali.kra.service.SponsorService;
 import org.kuali.rice.kns.service.DataDictionaryService;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
+import org.kuali.rice.kns.util.MessageList;
 import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.ErrorMessage;
 import org.kuali.rice.krad.util.GlobalVariables;
 
 /**
@@ -174,8 +182,16 @@ public class NegotiationDocumentRule extends ResearchDocumentRuleBase {
                 valid = false;
                 getErrorReporter().reportError("primeSponsorCode", KeyConstants.ERROR_MISSING, getDataDictionaryService().getAttributeErrorLabel(
                         NegotiationUnassociatedDetail.class, "primeSponsorCode"));
-            }
-            
+                // ### Vivantech Fix : #185 / [#95914042]  fix for the issue with negotiation with inactive prime sponsor
+            } else if (!StringUtils.isEmpty(detail.getPrimeSponsorCode()) && !detail.getPrimeSponsor().isActive()) {
+                if (!KNSGlobalVariables.getMessageList().contains(new ErrorMessage(KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE))) {
+                    KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE);
+                }
+                if (!StringUtils.isEmpty(detail.getSponsorCode()) && detail.getSponsor().isActive()) {
+                    KNSGlobalVariables.getMessageList().remove(new ErrorMessage(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE));
+                }
+             }
+            // end ### Vivantech Fix : #185 / [#95914042] 
             detail.refreshReferenceObject("subAwardOrganization");
             if (detail.getSubAwardOrganizationId() != null && detail.getSubAwardOrganization() == null) {
                 valid = false;
@@ -201,7 +217,7 @@ public class NegotiationDocumentRule extends ResearchDocumentRuleBase {
         GlobalVariables.getMessageMap().removeFromErrorPath("unAssociatedDetail");
         return valid;
     }
-    
+        
     /**
      * 
      * Validate existing negotiation activities.
