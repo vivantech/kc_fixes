@@ -136,10 +136,13 @@ public class AwardProjectPersonsSaveRuleImpl implements AwardProjectPersonsSaveR
                 // remove duplicates from remaining units
                 Set<Unit> duplicateUnits = new HashSet<Unit>(tempUnits);
                 for(Unit dupeUnit: duplicateUnits) {
-                    GlobalVariables.getMessageMap().putError(AWARD_PROJECT_PERSON_LIST_ERROR_KEY, 
-                                                            ERROR_AWARD_PROJECT_PERSON_DUPLICATE_UNITS, 
-                                                            dupeUnit.getUnitName(), dupeUnit.getUnitNumber(),
-                                                            p.getFullName());
+                 // ### Vivantech Fix : Issue #177 / [#96231594] fixed NPE
+                    if (dupeUnit != null) {
+                        GlobalVariables.getMessageMap().putError(AWARD_PROJECT_PERSON_LIST_ERROR_KEY, 
+                                ERROR_AWARD_PROJECT_PERSON_DUPLICATE_UNITS, 
+                                dupeUnit.getUnitName(), dupeUnit.getUnitNumber(),
+                                p.getFullName());
+                    }
                 }
             }
         }
