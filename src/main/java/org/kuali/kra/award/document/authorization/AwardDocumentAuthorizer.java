@@ -385,8 +385,9 @@ public class AwardDocumentAuthorizer extends KcTransactionalDocumentAuthorizerBa
     public boolean canRoute(Document document, Person user) {
         boolean canRoute = false;
         PermissionService permService = KraServiceLocator.getService(KimApiServiceLocator.KIM_PERMISSION_SERVICE);
+        // ### Vivantech Fix : Issue #184 / [#95205120] not display submit after enroute
         canRoute = 
-                (!(isFinal(document)||isProcessed (document))&&
+                (!(isFinal(document)||isProcessed (document) || isEnroute(document))&&
                         permService.hasPermission (user.getPrincipalId(), "KC-AWARD", "Submit Award"));
         return canRoute;
     }
