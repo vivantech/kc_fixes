@@ -425,11 +425,7 @@ public class AwardAction extends BudgetParentActionBase {
         getBusinessObjectService().save(award.getSyncChanges());
         awardForm.getAwardSyncBean().getConfirmedPendingChanges().clear();
         
-        /**
-         * deal with the award report tracking generation business.
-         * 96021432-Award reports should be generated when it goes to Final
-         */
-        // getReportTrackingService().generateReportTrackingAndSave(award, false);
+        getReportTrackingService().generateReportTrackingAndSave(award, false);
 
         return forward;
     }
