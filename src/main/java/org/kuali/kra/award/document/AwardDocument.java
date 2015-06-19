@@ -259,17 +259,6 @@ public class AwardDocument extends BudgetParentDocument<Award> implements  Copya
             //getVersionHistoryService().createVersionHistory(getAward(), VersionStatus.ACTIVE, GlobalVariables.getUserSession().getPrincipalName());
             getAwardService().updateAwardSequenceStatus(getAward(), VersionStatus.ACTIVE);
             getVersionHistoryService().updateVersionHistory(getAward(), VersionStatus.ACTIVE, GlobalVariables.getUserSession().getPrincipalName());
-            
-            // 96021432-Award reports should be generated when it goes to Final
-            if (KewApiConstants.ROUTE_HEADER_FINAL_CD.equalsIgnoreCase(newStatus)){
-            	try {
-					getReportTrackingService().generateReportTrackingAndSave(getAward(), false);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					LOG.debug("********************* getReportTrackingService().generateReportTrackingAndSave() returns an exception!");
-					throw new RuntimeException("getReportTrackingService().generateReportTrackingAndSave() returns an exception!", e);
-				}
-            }
         }
         if (newStatus.equalsIgnoreCase(KewApiConstants.ROUTE_HEADER_CANCEL_CD) || newStatus.equalsIgnoreCase(KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD)) {
             revertFundedProposals();
