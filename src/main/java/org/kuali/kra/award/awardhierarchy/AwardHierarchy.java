@@ -31,6 +31,11 @@ import java.util.*;
  */
 public class AwardHierarchy extends KraPersistableBusinessObjectBase implements Cloneable {
 
+    /** 
+     * Based on IU Customization: UITSRA-1239 
+     * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+    public final static String ALPHABET_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    /** End IU Customization */
     public static final String ROOTS_PARENT_AWARD_NUMBER = "000000-00000";
 
     public static final String UNIQUE_IDENTIFIER_FIELD = "awardNumber";
@@ -267,6 +272,9 @@ public class AwardHierarchy extends KraPersistableBusinessObjectBase implements 
         return findNode(rootNode, awardNumber);
     }
 
+    /** 
+     * Based on IU Customization: UITSRA-1239 
+     * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
     /**
      * @return
      */
@@ -274,7 +282,13 @@ public class AwardHierarchy extends KraPersistableBusinessObjectBase implements 
         List<AwardHierarchy> list = getFlattenedListOfNodesInHierarchy();
         Set<String> awardNumberSet = new TreeSet<String>();
         for (AwardHierarchy node : list) {
-            awardNumberSet.add(node.getAwardNumber());
+// ### Vivantech Fix : #151 / [#90223952] 
+            if(node.getAwardNumber().length() == 13) {
+                awardNumberSet.add(node.getAwardNumber().substring(0, 12));
+            }
+            else {
+                awardNumberSet.add(node.getAwardNumber());
+            }
         }
         List<String> orderedList = new ArrayList<String>(awardNumberSet);
         String maximumAwardNumber = orderedList.get(orderedList.size() - 1);
@@ -282,6 +296,21 @@ public class AwardHierarchy extends KraPersistableBusinessObjectBase implements 
         Integer nextVal = Integer.valueOf(parts[1]) + 1;
         return String.format("%s-%05d", parts[0], nextVal);
     }
+    
+   // ### Vivantech Fix : #151 / [#90223952]
+    public char getHierarchyLevelCharacter() {
+        return ALPHABET_CHARS.charAt(findLevelInHierarchy(this));
+    }
+    
+    public int findLevelInHierarchy(AwardHierarchy node) {
+        if(node.getParentAwardNumber().equals(ROOTS_PARENT_AWARD_NUMBER)) {
+            return 0;
+        }
+        else {
+            return findLevelInHierarchy(node.getParent()) + 1;
+        }
+    }
+    /** End IU Customization */
 
     /**
      * @param award

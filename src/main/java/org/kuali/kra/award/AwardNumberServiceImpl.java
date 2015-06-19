@@ -40,7 +40,8 @@ public class AwardNumberServiceImpl implements AwardNumberService {
         Long nextAwardNumber = sequenceAccessorService.getNextAvailableSequenceNumber(Constants.AWARD_SEQUENCE_AWARD_NUMBER);
         
         // Use Coeus' xxxxxx-yyy format for compatibility
-        DecimalFormat formatter = new DecimalFormat("000000");        
-        return formatter.format(nextAwardNumber) + "-00001";
+        DecimalFormat formatter = new DecimalFormat("000000");   
+        // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+        return formatter.format(nextAwardNumber) + "-00001A";
     }
 }
