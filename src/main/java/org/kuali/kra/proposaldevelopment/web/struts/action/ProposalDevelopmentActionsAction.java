@@ -56,6 +56,7 @@ import org.kuali.kra.proposaldevelopment.printing.service.ProposalDevelopmentPri
 import org.kuali.kra.proposaldevelopment.rule.event.BudgetDataOverrideEvent;
 import org.kuali.kra.proposaldevelopment.rule.event.CopyProposalEvent;
 import org.kuali.kra.proposaldevelopment.rule.event.ProposalDataOverrideEvent;
+import org.kuali.kra.proposaldevelopment.rules.KeyPersonnelCertificationRule;
 import org.kuali.kra.proposaldevelopment.rules.ProposalDevelopmentRejectionRule;
 import org.kuali.kra.proposaldevelopment.rules.ProposalAttachmentSubmitToSponsorRule;
 import org.kuali.kra.proposaldevelopment.service.ProposalCopyService;
@@ -94,6 +95,7 @@ import org.kuali.rice.kns.util.WebUtils;
 import org.kuali.rice.kns.web.struts.action.AuditModeAction;
 import org.kuali.rice.kns.web.struts.form.KualiDocumentFormBase;
 import org.kuali.rice.kns.web.struts.form.KualiForm;
+import org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent;
 import org.kuali.rice.krad.service.*;
 import org.kuali.rice.krad.util.ErrorMessage;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -241,10 +243,20 @@ public class ProposalDevelopmentActionsAction extends ProposalDevelopmentAction 
                        KRADConstants.CONFIRMATION_QUESTION, methodToCall, "");             
         }
         else if(DOCUMENT_APPROVE_QUESTION.equals(question) && ConfirmationQuestion.NO.equals(buttonClicked)) {
-            workflowDoc.setDoNotReceiveFutureRequests();
+         // ### Vivantech Fix : #123 / [#92180712] prevent initiator to approve without certification
+            if (isCertificationComplete((ProposalDevelopmentForm) form)) {
+                workflowDoc.setDoNotReceiveFutureRequests();
+            } else {
+                return mapping.findForward((Constants.MAPPING_BASIC));
+            }
         }
         else if(DOCUMENT_APPROVE_QUESTION.equals(question)){ 
-            workflowDoc.setReceiveFutureRequests();  
+            // ### Vivantech Fix : #123 / [#92180712] prevent initiator to approve without certification
+            if (isCertificationComplete((ProposalDevelopmentForm) form)) {
+                workflowDoc.setReceiveFutureRequests();  
+            } else {
+                return mapping.findForward((Constants.MAPPING_BASIC));
+            }
         }
         
         if( StringUtils.equals(action, "approve")){
@@ -256,6 +268,14 @@ public class ProposalDevelopmentActionsAction extends ProposalDevelopmentAction 
         }
     }   
 
+    // ### Vivantech Fix : #123 / [#92180712] prevent initiator to approve without certification
+    private boolean isCertificationComplete (ProposalDevelopmentForm proposalDevelopmentForm) {
+        KeyPersonnelCertificationRule keyPersonnelRule = new KeyPersonnelCertificationRule();
+        ProposalDevelopmentDocument pdDoc = proposalDevelopmentForm.getProposalDevelopmentDocument();
+        ApproveDocumentEvent appDocumentEvent = new ApproveDocumentEvent(pdDoc);
+        return keyPersonnelRule.processApproveDocument(appDocumentEvent);
+    }
+    
     private boolean canGenerateRequestsInFuture(WorkflowDocument workflowDoc, String principalId) throws Exception {
         RoutingReportCriteria.Builder reportCriteriaBuilder = RoutingReportCriteria.Builder.createByDocumentId(workflowDoc.getDocumentId());
         reportCriteriaBuilder.setTargetPrincipalIds(Collections.singletonList(principalId));
