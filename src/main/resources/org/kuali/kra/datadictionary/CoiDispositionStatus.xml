@@ -47,6 +47,8 @@
         <property name="name" value="coiDisclosureStatusCode" />
         <property name="forceUppercase" value="false" />
         <property name="label" value="Coi Disclosure Status Code" />
+        <!-- Vivantech Fix : EKC-1603 make it required --> 
+        <property name="required" value="true"/>
         <property name="shortLabel" value="Coi Disclosure Status Code" />
         <property name="maxLength" value="3" />
         <property name="validationPattern" >
@@ -66,18 +68,15 @@
         <property name="forceUppercase" value="false" />
         <property name="label" value="Coi Disposition Code" />
         <property name="shortLabel" value="Coi Disposition Code" />
+        <!-- Vivantech Fix : EKC-1603 make it required --> 
+        <property name="required" value="true"/>
         <property name="maxLength" value="3" />
         <property name="validationPattern" >
             <bean parent="NumericValidationPattern" />
         </property>
-        <property name="control" >
-          <bean parent="SelectControlDefinition"
-	            p:businessObjectClass="org.kuali.kra.coi.CoiDispositionStatus"
-	            p:valuesFinderClass="org.kuali.kra.lookup.keyvalue.ExtendedPersistableBusinessObjectValuesFinder"
-	            p:includeKeyInLabel="false"
-	            p:includeBlankRow="false"
-	            p:keyAttribute="coiDispositionCode"
-	            p:labelAttribute="description" />
+        <!-- Vivantech Fix : EKC-1603 make it a free form text --> 
+        <property name="control">
+            <bean p:size="3" parent="TextControlDefinition"/>
         </property>
         <property name="summary" value="Coi Disposition Code" />
         <property name="description" value="Coi Disposition Code" />
@@ -89,9 +88,12 @@
         <property name="forceUppercase" value="false" />
         <property name="label" value="COI Disposition" />
         <property name="shortLabel" value="Disposition" />
+        <!-- Vivantech Fix : EKC-1603 make it required --> 
+        <property name="required" value="true"/>
         <property name="maxLength" value="200" />
         <property name="validationPattern" >
-            <bean parent="AlphaNumericValidationPattern" />
+        <!-- Vivantech Fix : EKC-1603 allow white space in description--> 
+            <bean parent="AlphaNumericValidationPattern"  p:allowWhitespace="true"/>
         </property>
         <property name="control" >
             <bean parent="TextControlDefinition"
