@@ -78,9 +78,10 @@
           	</c:if>
           	
          <c:forEach var="awardNotepad" items="${KualiForm.document.award.awardNotepads}" varStatus="status">
+             <!-- Vivantech Fix : EKC-1625 : corrected action value -->
 		     <kra:noteLineItem statusIndex="${status.index}" noteParmeterString="document.award.awardNotepads[${status.index}]" 
 		         viewRestrictedNotes="true" noteObject="${awardNotepad}" modifyPermission="${modifyPermission}" 
-		         hasAdministratorRole="${awardAdmin}" action="AwardNotesAndAttachmentsAction" showUpdate="true" isAddLine="${false}" />
+		         hasAdministratorRole="${awardAdmin}" action="awardNotesAndAttachments" showUpdate="true" isAddLine="${false}" />
 	    	</c:forEach> 
         </table>
    </div>
