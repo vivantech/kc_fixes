@@ -35,9 +35,11 @@ import org.kuali.kra.rules.ResearchDocumentRuleBase;
 import org.kuali.kra.service.SponsorService;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kns.service.DataDictionaryService;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.krad.bo.BusinessObject;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent;
+import org.kuali.rice.krad.util.ErrorMessage;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.MessageMap;
 
@@ -123,9 +125,16 @@ public class ProposalDevelopmentDocumentRule extends ResearchDocumentRuleBase im
             System.err.println("  Invalid  prime sponsor");
             valid = false;
             //this.reportError("document.developmentProposalList[0].primeSponsorCode", KeyConstants.ERROR_INVALID_SPONSOR_CODE, "");
-            GlobalVariables.getMessageMap().putError("primeSponsorCode", KeyConstants.ERROR_MISSING, dataDictionaryService.getAttributeErrorLabel(DevelopmentProposal.class, "primeSponsorCode"));
-            
-        }
+            GlobalVariables.getMessageMap().putError("primeSponsorCode", KeyConstants.ERROR_MISSING, dataDictionaryService.getAttributeErrorLabel(DevelopmentProposal.class, "primeSponsorCode"));           
+            // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+        } else if (!StringUtils.isEmpty(proposalDevelopmentDocument.getDevelopmentProposal().getPrimeSponsorCode()) &&
+                !proposalDevelopmentDocument.getDevelopmentProposal().getPrimeSponsor().isActive()) {
+             KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE);
+             if (!StringUtils.isEmpty(proposalDevelopmentDocument.getDevelopmentProposal().getSponsorCode()) &&
+                     proposalDevelopmentDocument.getDevelopmentProposal().getSponsor().isActive()) {
+                      KNSGlobalVariables.getMessageList().remove(new ErrorMessage(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE));
+                  }
+         }
         System.err.println("  returning: " +  (valid));
         return valid;
     }

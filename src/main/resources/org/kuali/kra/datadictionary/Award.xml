@@ -335,16 +335,22 @@
     <property name="forceUppercase" value="false" />
     <property name="label" value="Award ID" />
     <property name="shortLabel" value="Award ID" />
-    <property name="maxLength" value="12" />
+    <!--Based on IU Customization: UITSRA-1239 
+       ### Vivantech Fix : #151 / [#90223952] revise award numbering -->
+    <property name="maxLength" value="13" />
     <property name="validationPattern" >
       <bean parent="RegexValidationPattern"
-            p:pattern="\d\d\d\d\d\d-\d\d\d\d\d" 
+            p:pattern="\d\d\d\d\d\d-\d\d\d\d\d\p{Upper}" 
             p:validationErrorMessageKey="error.invalid.awardId"/>
     </property>
+    <!-- End IU Customization -->
     <property name="required" value="false" />
     <property name="control" >
+    <!--Based on IU Customization: UITSRA-1239 
+       ### Vivantech Fix : #151 / [#90223952] revise award numbering -->
       <bean parent="TextControlDefinition"
-            p:size="12" />
+            p:size="13" />
+      <!-- End IU Customization -->
     </property>
     <property name="summary" value="Award ID" />
     <property name="description" value="Award ID" />
@@ -922,7 +928,10 @@
 		<property name="name" value="awardIdAccount" />
 		<property name="label" value="Award ID: Account" />
 		<property name="shortLabel" value="Award ID: Account" />
-    <property name="maxLength" value="20" />
+    <!--Based on IU Customization: UITSRA-1239 
+       ### Vivantech Fix : #151 / [#90223952] revise award numbering -->
+    <property name="maxLength" value="21" />
+    <!-- End IU Customization -->
     <property name="required" value="false" />
     <property name="control" >
       <bean parent="TextControlDefinition"

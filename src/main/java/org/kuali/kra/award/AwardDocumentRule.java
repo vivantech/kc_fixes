@@ -15,9 +15,34 @@
  */
 package org.kuali.kra.award;
 
+import static org.kuali.kra.infrastructure.KeyConstants.AWARD_ATTACHMENT_FILE_REQUIRED;
+import static org.kuali.kra.infrastructure.KeyConstants.AWARD_ATTACHMENT_TYPE_CODE_REQUIRED;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
-import org.kuali.kra.award.commitments.*;
-import org.kuali.kra.award.contacts.*;
+import org.kuali.kra.award.commitments.AddAwardFandaRateEvent;
+import org.kuali.kra.award.commitments.AddFandaRateRule;
+import org.kuali.kra.award.commitments.AwardBenefitsRatesRuleEvent;
+import org.kuali.kra.award.commitments.AwardBenefitsRatesRuleImpl;
+import org.kuali.kra.award.commitments.AwardCostShare;
+import org.kuali.kra.award.commitments.AwardCostShareAuditRule;
+import org.kuali.kra.award.commitments.AwardCostShareRuleEvent;
+import org.kuali.kra.award.commitments.AwardCostShareRuleImpl;
+import org.kuali.kra.award.commitments.AwardFandARateAuditRule;
+import org.kuali.kra.award.commitments.AwardFandaRateRule;
+import org.kuali.kra.award.commitments.AwardFandaRateSaveEvent;
+import org.kuali.kra.award.commitments.AwardFandaRateSaveRule;
+import org.kuali.kra.award.contacts.AwardPersonCreditSplitAuditRule;
+import org.kuali.kra.award.contacts.AwardProjectPersonsAuditRule;
+import org.kuali.kra.award.contacts.AwardProjectPersonsSaveRule;
+import org.kuali.kra.award.contacts.AwardProjectPersonsSaveRuleImpl;
+import org.kuali.kra.award.contacts.AwardSponsorContactAuditRule;
+import org.kuali.kra.award.contacts.SaveAwardProjectPersonsRuleEvent;
 import org.kuali.kra.award.detailsdates.AddAwardTransferringSponsorEvent;
 import org.kuali.kra.award.detailsdates.AwardDetailsAndDatesRule;
 import org.kuali.kra.award.detailsdates.AwardDetailsAndDatesRuleImpl;
@@ -30,7 +55,15 @@ import org.kuali.kra.award.home.approvedsubawards.AwardApprovedSubawardRuleImpl;
 import org.kuali.kra.award.home.keywords.AwardScienceKeyword;
 import org.kuali.kra.award.lookup.keyvalue.FrequencyBaseCodeValuesFinder;
 import org.kuali.kra.award.lookup.keyvalue.ReportCodeValuesFinder;
-import org.kuali.kra.award.paymentreports.awardreports.*;
+import org.kuali.kra.award.paymentreports.awardreports.AddAwardReportTermRecipientRuleEvent;
+import org.kuali.kra.award.paymentreports.awardreports.AddAwardReportTermRuleEvent;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTerm;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRecipientRule;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRecipientRuleEvent;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRecipientRuleImpl;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRule;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRuleEvent;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTermRuleImpl;
 import org.kuali.kra.award.paymentreports.awardreports.reporting.ReportTracking;
 import org.kuali.kra.award.paymentreports.awardreports.reporting.ReportTrackingBean;
 import org.kuali.kra.award.paymentreports.closeout.AddAwardCloseoutRuleEvent;
@@ -55,6 +88,7 @@ import org.kuali.kra.award.rule.AwardCommentsRuleImpl;
 import org.kuali.kra.award.rule.event.AddAwardAttachmentEvent;
 import org.kuali.kra.award.rule.event.AwardCommentsRuleEvent;
 import org.kuali.kra.bo.KcPerson;
+import org.kuali.kra.bo.Sponsor;
 import org.kuali.kra.common.permissions.bo.PermissionsUser;
 import org.kuali.kra.common.permissions.bo.PermissionsUserEditRoles;
 import org.kuali.kra.common.permissions.rule.PermissionsRule;
@@ -66,6 +100,7 @@ import org.kuali.kra.rule.BusinessRuleInterface;
 import org.kuali.kra.rule.event.KraDocumentEventBaseExtension;
 import org.kuali.kra.rules.ResearchDocumentRuleBase;
 import org.kuali.kra.service.KcPersonService;
+import org.kuali.kra.service.SponsorService;
 import org.kuali.kra.timeandmoney.TimeAndMoneyForm;
 import org.kuali.kra.timeandmoney.rule.event.TimeAndMoneyAwardDateSaveEvent;
 import org.kuali.kra.timeandmoney.rules.TimeAndMoneyAwardDateSaveRuleImpl;
@@ -76,18 +111,10 @@ import org.kuali.rice.kns.util.AuditError;
 import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.rules.rule.DocumentAuditRule;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ErrorMessage;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.MessageMap;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.kuali.kra.infrastructure.KeyConstants.AWARD_ATTACHMENT_FILE_REQUIRED;
-import static org.kuali.kra.infrastructure.KeyConstants.AWARD_ATTACHMENT_TYPE_CODE_REQUIRED;
 
 
 
@@ -290,7 +317,9 @@ public class AwardDocumentRule extends ResearchDocumentRuleBase implements Award
         retval &= processAwardDetailsAndDatesSaveRules(document);
         retval &= processDateBusinessRule(errorMap, awardDocument);
         retval &=processKeywordBusinessRule(awardDocument);
-        
+        // ### Vivantech Fix : #130 / [#93042556] validate sponsor code
+        retval &= validateSponsors(document);
+    
         return retval;
     }
 
@@ -503,6 +532,8 @@ public class AwardDocumentRule extends ResearchDocumentRuleBase implements Award
         retval &= new AwardSponsorContactAuditRule().processRunAuditBusinessRules(document);
         retval &= new AwardBudgetLimitsAuditRule().processRunAuditBusinessRules(document);
         retval &= processDateBusinessRule(GlobalVariables.getMessageMap(), (AwardDocument)document);
+        // ### Vivantech Fix : #185 / [#95914042]  fix for the issue with Award with inactive sponsor not being editable
+        retval &= processInactiveSponsorAuditRule(document);
         reportAndCreateAuditCluster();
         return retval;
         
@@ -799,4 +830,71 @@ public class AwardDocumentRule extends ResearchDocumentRuleBase implements Award
             KNSGlobalVariables.getAuditErrorMap().put("homePageAuditWarnings", new AuditCluster(Constants.MAPPING_AWARD_HOME_DETAILS_AND_DATES_PAGE_NAME, auditWarnings, Constants.AUDIT_WARNINGS));            
         }
     }
+
+    // ### Vivantech Fix : #130 / [#93042556] validate sponsor code - begin
+    private boolean validateSponsors(Document document) {
+        boolean valid = true;
+        MessageMap errorMap = GlobalVariables.getMessageMap();
+        AwardDocument awardDocument = (AwardDocument) document;
+        SponsorService ss = this.getSponsorService();
+        if (!StringUtils.isEmpty(awardDocument.getAward().getSponsorCode()) &&
+                !ss.validateSponsor(awardDocument.getAward().getSponsor())) {
+            errorMap.putError("document.awardList[0].sponsorCode", KeyConstants.ERROR_INVALID_SPONSOR_CODE);
+            valid = false;
+        }
+        if (!StringUtils.isEmpty(awardDocument.getAward().getPrimeSponsorCode()) &&
+                !ss.validateSponsor(awardDocument.getAward().getPrimeSponsor())) {
+            errorMap.putError("document.awardList[0].primeSponsorCode", KeyConstants.ERROR_INVALID_PRIME_SPONSOR_CODE);
+            valid = false;
+            // ### Vivantech Fix : #185 / [#95914042]  fix for the issue with award with inactive prime sponsor
+        } else if (!StringUtils.isEmpty(awardDocument.getAward().getPrimeSponsorCode()) && !awardDocument.getAward().getPrimeSponsor().isActive()) {
+            if (!KNSGlobalVariables.getMessageList().contains(new ErrorMessage(KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE))) {
+                KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE);
+            }
+            if (!StringUtils.isEmpty(awardDocument.getAward().getSponsorCode()) && awardDocument.getAward().getSponsor().isActive()) {
+                KNSGlobalVariables.getMessageList().remove(new ErrorMessage(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE));
+            }
+         }
+        return valid;
+    }
+
+    private SponsorService getSponsorService() {
+        return KraServiceLocator.getService(SponsorService.class);
+    }
+    // ### Vivantech Fix : #130 / [#93042556] validate sponsor code - end
+  
+    // ### Vivantech Fix : #185 / [#95914042]  fix for the issue with Award with inactive sponsor not being editable
+    private boolean processInactiveSponsorAuditRule(Document document) {
+        boolean valid = true;
+        Award award = ((AwardDocument) document).getAward();
+        List<AuditError> auditErrors = new ArrayList<AuditError>();
+        if (!StringUtils.isEmpty(award.getSponsorCode())) {
+            Map<String, String> primaryKeys = new HashMap<String, String>();
+            primaryKeys.put("sponsorCode", award.getSponsorCode());
+            Sponsor sp = (Sponsor) KraServiceLocator.getService(BusinessObjectService.class).findByPrimaryKey(Sponsor.class, primaryKeys);
+            if (sp != null && !sp.isActive()) {
+                auditErrors.add(new AuditError(Constants.AWARD_SPONSOR_KEY, KeyConstants.ERROR_INACTIVE_SPONSOR_CODE, 
+                        Constants.MAPPING_AWARD_HOME_PAGE + "." + Constants.MAPPING_AWARD_HOME_DETAILS_AND_DATES_PAGE_ANCHOR));
+                valid &= false;
+            }
+        }
+        if (!StringUtils.isEmpty(award.getPrimeSponsorCode())) {
+            Map<String, String> primaryKeys = new HashMap<String, String>();
+            primaryKeys.put("sponsorCode", award.getPrimeSponsorCode());
+            Sponsor sp = (Sponsor) KraServiceLocator.getService(BusinessObjectService.class).findByPrimaryKey(Sponsor.class, primaryKeys);
+            if (sp != null && !sp.isActive()) {
+                auditErrors.add(new AuditError(Constants.AWARD_PRIME_SPONSOR_KEY, KeyConstants.ERROR_INACTIVE_PRIME_SPONSOR_CODE, 
+                        Constants.MAPPING_AWARD_HOME_PAGE + "." + Constants.MAPPING_AWARD_HOME_DETAILS_AND_DATES_PAGE_ANCHOR));
+                valid &= false;
+            }
+        }
+        
+        if (auditErrors.size() > 0) {
+            KNSGlobalVariables.getAuditErrorMap().put("sponsorAuditWarnings", new AuditCluster(Constants.SPONSOR_PANEL_NAME, auditErrors, Constants.AUDIT_WARNINGS));
+           valid &= false;
+        }
+        return valid;
+
+    }
+
 }

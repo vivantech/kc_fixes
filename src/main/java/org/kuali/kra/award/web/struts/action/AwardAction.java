@@ -220,6 +220,15 @@ public class AwardAction extends BudgetParentActionBase {
             new AuditActionHelper().auditConditionally((AwardForm) form);
         }
         
+        // ### Vivantech Fix #162 :  [#93390108] refresh report tracking
+        if (StringUtils.equals(actionForward.getName(), Constants.MAPPING_AWARD_PAYMENT_REPORTS_AND_TERMS_PAGE)) {
+            AwardDocument awardDocument = awardForm.getAwardDocument();
+            if (awardDocument.getDocumentHeader().getWorkflowDocument().isFinal()) {
+                getReportTrackingService().refreshReportTracking(awardForm.getAwardDocument().getAward());
+            }         
+        }
+        // end Vivantech fix
+
         return actionForward;
     }
     
@@ -418,8 +427,9 @@ public class AwardAction extends BudgetParentActionBase {
         
         /**
          * deal with the award report tracking generation business.
+         * 96021432-Award reports should be generated when it goes to Final
          */
-        getReportTrackingService().generateReportTrackingAndSave(award, false);
+        // getReportTrackingService().generateReportTrackingAndSave(award, false);
 
         return forward;
     }

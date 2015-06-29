@@ -16,6 +16,7 @@
 package org.kuali.kra.proposaldevelopment.rules;
 
 import org.apache.commons.lang.StringUtils;
+import org.kuali.kra.bo.Sponsor;
 import org.kuali.kra.infrastructure.Constants;
 import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.infrastructure.KraServiceLocator;
@@ -30,9 +31,12 @@ import org.kuali.rice.kns.util.AuditError;
 import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.rules.rule.DocumentAuditRule;
+import org.kuali.rice.krad.service.BusinessObjectService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class processes audit rules (warnings) for the Sponsor & Program Information related
@@ -77,6 +81,25 @@ public class ProposalDevelopmentProposalRequiredFieldsAuditRule implements Docum
         if (auditErrors.size() > 0) {
             KNSGlobalVariables.getAuditErrorMap().put("requiredFieldsAuditErrors", new AuditCluster(Constants.REQUIRED_FIELDS_PANEL_NAME, auditErrors, Constants.AUDIT_ERRORS));
         }
+
+        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable - begin
+        auditErrors = new ArrayList<AuditError>();
+        if (!StringUtils.isEmpty(proposal.getSponsorCode())) {
+            Map<String, String> primaryKeys = new HashMap<String, String>();
+            primaryKeys.put("sponsorCode", proposal.getSponsorCode());
+            Sponsor sp = (Sponsor) KraServiceLocator.getService(BusinessObjectService.class).findByPrimaryKey(Sponsor.class, primaryKeys);
+            if (sp != null && !sp.isActive()) {
+                auditErrors.add(new AuditError(Constants.PD_SPONSOR_KEY, KeyConstants.ERROR_INACTIVE_SPONSOR_CODE, 
+                        Constants.PROPOSAL_PAGE + "." + Constants.SPONSOR_PROGRAM_INFORMATION_PANEL_ANCHOR));
+                valid &= false;
+            }
+        }
+        
+        if (auditErrors.size() > 0) {
+            KNSGlobalVariables.getAuditErrorMap().put("requiredFieldsAuditWarnings", new AuditCluster(Constants.REQUIRED_FIELDS_PANEL_NAME, auditErrors, Constants.AUDIT_WARNINGS));
+            valid &= false;
+        }
+        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable - end
 
         return valid;
     }

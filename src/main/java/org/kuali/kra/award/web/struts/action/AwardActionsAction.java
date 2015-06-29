@@ -57,7 +57,10 @@ import org.kuali.rice.krad.util.KRADConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 
@@ -186,7 +189,15 @@ public class AwardActionsAction extends AwardAction implements AuditModeAction {
         
         AwardForm awardForm = (AwardForm)form;
         String awardNumber = getAwardNumber(request);
-        int index = Integer.parseInt(StringUtils.split(awardNumber, "-")[1]);
+        /** 
+         * Based on IU Customization: UITSRA-1239 
+         * ### Vivantech Fix : #151 / [#90223952] revise award numbering */
+        int index = 0;
+        Matcher awardNumMatcher = Pattern.compile("\\d+-0*([1-9]\\d*)").matcher(awardNumber);
+        if(awardNumMatcher.find()) {
+            index = Integer.parseInt(awardNumMatcher.group(1));
+        } 
+        /** End IU Customization */          
         ActionForward forward = null;
         AwardHierarchy newRootNode = null;
         if (!StringUtils.isEmpty(awardForm.getAwardHierarchyTempObjects().get(index).getCopyAwardRadio())) {
@@ -242,7 +253,14 @@ public class AwardActionsAction extends AwardAction implements AuditModeAction {
     public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         AwardForm awardForm = (AwardForm)form;
         String awardNumber = getAwardNumber(request);
-        int index = Integer.parseInt(StringUtils.split(awardNumber, "-")[1]);
+        /** Based on IU Customization: UITSRA-1239 
+         *  ### Vivantech Fix : #151 / [#90223952] revise award numbering **/
+        int index = 0;
+        Matcher awardNumMatcher = Pattern.compile("\\d+-0*([1-9]\\d*)").matcher(awardNumber);
+        if(awardNumMatcher.find()) {
+            index = Integer.parseInt(awardNumMatcher.group(1));
+        } 
+        /** End IU Customization */        
         ActionForward forward = null;
         
         if(awardForm.getAwardHierarchyTempObjects().get(index).getCreateNewChildRadio()!=null){

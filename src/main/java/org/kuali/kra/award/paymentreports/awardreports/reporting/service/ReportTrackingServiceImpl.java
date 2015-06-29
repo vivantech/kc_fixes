@@ -47,6 +47,12 @@ public class ReportTrackingServiceImpl implements ReportTrackingService {
     public void refreshReportTracking(Award award) throws ParseException {
         List<AwardReportTerm> awardReportTermItems = award.getAwardReportTermItems();      
         for (AwardReportTerm awardTerm : awardReportTermItems) {
+         // ### Vivantech Fix #162 :  [#93390108] no report tracking if report class's generaterequirements is 'false'
+            awardTerm.refreshReferenceObject("reportClass");
+            if (!awardTerm.getReportClass().getGenerateReportRequirements()) {
+                continue;
+            }
+            // end Vivantech fix
             List<java.util.Date> dates = new ArrayList<java.util.Date>();
             List<AwardReportTerm> awardReportTerms = new ArrayList<AwardReportTerm>();
             awardReportTerms.add(awardTerm);
@@ -97,10 +103,9 @@ public class ReportTrackingServiceImpl implements ReportTrackingService {
                      * if needed.
                      */
                     awardTerm.setReportTrackings(purgePendingReports(awardTerm, awardTerm.getReportTrackings(), reportsToDelete));
-                    reportsToSave.addAll(awardTerm.getReportTrackings());
                 }
-                
                 runDateCalcuations(dates, award, awardTerm, reportsToSave);
+                reportsToSave.addAll(awardTerm.getReportTrackings());
 
                 deleteExtraReports(dates, award, awardTerm, reportsToDelete);
 
@@ -349,7 +354,8 @@ public class ReportTrackingServiceImpl implements ReportTrackingService {
     
     @Override
     public boolean autoRegenerateReports(Award award) {
-        String rootAwardNumberEnder = "-00001";
+        // ### Vivantech Fix : #151 / [#90223952] added char to the end of award number
+        String rootAwardNumberEnder = "-00001A";
         boolean retVal = StringUtils.endsWith(award.getAwardNumber(), rootAwardNumberEnder);
         if (!retVal) {
             for (AwardReportTerm term : award.getAwardReportTermItems()) {

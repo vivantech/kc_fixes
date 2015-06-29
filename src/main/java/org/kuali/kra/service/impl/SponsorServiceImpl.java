@@ -22,11 +22,14 @@ import org.kuali.kra.bo.Sponsor;
 import org.kuali.kra.bo.SponsorHierarchy;
 import org.kuali.kra.dao.SponsorHierarchyDao;
 import org.kuali.kra.infrastructure.Constants;
+import org.kuali.kra.infrastructure.KeyConstants;
 import org.kuali.kra.service.SponsorService;
 import org.kuali.kra.service.Sponsorable;
 import org.kuali.kra.web.struts.form.SponsorHierarchyForm;
 import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ErrorMessage;
 import org.kuali.rice.krad.util.GlobalVariables;
 
 import java.lang.reflect.Method;
@@ -516,9 +519,15 @@ public class SponsorServiceImpl implements SponsorService, Constants {
     
     public boolean validateSponsor(Sponsor sponsor) {
         boolean valid = true;
-        if (sponsor == null || !sponsor.isActive()) {
+        
+        if (sponsor == null) {
             valid = false;
         }
+        // ### Vivantech Fix : #87 / [#91531064] fix for the issue with Institutional Proposal with inactive sponsor not being editable
+        if(sponsor != null && !sponsor.isActive() && !KNSGlobalVariables.getMessageList().contains(new ErrorMessage(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE))) {
+        	KNSGlobalVariables.getMessageList().add(KeyConstants.ERROR_INACTIVE_SPONSOR_CODE);
+        }
+        
         return valid;
     }
 }
