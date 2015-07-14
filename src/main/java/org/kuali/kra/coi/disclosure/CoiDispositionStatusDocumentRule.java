@@ -67,7 +67,8 @@ public class CoiDispositionStatusDocumentRule extends KraMaintenanceDocumentRule
         final CoiDispositionStatus coiDispositionStatus = (CoiDispositionStatus) document.getNewMaintainableObject().getDataObject();
         if (!document.getNewMaintainableObject().getMaintenanceAction().equals(KRADConstants.MAINTENANCE_DELETE_ACTION)) {
             final CoiDispositionStatus oldDocument = (CoiDispositionStatus) document.getOldMaintainableObject().getDataObject();
-            if (isNotDuplicate(coiDispositionStatus) && isValidCoiDisclosureStatus(coiDispositionStatus)) {
+            // Vivantech Fix : EKC-1603 should not check duplicate for 'edit'
+            if ((document.getNewMaintainableObject().getMaintenanceAction().equals(KRADConstants.MAINTENANCE_EDIT_ACTION) || isNotDuplicate(coiDispositionStatus)) && isValidCoiDisclosureStatus(coiDispositionStatus)) {
                 result = true;
             } else {
                 result = false;

@@ -30,10 +30,16 @@
 <%@ attribute name="isMasterDisclosure" required="false" type="java.lang.Boolean" %>
 
 <%@ attribute name="showUpdate" required="false" type="java.lang.Boolean" %>
+<!-- Vivantech Fix : EKC-1625 : add attributes  -->
+<%@ attribute name="textAreaSize" required="false" %>
 
 <c:if test="${displayProjectId == null}"><c:set var="displayProjectId" value="${false}" /></c:if>
 <c:if test="${displayFinancialEntityId == null}"><c:set var="displayFinancialEntityId" value="${false}" /></c:if>
 <c:if test="${isMasterDisclosure == null}"><c:set var="isMasterDisclosure" value="${false}" /></c:if>
+<!-- Vivantech Fix : EKC-1625 : add attributes 
+currently award/irb/iacuc notes are the 3 used notelineitem, and all have size 4000. so it's ok
+  to set the default size to 4000.  for future reference, should pass as an attribute if size is not 4000. -->
+<c:if test="${textAreaSize == null}"><c:set var="textAreaSize" value="4000" /></c:if>
 
 <c:set var="notesAttributes" value="${DataDictionary.CoiDisclosureNotepad.attributes}" />
 
@@ -90,8 +96,9 @@
 			                	  ${fn:substring(noteObject.comments,0,displaySize - 1)}...
 			                	  
 			                	  <html:hidden property="${noteParmeterString }.comments" write="false" styleId="${noteParmeterString }.comments" />
+                                  <!-- Vivantech Fix : EKC-1625 : use textareasize as maxlength -->
 			                	  <kul:expandedTextArea textAreaFieldName="${noteParmeterString }.comments" action="${action }" 
-			                	  	textAreaLabel="${notesAttributes.comments.label}"  readOnly="true" />
+			                	  	textAreaLabel="${notesAttributes.comments.label}"  readOnly="true" maxLength="${textAreaSize}"/>
 			                	  
 			                </c:when>
 				            <c:otherwise>
