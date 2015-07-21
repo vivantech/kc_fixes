@@ -219,15 +219,6 @@ public class AwardAction extends BudgetParentActionBase {
         if (KNSGlobalVariables.getAuditErrorMap().isEmpty()) {
             new AuditActionHelper().auditConditionally((AwardForm) form);
         }
-        
-        // ### Vivantech Fix #162 :  [#93390108] refresh report tracking
-        if (StringUtils.equals(actionForward.getName(), Constants.MAPPING_AWARD_PAYMENT_REPORTS_AND_TERMS_PAGE)) {
-            AwardDocument awardDocument = awardForm.getAwardDocument();
-            if (awardDocument.getDocumentHeader().getWorkflowDocument().isFinal()) {
-                getReportTrackingService().refreshReportTracking(awardForm.getAwardDocument().getAward());
-            }         
-        }
-        // end Vivantech fix
 
         return actionForward;
     }
@@ -435,15 +426,6 @@ public class AwardAction extends BudgetParentActionBase {
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         AwardForm awardForm = (AwardForm) form;
         ActionForward actionForward = super.reload(mapping, form, request, response);
-        // ### Vivantech Fix Issue #113 / [92971838] Reload button causes stack trace when project end date is blanked out
-        // Only perform refreshReportTracking after confirmation reload has been answered with Yes. 
-        Object question = getQuestion(request);
-        if(question!=null){
-        	 Object buttonClicked = request.getParameter(KRADConstants.QUESTION_CLICKED_BUTTON);
-        	 if(DOCUMENT_RELOAD_QUESTION.equals(question) && ConfirmationQuestion.YES.equals(buttonClicked)){
-        		 getReportTrackingService().refreshReportTracking(awardForm.getAwardDocument().getAward());        		 
-        	 }
-        }
         return actionForward;        
     }
 

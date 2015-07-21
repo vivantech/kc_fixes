@@ -626,11 +626,14 @@ public class AwardPaymentReportsAndTermsAction extends AwardAction {
                 }
             }
             
-            ActionForward forward = super.save(mapping, form, request, response);
+            // EKC-1351-Award-Report-Tracking
+            // before save (re-generate reports),  ReportTrackingsToDelete should be deleted.
             if (!awardForm.getReportTrackingsToDelete().isEmpty()) {
                 this.getBusinessObjectService().delete(awardForm.getReportTrackingsToDelete());
                 awardForm.setReportTrackingsToDelete(new ArrayList<ReportTracking>());
             }
+            ActionForward forward = super.save(mapping, form, request, response);
+            
             return forward;
         } else {
             return mapping.findForward(Constants.MAPPING_AWARD_BASIC);

@@ -22,7 +22,10 @@
 
 <c:set var="reportTrackingAttributes" value="${DataDictionary.ReportTracking.attributes}" />
 <c:set var="reportTrackingBeanAttributes" value="${DataDictionary.ReportTrackingBean.attributes}" />
-<c:set var="reportTrackingReadOnly" value="${!KualiForm.permissionsHelper.maintainAwardReportTracking }"/>
+
+<c:set var="reportTrackingPermission" value="${KualiForm.permissionsHelper.maintainAwardReportTracking}" scope="request"/>
+<c:set var="reportTrackingReadOnly" value="${!reportTrackingPermission || readOnly}" scope="request"/>
+
 
 <kul:innerTab parentTab="${innerTabParent}" defaultOpen="false"
 	tabTitle="Details - Report Tracking"
@@ -185,7 +188,8 @@
 					
 				</td>
 				<td>
-					<c:if test="${reportTracking.displayDeleteButton}">
+					<c:if test="${reportTracking.displayDeleteButton && !reportTrackingReadOnly}">										       
+					
 						<html:image property="methodToCall.deleteReportTrackingRecord.awardReportTermItems${index}.line${status.index}.anchor${currentTabIndex}"
 				        src='${ConfigProperties.kra.externalizable.images.url}tinybutton-delete1.gif' styleClass="tinybutton"
 				        onclick="return confirm('Are you sure you want to delete this report tracking detail?  Note, this record may be regenerated on the next save, based on the selected frequency and frequency base.')"/>
