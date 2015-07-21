@@ -418,7 +418,8 @@ public class ProposalDevelopmentAction extends BudgetParentActionBase {
         //if the proposal hasn't been saved yet, the s2sopp proposal number will be null. We need to save it in the form until we
         //have a proposal number to set due to OJBs difficulty in dealing with 1-to-1 relationships.
         S2sOpportunity s2sOpportunity = proposalDevelopmentForm.getProposalDevelopmentDocument().getDevelopmentProposal().getS2sOpportunity();
-        if(s2sOpportunity!=null && s2sOpportunity.getProposalNumber()==null){
+        // ### Vivantech Fix : #198 / [EKC-1818] saving a grants.gov proposal dev doc with missing opportunity causes OJB exception
+        if(s2sOpportunity!=null && s2sOpportunity.getOpportunityId()!=null && s2sOpportunity.getProposalNumber()==null){
             proposalDevelopmentForm.getProposalDevelopmentDocument().getDevelopmentProposal().setS2sOpportunity(null);
             proposalDevelopmentForm.setS2sOpportunity(s2sOpportunity);
         }
