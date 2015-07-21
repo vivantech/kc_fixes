@@ -16,9 +16,11 @@
 package org.kuali.kra.award.paymentreports.awardreports.reporting;
 
 import org.apache.commons.lang.StringUtils;
+import org.kuali.kra.award.awardhierarchy.sync.AwardSyncableProperty;
 import org.kuali.kra.award.home.Award;
 import org.kuali.kra.award.home.Distribution;
 import org.kuali.kra.award.paymentreports.*;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTerm;
 import org.kuali.kra.bo.*;
 import org.kuali.kra.infrastructure.KraServiceLocator;
 import org.kuali.kra.service.KcPersonService;
@@ -37,6 +39,9 @@ public class ReportTracking extends KraPersistableBusinessObjectBase implements 
      * Comment for <code>serialVersionUID</code>
      */
     private static final long serialVersionUID = -7660491024739306314L;
+    // EKC-1351-Award-Report-Tracking
+    private Long awardReportTrackingId;
+    // EKC-1351-Award-Report-Tracking
     private Long awardReportTermId;
 
     private String awardNumber;
@@ -115,12 +120,30 @@ public class ReportTracking extends KraPersistableBusinessObjectBase implements 
     private transient BusinessObjectService businessObjectService;
     private boolean multiEditSelected;
 
+    @AwardSyncableProperty(parent = true, parentProperty = "reportTrackings")
+    private AwardReportTerm awardReportTerm;
 
-    public Long getAwardReportTermId() {
+	public AwardReportTerm getAwardReportTerm() {
+		return awardReportTerm;
+	}
+
+	public void setAwardReportTerm(AwardReportTerm awardReportTerm) {
+		this.awardReportTerm = awardReportTerm;
+	}
+
+	public Long getAwardReportTermId() {
         return awardReportTermId;
     }
 
-    public void setAwardReportTermId(Long awardReportTermId) {
+    public Long getAwardReportTrackingId() {
+		return awardReportTrackingId;
+	}
+
+	public void setAwardReportTrackingId(Long awardReportTrackingId) {
+		this.awardReportTrackingId = awardReportTrackingId;
+	}
+
+	public void setAwardReportTermId(Long awardReportTermId) {
         this.awardReportTermId = awardReportTermId;
     }
 
