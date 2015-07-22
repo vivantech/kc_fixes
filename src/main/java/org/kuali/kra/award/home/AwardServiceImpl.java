@@ -17,6 +17,8 @@ package org.kuali.kra.award.home;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -277,7 +279,30 @@ public class AwardServiceImpl implements AwardService {
         }
     }
     
-
+    // EKC-1351 Award-Report-Tracking-Canceled-Award 
+    /**
+     * @see org.kuali.kra.award.home.AwardService#getLatestFinalizedAward(VersionHistory versions)
+     */
+    public Award getLatestFinalizedAward(Award award) {
+    	List<VersionHistory> versions = getVersionHistoryService().loadVersionHistory(Award.class, award.getAwardNumber());
+    	
+        Collections.sort(versions, new Comparator<VersionHistory>() {
+            public int compare(VersionHistory action1, VersionHistory action2) {
+            	// reverse sort
+                return action2.getSequenceOwnerSequenceNumber().compareTo(action1.getSequenceOwnerSequenceNumber());
+            }
+        });
+        Award previousAward = null;
+        for (VersionHistory version: versions){
+        	if (!version.getSequenceOwnerSequenceNumber().equals(award.getSequenceNumber())){
+        		if (!version.getStatus().equals(VersionStatus.CANCELED)){
+        			previousAward = (Award) version.getSequenceOwner();
+        			break;
+        		}
+        	}
+        }
+        return previousAward;
+    }
     
     public Award getAwardAssociatedWithDocument(String docNumber) {
         Map<String, Object> values = new HashMap<String, Object>();
