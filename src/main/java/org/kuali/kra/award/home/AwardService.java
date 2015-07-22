@@ -98,5 +98,13 @@ public interface AwardService {
     
     public Award getAwardAssociatedWithDocument(String docNumber);
     
+    // EKC-1351 Award-Report-Tracking-Canceled-Award 
+    /**
+     * Returns the latest finalized award
+     * @param award
+     * @return
+     */
+    public Award getLatestFinalizedAward(Award award);
+    
     
 }
