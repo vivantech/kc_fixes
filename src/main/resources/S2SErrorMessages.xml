@@ -1349,11 +1349,11 @@
  		<Message>Please attach an Other Attachments file.</Message> 
   		<FixLink>abstractsAttachments</FixLink> 
 	</Error>
-	<!-- #ED524_Budget-V1_1-->
+	<!-- #unknown-->
 	<Error>
  		<MessageKey>/GrantApplication/Forms</MessageKey> 
- 		<Message>Please add a budget to the proposal.</Message> 
-  		<FixLink>budgetVersions</FixLink> 
+ 		<Message>An unknown error has occurred while processing this attachment.</Message> 
+  		<FixLink>grantsGov</FixLink> 
 	</Error>
 	<!-- #ED_SF424_Supplement-V1_1-->
 	<Error>
