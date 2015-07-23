@@ -796,7 +796,7 @@ public class AwardPaymentReportsAndTermsAction extends AwardAction {
             String key = keys.next().toString();
             if (StringUtils.contains(key, awardReportTermItemsIndexBase)) {
                 int startingSubStringIndex = StringUtils.indexOf(key, awardReportTermItemsIndexBase) + awardReportTermItemsIndexBase.length();
-                int endingSubStringIndex = key.length() - 2;
+                int endingSubStringIndex = key.length();
                 String intValSubstring = key.substring(startingSubStringIndex, endingSubStringIndex);
                 return Integer.valueOf(intValSubstring);
             }
