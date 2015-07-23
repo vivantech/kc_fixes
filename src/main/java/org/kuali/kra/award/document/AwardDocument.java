@@ -17,6 +17,8 @@ package org.kuali.kra.award.document;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +49,7 @@ import org.kuali.kra.award.paymentreports.awardreports.reporting.service.ReportT
 import org.kuali.kra.award.specialreview.AwardSpecialReview;
 import org.kuali.kra.award.specialreview.AwardSpecialReviewExemption;
 import org.kuali.kra.bo.DocumentCustomData;
+import org.kuali.kra.bo.versioning.VersionHistory;
 import org.kuali.kra.bo.versioning.VersionStatus;
 import org.kuali.kra.budget.document.BudgetDocument;
 import org.kuali.kra.budget.document.BudgetParentDocument;
@@ -62,6 +65,7 @@ import org.kuali.kra.institutionalproposal.service.InstitutionalProposalService;
 import org.kuali.kra.krms.KcKrmsConstants;
 import org.kuali.kra.krms.KrmsRulesContext;
 import org.kuali.kra.krms.service.KcKrmsFactBuilderService;
+import org.kuali.kra.protocol.actions.ProtocolActionBase;
 import org.kuali.kra.service.KraWorkflowService;
 import org.kuali.kra.service.ResearchDocumentService;
 import org.kuali.kra.service.VersionHistoryService;
@@ -260,15 +264,17 @@ public class AwardDocument extends BudgetParentDocument<Award> implements  Copya
             getAwardService().updateAwardSequenceStatus(getAward(), VersionStatus.ACTIVE);
             getVersionHistoryService().updateVersionHistory(getAward(), VersionStatus.ACTIVE, GlobalVariables.getUserSession().getPrincipalName());
             
-            // 96021432-Award reports should be generated when it goes to Final
+            
+            // delete reports on previous version when the Award goes to final
             if (KewApiConstants.ROUTE_HEADER_FINAL_CD.equalsIgnoreCase(newStatus)){
-            	try {
-					getReportTrackingService().generateReportTrackingAndSave(getAward(), false);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					LOG.debug("********************* getReportTrackingService().generateReportTrackingAndSave() returns an exception!");
-					throw new RuntimeException("getReportTrackingService().generateReportTrackingAndSave() returns an exception!", e);
-				}
+                List<VersionHistory> versions = getVersionHistoryService().loadVersionHistory(Award.class, getAward().getAwardNumber());
+                
+                // get previously finalized Award ONLY when there are more than 1 versions and delete report items
+                if (versions.size() > 1){
+                    Award previouslyFinalizedAward = getAwardService().getLatestFinalizedAward(getAward());
+                    // delete reportItems
+                	KraServiceLocator.getService(BusinessObjectService.class).delete(previouslyFinalizedAward.getAwardReportTermItems());
+                }
             }
         }
         if (newStatus.equalsIgnoreCase(KewApiConstants.ROUTE_HEADER_CANCEL_CD) || newStatus.equalsIgnoreCase(KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD)) {

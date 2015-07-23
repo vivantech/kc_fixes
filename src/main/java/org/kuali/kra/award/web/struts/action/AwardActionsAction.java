@@ -824,7 +824,12 @@ public class AwardActionsAction extends AwardAction implements AuditModeAction {
             hierarchy.setActive(false);
             getBusinessObjectService().save(hierarchy);
         }
+        
+        // EKC-1351 Award-Report-Tracking-Canceled-Award 
+        // delete copied reports
+        getBusinessObjectService().delete(award.getAwardReportTermItems());
         getDocumentService().cancelDocument(kualiDocumentFormBase.getDocument(), kualiDocumentFormBase.getAnnotation());
+        
         
         //add all award amount info objects to previous award version and save.
 //        AwardForm awardForm = (AwardForm) form;

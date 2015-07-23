@@ -15,9 +15,21 @@
  */
 package org.kuali.kra.award.home;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.kuali.kra.award.customdata.AwardCustomData;
 import org.kuali.kra.award.document.AwardDocument;
 import org.kuali.kra.award.notesandattachments.attachments.AwardAttachment;
+import org.kuali.kra.award.paymentreports.awardreports.AwardReportTerm;
+import org.kuali.kra.award.paymentreports.awardreports.reporting.ReportTracking;
 import org.kuali.kra.bo.CustomAttributeDocument;
 import org.kuali.kra.bo.versioning.VersionHistory;
 import org.kuali.kra.bo.versioning.VersionStatus;
@@ -28,8 +40,6 @@ import org.kuali.kra.service.VersioningService;
 import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.krad.service.BusinessObjectService;
 import org.kuali.rice.krad.service.DocumentService;
-
-import java.util.*;
 
 /** {@inheritDoc} */
 public class AwardServiceImpl implements AwardService {
@@ -81,6 +91,15 @@ public class AwardServiceImpl implements AwardService {
             attach.setUpdateTimestamp(orignalAttachment.getUpdateTimestamp());
             attach.setUpdateUserSet(true);
         }
+        
+        // EKC-1351-Award-Report-Tracking
+        // create another copy of report trackings
+        for (AwardReportTerm reportTerm : newVersion.getAwardReportTermItems()){
+        	for (ReportTracking reportTracking : reportTerm.getReportTrackings()){
+        		reportTracking.setAwardReportTrackingId(null);
+        	}
+        }
+        // EKC-1351-Award-Report-Tracking
         
         incrementVersionNumberIfCanceledVersionsExist(newVersion);//Canceled versions retain their own version number.
         newVersion.getFundingProposals().clear();
@@ -260,7 +279,30 @@ public class AwardServiceImpl implements AwardService {
         }
     }
     
-
+    // EKC-1351 Award-Report-Tracking-Canceled-Award 
+    /**
+     * @see org.kuali.kra.award.home.AwardService#getLatestFinalizedAward(VersionHistory versions)
+     */
+    public Award getLatestFinalizedAward(Award award) {
+    	List<VersionHistory> versions = getVersionHistoryService().loadVersionHistory(Award.class, award.getAwardNumber());
+    	
+        Collections.sort(versions, new Comparator<VersionHistory>() {
+            public int compare(VersionHistory action1, VersionHistory action2) {
+            	// reverse sort
+                return action2.getSequenceOwnerSequenceNumber().compareTo(action1.getSequenceOwnerSequenceNumber());
+            }
+        });
+        Award previousAward = null;
+        for (VersionHistory version: versions){
+        	if (!version.getSequenceOwnerSequenceNumber().equals(award.getSequenceNumber())){
+        		if (!version.getStatus().equals(VersionStatus.CANCELED)){
+        			previousAward = (Award) version.getSequenceOwner();
+        			break;
+        		}
+        	}
+        }
+        return previousAward;
+    }
     
     public Award getAwardAssociatedWithDocument(String docNumber) {
         Map<String, Object> values = new HashMap<String, Object>();
